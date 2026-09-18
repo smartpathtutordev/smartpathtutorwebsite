@@ -19,6 +19,15 @@ const links = [
   { href: "/#contact", label: "Contact" },
 ];
 
+// Where a parent goes to actually start.
+//
+// Every route in this file was an anchor on this page, so the whole site led
+// only back to itself: a parent could read all of it, decide to buy, and have
+// nowhere to go. "Start free" pointed at the pricing SECTION — prices, not a
+// sign-up. This is the portal, which is where the account and the payment
+// really live.
+const PORTAL = "https://portal.smartpathtutor.ph/portal";
+
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -68,10 +77,12 @@ export function SiteNav() {
 
         <div className="hidden md:flex items-center gap-2">
           <ThemeToggle />
-          <Button variant="ghost" size="sm" render={<a href="/#contact" />}>
-            Talk to us
+          {/* A family that already pays needs a way back in, and there was
+              none anywhere on the site. */}
+          <Button variant="ghost" size="sm" render={<a href={PORTAL} />}>
+            Sign in
           </Button>
-          <Button size="sm" className="rounded-full" render={<a href="/#pricing" />}>
+          <Button size="sm" className="rounded-full" render={<a href={PORTAL} />}>
             Start free
           </Button>
         </div>
@@ -101,10 +112,17 @@ export function SiteNav() {
                 {l.label}
               </a>
             ))}
+            <a
+              href={PORTAL}
+              onClick={() => setOpen(false)}
+              className="py-2 text-muted-foreground hover:text-foreground"
+            >
+              Sign in
+            </a>
             <Button
               size="sm"
               className="mt-2 rounded-full w-full"
-              render={<a href="/#pricing" onClick={() => setOpen(false)} />}
+              render={<a href={PORTAL} onClick={() => setOpen(false)} />}
             >
               Start free
             </Button>
