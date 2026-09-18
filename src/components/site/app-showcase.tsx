@@ -1,13 +1,35 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Gamepad2, WifiOff, Languages, LineChart } from "lucide-react";
+import {
+  Gamepad2,
+  WifiOff,
+  Languages,
+  LineChart,
+  Backpack,
+  Users,
+  GraduationCap,
+} from "lucide-react";
 
 const perks = [
   { icon: Gamepad2, label: "Points, streaks & badges" },
   { icon: WifiOff, label: "Works offline, anywhere" },
   { icon: Languages, label: "English, Filipino, Cebuano & Hiligaynon" },
   { icon: LineChart, label: "Parent progress dashboard" },
+];
+
+// The three apps, in a browser.
+//
+// Set NEXT_PUBLIC_APP_BASE to point these somewhere else — a local server
+// while developing, a different host later. The default is the portal, which
+// is where they are served from today.
+const APP_BASE =
+  process.env.NEXT_PUBLIC_APP_BASE ?? "https://portal.smartpathtutor.ph";
+
+const WEB_APPS = [
+  { icon: Backpack, label: "For learners", href: `${APP_BASE}/app/tutor/` },
+  { icon: Users, label: "For parents", href: `${APP_BASE}/app/parent/` },
+  { icon: GraduationCap, label: "For teachers", href: `${APP_BASE}/app/teacher/` },
 ];
 
 /** Apple App Store badge (links out when you have a real URL). */
@@ -122,6 +144,37 @@ export function AppShowcase() {
             <div className="mt-9 flex flex-wrap gap-3">
               <AppStoreBadge />
               <GooglePlayBadge />
+            </div>
+
+            {/* ── use it in a browser ──────────────────────────────────────
+                Both badges above still point at "#", because there is nothing
+                in either store yet. Meanwhile the apps DO run in a browser —
+                they are Flutter, which compiles to web — so a family sharing
+                one laptop, or a teacher on a school desktop, can sign in today
+                without installing anything.
+
+                Worth saying out loud rather than leaving as a surprise: this
+                is the only way in until the stores are live. */}
+            <div className="mt-7 rounded-2xl border border-border/60 bg-background/60 p-5">
+              <p className="text-sm font-semibold">
+                No Android device? Use it in your browser.
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                The same apps, nothing to install. Sign in with the account you
+                already have.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {WEB_APPS.map((a) => (
+                  <a
+                    key={a.href}
+                    href={a.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-border/60 px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
+                  >
+                    <a.icon className="h-4 w-4" />
+                    {a.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
 
