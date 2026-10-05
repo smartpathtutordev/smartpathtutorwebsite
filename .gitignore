@@ -45,3 +45,6 @@ subscribers.json
 
 # redundant root copy of the logo (app uses public/)
 /spt_logo.png
+
+# Claude outputs / local docs
+Claude outputs/

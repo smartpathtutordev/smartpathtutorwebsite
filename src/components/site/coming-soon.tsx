@@ -15,9 +15,9 @@ const fadeUp = {
 };
 
 const chips = [
-  "Grades 1–3",
-  "DepEd-aligned",
-  "Math · Science · English",
+  "DepEd MATATAG Grades 1–3",
+  "100% Free for Teachers",
+  "Math · Science · English · Reading",
   "English · Filipino · Cebuano · Hiligaynon",
 ];
 
@@ -161,10 +161,10 @@ export function ComingSoon() {
           animate="visible"
           custom={0.2}
           variants={fadeUp}
-          className="mt-5 text-balance text-4xl font-extrabold tracking-tight sm:text-5xl"
+          className="mt-5 font-heading font-black text-balance text-4xl tracking-tight sm:text-5xl text-slate-900 dark:text-white"
         >
           Your child&rsquo;s{" "}
-          <span className="brand-text-gradient animate-sp-shimmer bg-clip-text text-transparent">
+          <span className="bg-gradient-sunset bg-clip-text text-transparent">
             smart path
           </span>{" "}
           is almost here.
@@ -176,11 +176,10 @@ export function ComingSoon() {
           animate="visible"
           custom={0.3}
           variants={fadeUp}
-          className="mx-auto mt-5 max-w-md text-pretty text-base text-muted-foreground sm:text-lg"
+          className="mx-auto mt-5 max-w-md text-pretty text-base text-muted-foreground sm:text-lg font-sans"
         >
-          A playful, DepEd-aligned learning app for Filipino kids in Grades 1 to 3
-          &mdash; Math, Science, and English, made to feel like play. We&rsquo;re
-          putting on the finishing touches.
+          A playful, DepEd MATATAG-aligned learning platform for Filipino kids across Grades 1 to 3
+          &mdash; Math, English, and Science, made to feel like play with Tala.
         </motion.p>
 
         {/* Notify form */}
@@ -207,14 +206,14 @@ export function ComingSoon() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 aria-label="Email address"
-                className="h-11 flex-1 rounded-full border border-border/70 bg-card px-4 text-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-amber-400"
+                className="h-11 flex-1 rounded-full border border-border/70 bg-card px-4 text-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-orange-400"
               />
               <motion.button
                 type="submit"
                 disabled={status === "loading"}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground shadow-sm disabled:opacity-70"
+                className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full bg-gradient-sunset px-6 text-sm font-bold text-white shadow-md shadow-orange-500/20 disabled:opacity-70"
               >
                 {status === "loading" ? (
                   <>

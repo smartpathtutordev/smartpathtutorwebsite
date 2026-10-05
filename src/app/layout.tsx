@@ -1,26 +1,42 @@
 import type { Metadata } from "next";
-import { Baloo_2 } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-// Baloo 2 — the SmartPath Tutor learning-app brand font (used app-wide).
-const baloo = Baloo_2({
+// Nunito — the primary UI and body font of SmartPath Tutor (clean, modern, highly legible).
+const nunito = localFont({
+  src: [
+    { path: "../../public/fonts/Nunito-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Nunito-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../../public/fonts/Nunito-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Nunito-ExtraBold.ttf", weight: "800", style: "normal" },
+  ],
   variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+// Baloo 2 — the brand display font used for impactful headings, hero titles, and badges.
+const baloo = localFont({
+  src: [
+    { path: "../../public/fonts/Baloo2-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Baloo2-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/Baloo2-ExtraBold.ttf", weight: "800", style: "normal" },
+  ],
+  variable: "--font-heading",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://smartpathtutor.com"),
+  metadataBase: new URL("https://smartpathtutor.ph"),
   title: {
-    default: "SmartPath Tutor — Grades 1–3 online tutoring built for the Philippine curriculum",
+    default: "SmartPath Tutor — DepEd MATATAG Grades 1–3 Learning Platform",
     template: "%s · SmartPath Tutor",
   },
   description:
-    "Personalized Grades 1–3 lessons in Math, Science, and English aligned with the DepEd curriculum. Learn at your pace, track progress, and grow.",
+    "DepEd MATATAG-aligned Math, English, and Science for Grades 1 to 3. Adaptive Today's Path, 100% free for teachers, and affordable per-family subscriptions.",
   openGraph: {
-    title: "SmartPath Tutor",
+    title: "SmartPath Tutor — DepEd Grades 1–3 Learning Platform",
     description:
-      "Personalized Grades 1–3 lessons aligned with the DepEd curriculum. Learn at your pace, track progress, and grow.",
+      "Empowering Filipino learners with personalized guided sessions, Today's Path daily learning, and DepEd MATATAG curriculum alignment.",
     type: "website",
     locale: "en_PH",
   },
@@ -35,7 +51,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${baloo.variable} h-full antialiased scroll-smooth`}
+      className={`${nunito.variable} ${baloo.variable} h-full antialiased scroll-smooth`}
     >
       <head>
         {/* Apply saved theme before paint to avoid a flash of the wrong mode. */}
@@ -45,9 +61,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans selection:bg-amber-100 selection:text-amber-900">
         {children}
       </body>
     </html>
   );
 }
+

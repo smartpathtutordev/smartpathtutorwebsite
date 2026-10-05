@@ -3,29 +3,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/#how-it-works", label: "How it works" },
-  { href: "/#subjects", label: "Subjects" },
-  { href: "/#app", label: "App" },
+  // Only ids the home page actually renders.
+  //
+  // "Today's Trip", "Curriculum" and "Features" pointed at #how-it-works,
+  // #curriculum and #superpowers. Those sections are no longer on the page, so
+  // all three scrolled nowhere — a click that does nothing, throws nothing and
+  // logs nothing, which is the hardest kind of broken to notice.
+  //
+  // Anything added back here has to have a section with that id on the page.
   { href: "/#pricing", label: "Pricing" },
-  { href: "/programs", label: "Programs" },
-  { href: "/about", label: "About" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#faq", label: "Questions" },
 ];
 
-// Where a parent goes to actually start.
-//
-// Every route in this file was an anchor on this page, so the whole site led
-// only back to itself: a parent could read all of it, decide to buy, and have
-// nowhere to go. "Start free" pointed at the pricing SECTION — prices, not a
-// sign-up. This is the portal, which is where the account and the payment
-// really live.
 const PORTAL = "https://portal.smartpathtutor.ph/portal";
 
 export function SiteNav() {
@@ -33,7 +28,7 @@ export function SiteNav() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -42,90 +37,108 @@ export function SiteNav() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all",
+        "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border/60"
-          : "bg-transparent"
+          ? "bg-white/90 dark:bg-slate-950/90 border-b border-slate-200/80 dark:border-slate-800/80 py-3 backdrop-blur-md shadow-xs"
+          : "bg-transparent py-4"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6">
+        {/* Brand */}
+        <Link href="/" className="group flex items-center gap-2.5">
+          <div className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-white shadow-xs ring-1 ring-slate-900/10 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/spt_icon.png"
-              alt="SmartPath Tutor logo"
+              alt="SmartPath logo"
               width={36}
               height={36}
-              className="h-8 w-8 object-contain"
+              className="h-7 w-7 object-contain"
               priority
             />
-          </span>
-          <span className="tracking-tight">SmartPath Tutor</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="font-heading text-lg font-black tracking-tight text-slate-900 dark:text-white">
+              Smart<span className="text-orange-500">Path</span>
+            </span>
+            <span className="rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-700 dark:text-orange-300 border border-orange-500/20">
+              Grades 1–3
+            </span>
+          </div>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
+        {/* Center Links */}
+        <nav className="hidden md:flex items-center gap-1 rounded-full border-2 border-amber-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 px-4 py-1.5 backdrop-blur-md text-xs font-black text-slate-700 dark:text-slate-300 shadow-xs">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="hover:text-foreground transition-colors"
+              className="rounded-full px-3.5 py-1.5 transition-colors hover:text-orange-600 dark:hover:text-white hover:bg-amber-50 dark:hover:bg-slate-800"
             >
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-2">
+        {/* Right Actions */}
+        <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          {/* A family that already pays needs a way back in, and there was
-              none anywhere on the site. */}
-          <Button variant="ghost" size="sm" render={<a href={PORTAL} />}>
-            Sign in
-          </Button>
-          <Button size="sm" className="rounded-full" render={<a href={PORTAL} />}>
-            Start free
-          </Button>
+          <a
+            href={PORTAL}
+            className="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-white transition-colors px-2 py-1.5"
+          >
+            Sign In
+          </a>
+          <a
+            href="#pricing"
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-sunset px-5 py-2 text-xs font-black text-white shadow-md shadow-orange-500/20 hover:brightness-105 transition-all active:scale-95"
+          >
+            <span>Start Free</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </a>
         </div>
 
-        <div className="md:hidden flex items-center gap-2">
+        {/* Mobile menu button */}
+        <div className="flex md:hidden items-center gap-2">
           <ThemeToggle />
           <button
+            onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            className="grid place-items-center h-9 w-9 rounded-md border border-border/60"
-            onClick={() => setOpen((v) => !v)}
+            className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
+      {/* Mobile Drawer */}
       {open && (
-        <div className="md:hidden border-t border-border/60 bg-background/95 backdrop-blur">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex flex-col gap-3 text-sm">
+        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-5 py-5 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
+          <div className="flex flex-col gap-2">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="py-2 text-muted-foreground hover:text-foreground"
+                className="rounded-xl px-3 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {l.label}
               </a>
             ))}
+            <div className="my-2 border-t border-slate-100 dark:border-slate-800" />
             <a
               href={PORTAL}
               onClick={() => setOpen(false)}
-              className="py-2 text-muted-foreground hover:text-foreground"
+              className="rounded-xl px-3 py-2 text-sm font-bold text-orange-600 dark:text-orange-400"
             >
-              Sign in
+              Sign In to Portal →
             </a>
-            <Button
-              size="sm"
-              className="mt-2 rounded-full w-full"
-              render={<a href={PORTAL} onClick={() => setOpen(false)} />}
+            <a
+              href="#pricing"
+              onClick={() => setOpen(false)}
+              className="mt-2 text-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-2.5 text-sm font-bold shadow-md"
             >
-              Start free
-            </Button>
+              Start Free Trial
+            </a>
           </div>
         </div>
       )}

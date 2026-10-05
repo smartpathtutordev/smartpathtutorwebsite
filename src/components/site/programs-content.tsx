@@ -26,7 +26,7 @@ const fadeUp = {
   visible: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const, delay },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const, delay },
   }),
 };
 
@@ -43,73 +43,74 @@ type Program = {
 const familyPrograms: Program[] = [
   {
     icon: Ticket,
-    title: "Prepaid Voucher",
-    badge: "No card needed",
-    body: "Pay manually via GCash, Maya, or over-the-counter — no bank card, no auto-renew. One voucher unlocks a full month.",
-    cta: "Get a voucher",
+    title: "Prepaid Voucher Code",
+    badge: "No credit card needed",
+    body: "Pay manually via GCash, Maya, 7-Eleven, or over-the-counter load stations — no recurring bank charges. One 16-character code unlocks 30 days of all Grade 1–3 subjects.",
+    cta: "How vouchers work",
     steps: [
-      { title: "Pick 1 month", body: "Choose the prepaid voucher — it unlocks every subject and the Fun Zone for 30 days." },
-      { title: "Pay your way", body: "GCash, Maya, bank transfer, or over-the-counter at a partner load station — whatever's easiest for you." },
-      { title: "Get your code", body: "We send a voucher code by SMS or email, usually within minutes of payment." },
-      { title: "Redeem & learn", body: "Open the app, enter the code, pick your child's grade, and start. No auto-charge when it ends." },
+      { title: "Choose 1 Month or Term", body: "Pick the prepaid voucher that fits your budget — unlocks all subjects, Tala AI tutor, and Today's Path quests." },
+      { title: "Pay your way", body: "GCash, Maya, ShopeePay, Cebuana Lhuillier, Palawan Express, or over-the-counter load station." },
+      { title: "Instant Voucher Code", body: "Receive your unique 16-digit voucher code instantly via SMS and email upon payment confirmation." },
+      { title: "Redeem in 1 Tap", body: "Open the SmartPath app or web portal, enter the code, select your child's grade (Grades 1–3), and start learning immediately." },
     ],
     goodToKnow: [
-      "No credit card and no bank account required",
-      "Never renews automatically — you're always in control",
-      "Top up again any time, whenever the budget allows",
+      "No bank account or credit card required",
+      "Zero auto-renewals — you are always in complete control",
+      "Top up anytime whenever budget allows; child progress is never lost",
     ],
   },
   {
     icon: Users,
-    title: "Family Plan",
+    title: "Family Plan (Up to 3 Children)",
     badge: "Best for siblings",
-    body: "Add up to 4 child profiles under one account at a lower price per child — each with their own progress.",
-    cta: "See how it works",
+    body: "Add up to 3 child profiles under a single household account at ₱599/mo (or ₱5,990/yr). Each child maintains their own grade level, streaks, and stars.",
+    cta: "Explore family pass",
     steps: [
-      { title: "One parent account", body: "Sign up once — you'll manage everything from a single dashboard." },
-      { title: "Add your kids", body: "Create up to 4 child profiles, each with their own grade level and progress." },
-      { title: "Pay one family rate", body: "A single discounted price covers the whole household — cheaper than separate plans." },
-      { title: "Switch any time", body: "Move a child up a grade or swap profiles whenever you need to." },
+      { title: "One Parent Dashboard", body: "Create your parent account once — manage screen time, review Bloom quiz scores, and monitor all siblings in one place." },
+      { title: "Add up to 3 Child Profiles", body: "Configure individual grades for Grades 1, 2, and 3 with custom avatar choices." },
+      { title: "Shared Household Value", body: "One single subscription covers the entire family across multiple devices with live Parent App syncing." },
+      { title: "Switch Profiles Seamlessly", body: "Kids can swap profiles on the shared family tablet or phone with their own 4-digit child PIN." },
     ],
     goodToKnow: [
-      "Up to 4 learners on one account",
-      "Separate progress and badges per child",
-      "Lower cost per child than individual plans",
+      "Up to 3 independent learners on 1 subscription (Custom Mix for 4+ kids)",
+      "Separate mastery tracking, badges, and streaks per child",
+      "Includes 80 Parent AI questions a month on the Parent App",
     ],
   },
   {
     icon: Gift,
     title: "Refer a Kapamilya",
-    badge: "Free month",
-    body: "Invite another family. When they start, you both get a free month — share the learning, lower the cost.",
-    cta: "How referrals work",
+    badge: "Free 1 Month",
+    body: "Invite a fellow parent, cousin, or neighbor. When they start their subscription, both families receive a full bonus month of SmartPath Tutor credited automatically.",
+    cta: "Referral mechanics",
     steps: [
-      { title: "Share your code", body: "Send your personal invite link or code to another parent." },
-      { title: "They try it free", body: "Your friend signs up and starts their free week — no card needed." },
-      { title: "You both get a month", body: "When they subscribe, a free month is credited to both accounts automatically." },
+      { title: "Get your invite link", body: "Find your unique Kapamilya referral code in the Parent Portal." },
+      { title: "Share on Messenger or Viber", body: "Send your link to parents, family group chats, or school PTA groups." },
+      { title: "Friend starts 7-day trial", body: "They explore DepEd MATATAG lessons with Tala with zero payment required." },
+      { title: "Both get 30 days free", body: "Upon their first voucher or plan activation, 30 days are automatically credited to both accounts." },
     ],
     goodToKnow: [
-      "No limit — refer as many families as you like",
-      "Free months stack and apply automatically",
-      "Both sides win, every time",
+      "No limit on referral rewards — stack up to 12 months free",
+      "Valid for any active subscriber or prepaid voucher user",
+      "Both parties receive automatic SMS & email confirmation",
     ],
   },
   {
     icon: Globe,
     title: "OFW Gift Access",
     badge: "Gift from abroad",
-    body: "Working overseas? Gift a month — or a whole year — of learning to a child back home.",
-    cta: "How to gift",
+    body: "Working in the Middle East, Singapore, Canada, or worldwide? Directly gift a term or school year of DepEd-aligned tutoring to your children, nieces, or nephews back home.",
+    cta: "Send gift to PH",
     steps: [
-      { title: "Choose a gift", body: "Pick 1 month or a full year of access to give." },
-      { title: "Pay from anywhere", body: "Pay online from your country — card, e-wallet, or bank transfer." },
-      { title: "Send the code", body: "We give you a redemption code to share with the family back home." },
-      { title: "They start right away", body: "Your loved one redeems it and begins learning the same day." },
+      { title: "Select a gift pass", body: "Choose 3-month, 6-month, or full 1-year access for your learner in the Philippines." },
+      { title: "Pay internationally", body: "Pay securely via international Visa, Mastercard, PayPal, or remit partner." },
+      { title: "Digital Gift Voucher", body: "We generate a customized gift voucher with your personal message sent to your family's Philippine mobile number." },
+      { title: "Stay updated overseas", body: "Optionally receive weekly email progress reports to celebrate their achievements from afar." },
     ],
     goodToKnow: [
-      "Pay from abroad, learning happens in the Philippines",
-      "Great for ninong/ninang and OFW parents",
-      "One-time payment — no subscription to manage",
+      "Pay from abroad, child learns in the Philippines",
+      "Ideal for OFW parents, godparents (Ninong/Ninang), and relatives",
+      "One-time payment with zero surprise subscription charges",
     ],
   },
 ];
@@ -117,75 +118,86 @@ const familyPrograms: Program[] = [
 const givebackPrograms: Program[] = [
   {
     icon: HeartHandshake,
-    title: "Sponsor a Child",
-    body: "Fund full access for a learner whose family can't afford it — for individuals and companies (CSR).",
+    title: "Sponsor a Child (CSR)",
+    body: "Fund a year of digital tutoring for underprivileged learners. Ideal for individuals, alumni groups, and corporate social responsibility (CSR) initiatives.",
     cta: "How sponsoring works",
     steps: [
-      { title: "Choose your support", body: "Sponsor one child or many, as a one-time gift or monthly." },
-      { title: "We match a learner", body: "Your sponsorship goes to a verified family who applied for help." },
-      { title: "A child gets access", body: "They receive full SmartPath access at no cost to their family." },
-      { title: "See the impact", body: "Get periodic progress updates on the learner you're supporting." },
+      { title: "Choose sponsorship count", body: "Sponsor 1, 5, 20, or 100 learners as a one-time donation or monthly grant." },
+      { title: "Verified recipient matching", body: "We partner with local public elementary schools to identify deserving 4Ps beneficiary students." },
+      { title: "Digital pack deployment", body: "We provide tablet bundles or voucher codes with complete DepEd MATATAG Grade 1–3 lessons." },
+      { title: "Audited impact reports", body: "Receive anonymized quarterly competency improvement metrics demonstrating real educational outcomes." },
     ],
     goodToKnow: [
-      "Open to individuals and company CSR programs",
-      "One-time or monthly — any amount helps",
-      "Transparent updates on who you're helping",
+      "Includes Certificate of Educational Partnership",
+      "100% of sponsorship funds go directly to platform access and student tablets",
+      "Transparent reporting on learning hours and quiz mastery",
     ],
   },
   {
     icon: Building2,
-    title: "Community Discount",
-    body: "Special group rates for barangays, parent associations, and community learning centers.",
-    cta: "How to enroll a group",
+    title: "Barangay & Community Packs",
+    body: "Subsidized group access for barangay learning hubs, day care centers, SK youth programs, and community libraries.",
+    cta: "Group setup details",
     steps: [
-      { title: "Gather a group", body: "A barangay, parent association, or learning center brings families together." },
-      { title: "Tell us your headcount", body: "Send us roughly how many children will join." },
-      { title: "Get a group rate", body: "We set a discounted price and a simple sign-up link for your group." },
-      { title: "Families activate", body: "Each parent sets up their own child's profile and starts learning." },
+      { title: "Contact community desk", body: "Connect with our Filipino team with your estimated number of barangay learners." },
+      { title: "Local community license", body: "We set up a discounted group bundle optimized for shared community tablets." },
+      { title: "Staff orientation", body: "Short 30-minute virtual or on-site briefing for barangay volunteers and educators." },
+      { title: "Community hub access", body: "Tablets connect to local Wi-Fi or mobile data with low bandwidth usage." },
     ],
     goodToKnow: [
-      "The bigger the group, the better the rate",
-      "Each family keeps their own private account",
-      "Great for barangay and NGO programs",
+      "Tiered discounts up to 50% for local government units and non-profits",
+      "Works with low-spec Android tablets and refurbished hardware",
+      "Includes certificates of completion for learners",
     ],
   },
   {
     icon: School,
-    title: "School Partnership",
-    body: "Bring SmartPath to a whole classroom — teacher dashboard, bulk pricing, DepEd-aligned lessons.",
-    cta: "How partnership works",
+    title: "100% Free Teacher & Classroom Access",
+    body: "Equip elementary teachers with 100% free classroom presentation tools, 1-click PowerPoint / Canva (.pptx) lesson exporters, and DepEd MATATAG Grade 1–3 assessments.",
+    cta: "Get free teacher access",
     steps: [
-      { title: "Book a quick call", body: "We learn about your school, grade levels, and goals." },
-      { title: "We set you up", body: "We build your class roster and a teacher dashboard." },
-      { title: "Assign lessons", body: "Teachers assign DepEd-aligned lessons that match the class plan." },
-      { title: "Track the class", body: "See mastery for every student in one place." },
+      { title: "Instant educator registration", body: "Sign up with your DepEd or school email to unlock full educator access immediately." },
+      { title: "Classroom roster setup", body: "Batch enroll class sections with student IDs and parent contact numbers." },
+      { title: "Assign Today's Path modules", body: "Teachers assign specific DepEd competency modules matching the school lesson calendar." },
+      { title: "Automated grading insights", body: "Review student mastery percentages, pinpoint common misconceptions, and export reports." },
     ],
     goodToKnow: [
-      "Teacher dashboard for the whole class",
-      "Bulk pricing for schools",
-      "Lessons mapped to DepEd competencies",
+      "Teacher console includes slides exporter for TV/projector display",
+      "Fully compliant with DepEd Order No. 10 s. 2024 (MATATAG Curriculum)",
+      "100% Free forever for verified Philippine educators",
     ],
   },
   {
     icon: Award,
-    title: "Scholarship Seats",
-    body: "Need-based free seats for qualifying families, including public-school and 4Ps learners.",
-    cta: "How to apply",
+    title: "Public School Scholarship Seats",
+    body: "Annual allocation of 100% free SmartPath Tutor memberships reserved for qualified public-school students and 4Ps (Pantawid Pamilyang Pilipino) families.",
+    cta: "Apply for scholarship",
     steps: [
-      { title: "Check eligibility", body: "Fill out a short form — e.g., public-school or 4Ps learners qualify." },
-      { title: "Submit proof", body: "Share a simple document like a school ID or 4Ps ID." },
-      { title: "We review", body: "Our team reviews and approves qualifying applicants quickly." },
-      { title: "Learn for free", body: "Approved learners get free access for the school year." },
+      { title: "Verify eligibility", body: "Submit a simple verification form indicating enrolment in a Philippine public elementary school or 4Ps status." },
+      { title: "Upload student ID", body: "Provide a quick photo of the learner's school ID or certificate of registration." },
+      { title: "Fast-track review", body: "Our educator review board processes applications within 48 to 72 hours." },
+      { title: "Full 1-year access", body: "Approved students receive completely free 365-day access to all Grade 1–3 subjects and features." },
     ],
     goodToKnow: [
-      "Prioritizes public-school and 4Ps families",
-      "Simple form, minimal paperwork",
-      "Free access for the full school year",
+      "Priority given to rural and low-income elementary students",
+      "No paperwork hassle — swift digital verification",
+      "Renewable each academic school year upon continued enrollment",
     ],
   },
 ];
 
-const payMethods = ["GCash", "Maya", "Over-the-counter", "Load stations", "Bank transfer"];
+const payMethods = [
+  "GCash",
+  "Maya",
+  "ShopeePay",
+  "GrabPay",
+  "7-Eleven (Cliqq)",
+  "Cebuana Lhuillier",
+  "Palawan Express",
+  "Over-the-counter Load",
+  "BDO / BPI / UnionBank",
+  "Visa / Mastercard",
+];
 
 function ProgramCard({
   program,
@@ -199,32 +211,32 @@ function ProgramCard({
   const { icon: Icon, title, badge, body, cta } = program;
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col rounded-2xl border border-border/60 bg-card p-6 shadow-sm transition-shadow hover:shadow-lg"
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all"
     >
       <div className="flex items-center justify-between">
-        <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-[#7c3aed]">
+        <span className="grid h-11 w-11 place-items-center rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400">
           <Icon className="h-5 w-5" />
         </span>
         {badge && (
-          <Badge variant="secondary" className="rounded-full text-[11px]">
+          <Badge variant="secondary" className="rounded-full text-[11px] font-bold border border-orange-500/20 bg-orange-500/10 text-orange-700 dark:text-orange-300">
             {badge}
           </Badge>
         )}
       </div>
-      <h3 className="mt-5 text-lg font-bold">{title}</h3>
-      <p className="mt-2 flex-1 text-sm text-muted-foreground leading-relaxed">{body}</p>
+      <h3 className="mt-5 font-heading font-black text-lg text-slate-900 dark:text-white">{title}</h3>
+      <p className="mt-2 flex-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">{body}</p>
       <Button
         variant="ghost"
         size="sm"
         onClick={onOpen}
-        className="mt-5 self-start rounded-full px-3 text-[#7c3aed] hover:bg-accent"
+        className="mt-5 self-start rounded-full px-3 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/40 font-bold text-xs"
       >
         {cta}
-        <ArrowRight className="ml-1 h-4 w-4" />
+        <ArrowRight className="ml-1 h-3.5 w-3.5" />
       </Button>
     </motion.div>
   );
@@ -253,7 +265,7 @@ function ProgramDialog({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-end justify-center bg-foreground/40 p-0 backdrop-blur-sm sm:items-center sm:p-6"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-slate-950/60 p-0 backdrop-blur-sm sm:items-center sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -264,60 +276,60 @@ function ProgramDialog({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-card p-6 shadow-2xl ring-1 ring-foreground/10 sm:rounded-3xl sm:p-8"
+        className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white dark:bg-slate-900 p-6 shadow-2xl border border-slate-200 dark:border-slate-800 sm:rounded-3xl sm:p-8"
       >
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
         >
           <X className="h-4 w-4" />
         </button>
 
-        <span className="grid h-12 w-12 place-items-center rounded-2xl brand-gradient text-foreground shadow-sm">
+        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-sunset text-white shadow-md shadow-orange-500/20">
           <Icon className="h-6 w-6" />
         </span>
-        <h3 className="mt-4 text-2xl font-extrabold tracking-tight">{title}</h3>
-        <p className="mt-1 text-sm font-semibold text-[#7c3aed]">How it works</p>
+        <h3 className="mt-4 font-heading font-black text-2xl tracking-tight text-slate-900 dark:text-white">{title}</h3>
+        <p className="mt-1 text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">Step-by-Step Guide</p>
 
-        <ol className="mt-5 space-y-4">
+        <ol className="mt-5 space-y-3.5">
           {steps.map((s, i) => (
             <li key={s.title} className="flex gap-3">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent text-xs font-bold text-[#7c3aed]">
+              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-orange-500/15 text-xs font-bold text-orange-600 dark:text-orange-400">
                 {i + 1}
               </span>
               <div>
-                <div className="text-sm font-bold">{s.title}</div>
-                <div className="mt-0.5 text-sm text-muted-foreground leading-relaxed">{s.body}</div>
+                <div className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">{s.title}</div>
+                <div className="mt-0.5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">{s.body}</div>
               </div>
             </li>
           ))}
         </ol>
 
-        <div className="mt-6 rounded-2xl bg-muted/60 p-4">
-          <div className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+        <div className="mt-6 rounded-2xl bg-slate-50 dark:bg-slate-800/60 p-4 border border-slate-100 dark:border-slate-800">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Good to know
           </div>
-          <ul className="mt-2 space-y-1.5">
+          <ul className="mt-2.5 space-y-2">
             {goodToKnow.map((g) => (
-              <li key={g} className="flex items-start gap-2 text-sm">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#10b981]" />
-                <span className="text-muted-foreground">{g}</span>
+              <li key={g} className="flex items-start gap-2 text-xs font-sans">
+                <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
+                <span className="text-slate-600 dark:text-slate-300">{g}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+        <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
           <Button
-            className="flex-1 rounded-full"
+            className="flex-1 rounded-full bg-gradient-sunset text-white font-bold shadow-md shadow-orange-500/20 hover:opacity-95"
             render={<a href={`/?program=${encodeURIComponent(title)}#contact`} />}
           >
-            Get started
+            Inquire About This Program
             <ArrowRight className="ml-1.5 h-4 w-4" />
           </Button>
-          <Button variant="ghost" className="rounded-full" onClick={onClose}>
-            Maybe later
+          <Button variant="ghost" className="rounded-full text-xs font-semibold" onClick={onClose}>
+            Close
           </Button>
         </div>
       </motion.div>
@@ -334,17 +346,13 @@ export function ProgramsContent() {
       <section className="relative overflow-hidden pt-24 pb-16 sm:pt-32 sm:pb-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(60% 40% at 50% 0%, rgba(251,191,36,0.30) 0%, transparent 70%), radial-gradient(40% 30% at 80% 20%, rgba(124,58,237,0.16) 0%, transparent 70%)",
-          }}
+          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-background to-background dark:from-orange-950/20"
         />
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
-            <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" />
-              Programs &amp; access
+            <Badge variant="secondary" className="rounded-full px-3.5 py-1 text-xs gap-1.5 font-bold border border-orange-500/20 bg-orange-500/10 text-orange-700 dark:text-orange-300">
+              <Sparkles className="h-3.5 w-3.5 text-orange-500" />
+              Flexible Access &amp; Partnerships
             </Badge>
           </motion.div>
           <motion.h1
@@ -352,11 +360,11 @@ export function ProgramsContent() {
             animate="visible"
             custom={0.1}
             variants={fadeUp}
-            className="mt-6 text-balance text-4xl font-extrabold tracking-tight sm:text-5xl"
+            className="mt-6 font-heading font-black text-4xl tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-white"
           >
-            Learning that reaches{" "}
-            <span className="brand-text-gradient bg-clip-text text-transparent">
-              every Filipino child
+            Affordable learning tailored for{" "}
+            <span className="text-orange-500">
+              every Filipino home
             </span>
             .
           </motion.h1>
@@ -365,25 +373,25 @@ export function ProgramsContent() {
             animate="visible"
             custom={0.2}
             variants={fadeUp}
-            className="mt-6 text-pretty text-base text-muted-foreground sm:text-lg"
+            className="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed font-sans"
           >
-            No bank card? Tight budget? No problem. Tap any program to see exactly
-            how it works &mdash; pay your own way, enroll as a group, or let a
-            sponsor cover the cost.
+            No credit card? Tight family budget? No problem. Choose prepaid voucher codes, family discounts, OFW gifting, or public school scholarship programs.
           </motion.p>
         </div>
       </section>
 
       {/* ── Family programs ──────────────────────────────────────── */}
-      <section className="py-12 sm:py-16">
+      <section className="py-14 sm:py-18">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            <Badge variant="secondary" className="rounded-full px-3 py-0.5 text-xs font-bold border border-orange-500/20 bg-orange-500/10 text-orange-700 dark:text-orange-300">
+              Family Options
+            </Badge>
+            <h2 className="mt-3 font-heading font-black text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
               Ways to pay &amp; get access
             </h2>
-            <p className="mt-3 text-muted-foreground">
-              Flexible options built for how Filipino families actually pay.
-              Tap a card for the step-by-step.
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 font-sans">
+              Flexible options designed for how Filipino families actually transact. Tap any card for full details.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -395,14 +403,14 @@ export function ProgramsContent() {
       </section>
 
       {/* ── Payment methods strip ────────────────────────────────── */}
-      <section className="py-10 bg-muted/40">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <section className="py-10 bg-slate-50/70 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="mr-1 inline-flex items-center gap-1.5 text-sm font-medium">
-              <Wallet className="h-4 w-4 text-[#7c3aed]" /> Pay manually with:
+            <span className="mr-2 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <Wallet className="h-4 w-4 text-orange-500" /> Supported Payment Channels:
             </span>
             {payMethods.map((m) => (
-              <Badge key={m} variant="outline" className="rounded-full bg-background">
+              <Badge key={m} variant="outline" className="rounded-full bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-xs font-semibold py-1 px-3">
                 {m}
               </Badge>
             ))}
@@ -411,15 +419,17 @@ export function ProgramsContent() {
       </section>
 
       {/* ── Give-back programs ───────────────────────────────────── */}
-      <section className="py-12 sm:py-16">
+      <section className="py-14 sm:py-18">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            <Badge variant="secondary" className="rounded-full px-3 py-0.5 text-xs font-bold border border-purple-500/20 bg-purple-500/10 text-purple-700 dark:text-purple-300">
+              Community &amp; Schools
+            </Badge>
+            <h2 className="mt-3 font-heading font-black text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
               Programs that give back
             </h2>
-            <p className="mt-3 text-muted-foreground">
-              Help more kids learn &mdash; as a sponsor, a community, or a school.
-              Tap a card to see the steps.
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 font-sans">
+              Help more children learn — as a sponsor, a barangay learning hub, or an elementary school partner.
             </p>
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -433,26 +443,25 @@ export function ProgramsContent() {
       {/* ── CTA band ─────────────────────────────────────────────── */}
       <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          <div className="relative overflow-hidden rounded-3xl brand-gradient px-6 py-12 sm:px-12 sm:py-16 text-center shadow-sm">
-            <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
-              Not sure which program fits?
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-sunset p-8 sm:p-14 text-center shadow-xl shadow-orange-500/20 text-white">
+            <h2 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-white">
+              Not sure which program is right for you?
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-foreground/80">
-              Tell us about your family, group, or school &mdash; we&rsquo;ll
-              point you to the right option.
+            <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base font-sans">
+              Tell us about your child&apos;s grade level, school, or community — our local educator team will guide you to the easiest option.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button size="lg" variant="secondary" className="rounded-full" render={<a href="/#contact" />}>
-                Talk to us
+              <Button size="lg" className="rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold px-7 shadow-md" render={<a href="/#contact" />}>
+                Message an Educator
                 <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
               <Button
                 size="lg"
                 variant="ghost"
-                className="rounded-full hover:bg-foreground/10"
+                className="rounded-full text-white hover:bg-white/10 font-bold px-7"
                 render={<a href="/#pricing" />}
               >
-                See standard pricing
+                View Standard Pricing
               </Button>
             </div>
           </div>
