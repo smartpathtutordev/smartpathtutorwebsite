@@ -19,6 +19,7 @@ const links = [
   // Anything added back here has to have a section with that id on the page.
   { href: "/#pricing", label: "Pricing" },
   { href: "/#faq", label: "Questions" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function SiteNav() {

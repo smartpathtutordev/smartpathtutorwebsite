@@ -142,7 +142,7 @@ export function Pricing() {
               {PRO_FEATURES.map((f) => <Feature key={f} text={f} dark />)}
             </ul>
 
-            <a href="/soon" className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98]">
+            <a href="#contact" className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98]">
               Get started
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
@@ -170,7 +170,7 @@ export function Pricing() {
             <ul className="mt-6 flex-1 space-y-3 border-t border-slate-900/5 pt-6 dark:border-white/10">
               {TEACHER_FEATURES.map((f) => <Feature key={f} text={f} />)}
             </ul>
-            <a href="/soon" className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-100 py-3.5 text-sm font-extrabold text-slate-900 transition hover:bg-slate-200 active:scale-[0.98] dark:bg-white/10 dark:text-white dark:hover:bg-white/15">
+            <a href="#contact" className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-slate-100 py-3.5 text-sm font-extrabold text-slate-900 transition hover:bg-slate-200 active:scale-[0.98] dark:bg-white/10 dark:text-white dark:hover:bg-white/15">
               Get teacher access
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
@@ -200,7 +200,7 @@ export function Pricing() {
               <p className="text-sm text-slate-500 dark:text-slate-400">Prepaid codes. No auto-renewal, no bank account.</p>
             </div>
           </div>
-          <a href="/programs" className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10">
+          <a href="#contact" className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10">
             Learn About Prepaid Vouchers
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </a>

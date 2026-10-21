@@ -61,7 +61,7 @@ const ECOSYSTEM = [
       "Classroom roster tracking & assessments",
     ],
     ctaText: "Explore Teacher Programs",
-    ctaLink: "/programs",
+    ctaLink: "/#contact",
     external: false,
   },
 ];

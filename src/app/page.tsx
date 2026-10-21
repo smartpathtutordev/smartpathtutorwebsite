@@ -5,6 +5,7 @@ import { Hero } from "@/components/site/hero";
 import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { CtaBanner } from "@/components/site/cta-banner";
+import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
 
 /**
@@ -50,6 +51,7 @@ export default function HomePage() {
         <Pricing />
         <Faq />
         <CtaBanner />
+        <Contact />
       </main>
       <SiteFooter />
     </>
