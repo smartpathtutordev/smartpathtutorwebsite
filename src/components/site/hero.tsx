@@ -50,15 +50,15 @@ export function Hero() {
               </a>
             </div>
 
-            <ul className="mt-10 grid grid-cols-1 gap-3 text-sm font-bold text-slate-700 sm:grid-cols-3 sm:gap-4 dark:text-slate-300">
+            <ul className="mt-6 flex flex-wrap justify-center gap-2 text-sm font-bold text-slate-700 sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-4 dark:text-slate-300">
               {[
                 { icon: CheckCircle2, label: "Works offline", tint: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10" },
                 { icon: Users, label: "From ₱399/mo", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
                 { icon: GraduationCap, label: "Free for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
               ].map(({ icon: Icon, label, tint }) => (
-                <li key={label} className="flex items-center justify-center gap-2.5 lg:justify-start">
-                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${tint}`}>
-                    <Icon className="h-4 w-4" />
+                <li key={label} className="flex items-center gap-1.5 rounded-full bg-white/80 py-1 pl-1.5 pr-3 ring-1 ring-slate-900/5 sm:justify-center sm:gap-2.5 sm:bg-transparent sm:p-0 sm:ring-0 lg:justify-start dark:bg-white/5 dark:ring-white/10 sm:dark:bg-transparent">
+                  <span className={`grid h-6 w-6 place-items-center rounded-full sm:h-8 sm:w-8 sm:rounded-lg ${tint}`}>
+                    <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   </span>
                   {label}
                 </li>
