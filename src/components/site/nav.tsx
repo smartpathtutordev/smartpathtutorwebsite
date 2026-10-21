@@ -21,8 +21,6 @@ const links = [
   { href: "/#faq", label: "Questions" },
 ];
 
-const PORTAL = "https://portal.smartpathtutor.ph/portal";
-
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -83,12 +81,6 @@ export function SiteNav() {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <a
-            href={PORTAL}
-            className="text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-orange-600 dark:hover:text-white transition-colors px-2 py-1.5"
-          >
-            Sign In
-          </a>
-          <a
             href="#pricing"
             className="inline-flex items-center gap-1.5 rounded-full bg-gradient-sunset px-5 py-2 text-xs font-black text-white shadow-md shadow-orange-500/20 hover:brightness-105 transition-all active:scale-95"
           >
@@ -125,13 +117,6 @@ export function SiteNav() {
               </a>
             ))}
             <div className="my-2 border-t border-slate-100 dark:border-slate-800" />
-            <a
-              href={PORTAL}
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-2 text-sm font-bold text-orange-600 dark:text-orange-400"
-            >
-              Sign In to Portal →
-            </a>
             <a
               href="#pricing"
               onClick={() => setOpen(false)}

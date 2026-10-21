@@ -175,7 +175,7 @@ export function Pricing() {
 
                 <div className="mt-8 pt-5 border-t border-slate-100 dark:border-slate-800">
                   <a
-                    href="https://portal.smartpathtutor.ph/portal"
+                    href="/soon"
                     className={`inline-flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs sm:text-sm font-bold transition-all ${
                       p.highlight
                         ? "bg-gradient-sunset text-white shadow-md shadow-orange-500/25 hover:brightness-105 active:scale-[0.98]"

@@ -96,19 +96,6 @@ export function Contact() {
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 rounded-2xl border border-purple-500/20 bg-purple-500/5 p-4 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold text-slate-900 dark:text-white">Already have an active account?</p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">View real-time child mastery and attendance.</p>
-              </div>
-              <a
-                href="https://portal.smartpathtutor.ph/portal"
-                className="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline shrink-0"
-              >
-                Portal →
-              </a>
-            </div>
           </motion.div>
 
           {/* Right Column: Interactive Contact Card */}

@@ -84,7 +84,7 @@ const familyPrograms: Program[] = [
     body: "Invite a fellow parent, cousin, or neighbor. When they start their subscription, both families receive a full bonus month of SmartPath Tutor credited automatically.",
     cta: "Referral mechanics",
     steps: [
-      { title: "Get your invite link", body: "Find your unique Kapamilya referral code in the Parent Portal." },
+      { title: "Get your invite link", body: "Find your unique Kapamilya referral code in the SmartPath app." },
       { title: "Share on Messenger or Viber", body: "Send your link to parents, family group chats, or school PTA groups." },
       { title: "Friend starts 7-day trial", body: "They explore DepEd MATATAG lessons with Tala with zero payment required." },
       { title: "Both get 30 days free", body: "Upon their first voucher or plan activation, 30 days are automatically credited to both accounts." },

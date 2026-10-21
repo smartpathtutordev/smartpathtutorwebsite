@@ -43,9 +43,9 @@ const ECOSYSTEM = [
       "Early attention flags on tough topics",
       "100% ad-free & screen time caps",
     ],
-    ctaText: "Open Parent Portal",
-    ctaLink: "https://portal.smartpathtutor.ph/portal",
-    external: true,
+    ctaText: "See Family Plans",
+    ctaLink: "/#pricing",
+    external: false,
   },
   {
     id: "teacher",
@@ -60,9 +60,9 @@ const ECOSYSTEM = [
       "DepEd MATATAG module library",
       "Classroom roster tracking & assessments",
     ],
-    ctaText: "Open Teacher Console",
-    ctaLink: "https://portal.smartpathtutor.ph/teacher",
-    external: true,
+    ctaText: "Explore Teacher Programs",
+    ctaLink: "/programs",
+    external: false,
   },
 ];
 

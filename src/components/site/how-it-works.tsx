@@ -157,7 +157,7 @@ export function HowItWorks() {
               <span>Parent App Live Mirror</span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-              Parents monitor real-time daily checklist completion, accuracy scores, and tickets earned directly from their own phone with 1 household login.
+              Parents monitor real-time daily checklist completion, accuracy scores, and tickets earned directly from their own phone with 1 household account.
             </p>
           </div>
         </div>

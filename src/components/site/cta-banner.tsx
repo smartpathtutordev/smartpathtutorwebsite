@@ -43,7 +43,7 @@ export function CtaBanner() {
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
               <a
-                href="https://portal.smartpathtutor.ph/portal"
+                href="/soon"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 font-heading font-black text-sm sm:text-base text-slate-900 shadow-xl shadow-black/10 hover:bg-yellow-50 active:scale-95 transition-all w-full sm:w-auto"
               >
                 <span>Start Free 7-Day Trial</span>
