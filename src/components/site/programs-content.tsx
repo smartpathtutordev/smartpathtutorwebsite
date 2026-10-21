@@ -63,7 +63,7 @@ const familyPrograms: Program[] = [
     icon: Users,
     title: "Siblings: Add a Child for ₱199/mo",
     badge: "Best for siblings",
-    body: "Add a sibling to Pro or Premium for ₱199/mo (₱549/term, ₱1,990/school year). Each child maintains their own grade level, streaks, and stars.",
+    body: "Add a sibling to Pro for ₱199/mo (₱549/term, ₱1,990/school year). Each child maintains their own grade level, streaks, and stars.",
     cta: "Explore sibling add-on",
     steps: [
       { title: "One Parent Dashboard", body: "Create your parent account once — manage screen time, review Bloom quiz scores, and monitor all siblings in one place." },

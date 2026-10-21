@@ -21,7 +21,7 @@ const FAQS = [
   },
   {
     q: "How does family pricing work?",
-    a: "Per child, not per device. The Parents app is free. Pro is ₱399 a month for one child, Premium ₱649 adds a weekly guided catch-up and more Parent AI, and each extra child is ₱199 a month. Term and school-year plans cost less per month.",
+    a: "Per child, not per device. The Parents app is free. Pro is ₱399 a month for one child, and each extra child is ₱199 a month. Term and school-year plans cost less per month.",
   },
   {
     q: "Which grades?",

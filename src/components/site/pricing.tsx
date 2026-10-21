@@ -50,13 +50,6 @@ const PLANS: Plan[] = [
     badge: "Recommended",
   },
   {
-    name: "Premium",
-    tagline: "1 child",
-    prices: { monthly: "\u20b1649", term: "\u20b11,799", year: "\u20b16,490" },
-    features: ["Everything in Pro", "100 Parent AI questions a month", "Weekly guided catch-up", "Named support"],
-    cta: "Get started",
-  },
-  {
     name: "Teachers",
     tagline: "For classrooms",
     prices: null,
@@ -107,7 +100,7 @@ export function Pricing() {
           </div>
         </div>
 
-        <div className="mt-14 grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-14 grid max-w-5xl items-stretch gap-6 md:grid-cols-3 lg:gap-8">
           {PLANS.map((p, i) => {
             const price = p.prices ? p.prices[cycle] : "\u20b10";
             const cadence = p.prices ? CADENCE[cycle] : p.freeLabel;
@@ -120,7 +113,7 @@ export function Pricing() {
                 transition={{ duration: 0.5, delay: i * 0.07, ease }}
                 className={`relative flex flex-col rounded-[1.75rem] p-6 sm:p-7 ${
                   p.highlight
-                    ? "bg-slate-900 text-white shadow-2xl shadow-orange-900/20 ring-1 ring-slate-800 lg:-my-3 lg:py-10 dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 dark:ring-orange-400/30"
+                    ? "bg-slate-900 text-white shadow-2xl shadow-orange-900/20 ring-1 ring-slate-800 md:-my-3 md:py-10 dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 dark:ring-orange-400/30"
                     : "card-premium text-slate-900 dark:text-white"
                 }`}
               >
@@ -177,7 +170,7 @@ export function Pricing() {
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"><UserPlus className="h-5 w-5" /></span>
             <div>
               <p className="font-extrabold text-slate-900 dark:text-white">+{EXTRA_CHILD[cycle]} per extra child</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Add siblings to Pro or Premium. Each gets their own profile.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Add siblings to Pro. Each gets their own profile.</p>
             </div>
           </div>
           <div className="card-premium flex items-center gap-4 p-5">
