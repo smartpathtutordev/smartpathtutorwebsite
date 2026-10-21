@@ -183,7 +183,7 @@ export function AboutContent() {
               Ready to give your child the smart path?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base font-sans">
-              Get started with the free Parents app. Experience DepEd MATATAG lessons, Tala&apos;s audio guidance, and Today&apos;s Path learning today.
+              Get started today. Experience DepEd MATATAG lessons, Tala&apos;s audio guidance, and Today&apos;s Path learning today.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

@@ -101,7 +101,7 @@ export function Hero() {
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👧</span>
                 <div>
                   <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">From ₱399/mo</p>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Free Parents app</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">+₱199 per sibling</p>
                 </div>
               </motion.div>
 

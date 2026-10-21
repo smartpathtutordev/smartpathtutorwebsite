@@ -86,7 +86,7 @@ const familyPrograms: Program[] = [
     steps: [
       { title: "Get your invite link", body: "Find your unique Kapamilya referral code in the SmartPath app." },
       { title: "Share on Messenger or Viber", body: "Send your link to parents, family group chats, or school PTA groups." },
-      { title: "Friend gets started", body: "They explore SmartPath with the free Parents app, no payment required." },
+      { title: "Friend gets started", body: "They join SmartPath with your referral link and pick a plan." },
       { title: "Both get 30 days free", body: "Upon their first voucher or plan activation, 30 days are automatically credited to both accounts." },
     ],
     goodToKnow: [

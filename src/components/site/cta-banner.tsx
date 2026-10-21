@@ -21,14 +21,14 @@ export function CtaBanner() {
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-bold backdrop-blur">
             <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-            Free Parents app to start
+            From ₱399/mo per child
           </div>
 
           <h2 className="mt-6 font-heading text-5xl font-extrabold tracking-[-0.025em] sm:text-6xl lg:text-7xl">
             Start <span className="text-gradient-sunset">today</span>.
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Start free with the Parents app. Upgrade any time.</p>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Siblings just ₱199/mo. Cancel any time.</p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
