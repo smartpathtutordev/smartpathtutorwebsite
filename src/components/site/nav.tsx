@@ -17,6 +17,8 @@ const links = [
   // logs nothing, which is the hardest kind of broken to notice.
   //
   // Anything added back here has to have a section with that id on the page.
+  { href: "/#features", label: "Features" },
+  { href: "/#teachers", label: "Teachers" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#faq", label: "Questions" },
   { href: "/#contact", label: "Contact" },
@@ -82,7 +84,7 @@ export function SiteNav() {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <a
-            href="#pricing"
+            href="/#contact"
             className="group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-slate-900 px-5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           >
             <span>Get Started</span>
@@ -120,7 +122,7 @@ export function SiteNav() {
             ))}
             <div className="my-2 border-t border-slate-100 dark:border-slate-800" />
             <a
-              href="#pricing"
+              href="/#contact"
               onClick={() => setOpen(false)}
               className="mt-1 text-center rounded-full bg-gradient-sunset text-white py-3.5 text-base font-extrabold shadow-lg shadow-orange-500/25"
             >

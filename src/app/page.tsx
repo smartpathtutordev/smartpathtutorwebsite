@@ -7,6 +7,8 @@ import { Faq } from "@/components/site/faq";
 import { CtaBanner } from "@/components/site/cta-banner";
 import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
+import { Features, TeacherSaje, HowItWorks, Safety, Teachers, PilotAndApps, About } from "@/components/site/startup-sections";
+import { FAQS } from "@/lib/faqs";
 
 /**
  * The landing page carried 1,052 words. A parent deciding whether to spend
@@ -39,7 +41,7 @@ import { SiteFooter } from "@/components/site/footer";
 export const metadata: Metadata = {
   title: "SmartPath Tutor — DepEd MATATAG for Grades 1 to 3",
   description:
-    "Ten minutes a day of Math, English and Science on your child's phone. Works without signal. Free for teachers.",
+    "DepEd MATATAG Math and English for Grades 1–3, with Science from Grade 3. Reads aloud, works offline, and comes with a Parent app with homework coaching. Free to start for teachers.",
 };
 
 export default function HomePage() {
@@ -47,11 +49,19 @@ export default function HomePage() {
     <>
       <SiteNav />
       <main className="flex-1">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }) }} />
         <Hero />
+        <Features />
+        <TeacherSaje />
+        <HowItWorks />
+        <Safety />
+        <Teachers />
         <Pricing />
+        <PilotAndApps />
         <Faq />
         <CtaBanner />
         <Contact />
+        <About />
       </main>
       <SiteFooter />
     </>

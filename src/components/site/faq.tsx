@@ -9,29 +9,9 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { FAQS } from "@/lib/faqs";
 
-const FAQS = [
-  {
-    q: "Is it safe for my child?",
-    a: "No ads, no feed, no outside links. Nothing your child taps leaves the app.",
-  },
-  {
-    q: "Is it really free for teachers?",
-    a: "Yes. Verified Philippine teachers get 30 free credits to start, and editing and slide exports are always free.",
-  },
-  {
-    q: "How does family pricing work?",
-    a: "Per child, not per device. Pro is ₱399 a month for one child, and each extra child is ₱199 a month. Term and school-year plans cost less per month.",
-  },
-  {
-    q: "Which grades?",
-    a: "Grades 1 to 3: Math and English in every grade, Science from Grade 3. Grades 4 to 6 are being built.",
-  },
-  {
-    q: "Can I pay without a card?",
-    a: "GCash, Maya, or a prepaid code from a store. No auto-renewal, no bank account.",
-  },
-];
+
 
 export function Faq() {
   return (
@@ -50,7 +30,7 @@ export function Faq() {
           <div className="mt-8 text-sm font-semibold text-slate-500 dark:text-slate-400">
             Have more questions?{" "}
             <a href="mailto:smartpathtutor.dev@gmail.com" className="group inline-flex min-h-11 items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
-              Email our Filipino educator team <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              Email us <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>

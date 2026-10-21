@@ -28,7 +28,7 @@ export function CtaBanner() {
             Start <span className="text-gradient-sunset">today</span>.
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Siblings just ₱199/mo. Cancel any time.</p>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Siblings just ₱199/mo. No auto-renewal.</p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
@@ -42,13 +42,13 @@ export function CtaBanner() {
               href="#faq"
               className="inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/5 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10 sm:w-auto"
             >
-              Explore Curriculum
+              Read the FAQ
             </a>
           </div>
 
           <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-sm font-semibold text-slate-300">
-            <span className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-amber-300" /> 100% Free For Teachers</span>
-            <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-amber-300" /> 100% Ad-Free Safe Haven</span>
+            <span className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-amber-300" /> Free to start for teachers</span>
+            <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-amber-300" /> No ads, no outside links</span>
             <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-amber-300" /> DepEd MATATAG Grades 1–3</span>
           </div>
         </div>

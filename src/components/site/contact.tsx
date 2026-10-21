@@ -9,9 +9,9 @@ import { Badge } from "@/components/ui/badge";
 
 const TOPICS = [
   "Getting Started",
-  "Prepaid Voucher / GCash / Maya",
+  "Payment (GCash / bank / cash)",
   "Siblings (Add a child for ₱199/mo)",
-  "Free Teacher Access & Slides",
+  "Teacher access (free to start)",
   "DepEd MATATAG Grades 1–3",
   "Today's Path & App Support",
 ];
@@ -24,7 +24,7 @@ export function Contact() {
   useEffect(() => {
     const program = new URLSearchParams(window.location.search).get("program");
     if (program) {
-      setSelectedTopic("Prepaid Voucher / GCash / Maya");
+      setSelectedTopic("Payment (GCash / bank / cash)");
       setMessage(`Hi! I'm interested in the ${program} program. Please guide me on getting started.`);
     }
   }, []);
@@ -70,7 +70,7 @@ export function Contact() {
             </h2>
             
             <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-              Have questions about specific DepEd MATATAG competencies, GCash or Maya vouchers, classroom presentation export, or family household plans? Send a message — our local team usually responds within a few hours.
+              Questions about grades, plans, payment (GCash, bank or cash), teacher access or pilot schools? Send us a message and we will reply by email.
             </p>
 
             <div className="mt-8 space-y-3.5 text-xs sm:text-sm font-sans">
@@ -92,7 +92,7 @@ export function Contact() {
                 </span>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Hours &amp; Coverage</div>
-                  <span className="font-bold text-slate-900 dark:text-slate-100">Mon–Sat, 8:00 AM – 6:00 PM PHT</span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">We reply by email</span>
                 </div>
               </div>
 
@@ -102,7 +102,7 @@ export function Contact() {
                 </span>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Headquarters</div>
-                  <span className="font-bold text-slate-900 dark:text-slate-100">Cebu &amp; Manila · Serving learners nationwide</span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">Philippines · Serving learners nationwide</span>
                 </div>
               </div>
             </div>

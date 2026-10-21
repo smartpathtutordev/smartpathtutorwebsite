@@ -32,14 +32,21 @@ export const metadata: Metadata = {
     template: "%s · SmartPath Tutor",
   },
   description:
-    "DepEd MATATAG-aligned Math, English, and Science for Grades 1 to 3. Adaptive Today's Path, 100% free for teachers, and affordable per-family subscriptions.",
+    "DepEd MATATAG Math and English for Grades 1–3, with Science from Grade 3. Reads aloud, works offline, and keeps parents in the loop. From ₱399/month per child. Free to start for teachers.",
   openGraph: {
     title: "SmartPath Tutor — DepEd Grades 1–3 Learning Platform",
     description:
       "Empowering Filipino learners with personalized guided sessions, Today's Path daily learning, and DepEd MATATAG curriculum alignment.",
     type: "website",
     locale: "en_PH",
+    siteName: "SmartPath Tutor",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "SmartPath Tutor — DepEd MATATAG Grades 1–3",
+    description: "A short daily learning path for Filipino kids. Reads aloud, works offline. From ₱399/month.",
+  },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({

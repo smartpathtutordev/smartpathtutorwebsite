@@ -32,7 +32,7 @@ export function SiteFooter() {
               📚 DepEd MATATAG Grades 1–3
             </span>
             <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-900/10 dark:bg-white/5 dark:ring-white/10">
-              👩‍🏫 100% Free For Teachers
+              👩‍🏫 Free to start for teachers
             </span>
           </div>
         </div>
@@ -42,9 +42,11 @@ export function SiteFooter() {
             The Smart Path
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
-            <li><a href="#how-it-works" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Today&apos;s Path</a></li>
-            <li><a href="#pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</a></li>
-            <li><a href="#faq" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent FAQs</a></li>
+            <li><a href="/#features" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Features</a></li>
+            <li><a href="/#safety" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Safety &amp; privacy</a></li>
+            <li><a href="/#teachers" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">For teachers</a></li>
+            <li><a href="/#pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</a></li>
+            <li><a href="/#faq" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent FAQs</a></li>
           </ul>
         </div>
 
@@ -53,19 +55,21 @@ export function SiteFooter() {
             Community
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
-            <li><a href="#contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Contact Us</a></li>
-            <li><a href="mailto:smartpathtutor.dev@gmail.com" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Educator Support</a></li>
+            <li><a href="/#contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Contact Us</a></li>
+            <li><a href="mailto:smartpathtutor.dev@gmail.com" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">smartpathtutor.dev@gmail.com</a></li>
+            <li><Link href="/privacy" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Terms of Service</Link></li>
           </ul>
         </div>
       </div>
 
       <div className="border-t border-slate-900/5 dark:border-white/5">
         <div className="mx-auto max-w-6xl px-5 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center text-xs text-slate-500 dark:text-slate-400 font-sans">
-          <span>© {new Date().getFullYear()} SmartPath Tutor. DepEd MATATAG Grades 1–3. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} SmartPath Educational Technologies. DepEd MATATAG Grades 1–3. All rights reserved.</span>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-            <span>GCash · Maya · Cards · Load Stations</span>
+            <span>GCash · Bank transfer · Cash</span>
             <span className="hidden sm:inline">·</span>
-            <span>Cebu &amp; Manila, Philippines</span>
+            <Link href="/privacy" className="hover:text-orange-600">Privacy</Link><span>·</span><Link href="/terms" className="hover:text-orange-600">Terms</Link>
           </div>
         </div>
       </div>

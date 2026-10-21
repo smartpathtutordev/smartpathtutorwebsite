@@ -28,7 +28,7 @@ const MAX_KIDS = 6;
 const peso = (n: number) => "\u20b1" + n.toLocaleString("en-PH");
 
 const PRO_FEATURES = ["Full SmartPath Tutor app for each child", "Parents app", "40 Parent AI questions a month"];
-const TEACHER_FEATURES = ["30 credits to start", "Editing & export free", "Classroom dashboard"];
+const TEACHER_FEATURES = ["30 credits to start", "Class tools free to use", "Worksheet scan & marking"];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -196,12 +196,12 @@ export function Pricing() {
           <div className="flex items-center gap-4">
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400"><Wallet className="h-5 w-5" /></span>
             <div>
-              <p className="text-sm font-extrabold text-slate-900 sm:text-base dark:text-white">No credit card? GCash, Maya or 7-Eleven.</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">Prepaid codes. No auto-renewal, no bank account.</p>
+              <p className="text-sm font-extrabold text-slate-900 sm:text-base dark:text-white">No credit card needed. GCash, bank or cash.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Send your receipt, we activate your plan. No auto-renewal.</p>
             </div>
           </div>
           <a href="#contact" className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10">
-            Learn About Prepaid Vouchers
+            Ask about payment
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>

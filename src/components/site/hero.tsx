@@ -8,7 +8,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   return (
-    <section id="how-it-works" className="relative scroll-mt-20 overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32">
+    <section id="top" className="relative scroll-mt-20 overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32">
       {/* Background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-amber-50 via-background to-background dark:from-slate-900/60" />
@@ -37,15 +37,15 @@ export function Hero() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-600 sm:text-xl lg:mx-0 dark:text-slate-300">
-              Ten minutes a day of Math, English and Science — on your child&apos;s phone.
+              A short daily path of Math and English (plus Science from Grade 3) that reads aloud, works offline, and keeps parents in the loop.
             </p>
 
             <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <a
-                href="#pricing"
+                href="#contact"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-base font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:bg-slate-800 active:scale-[0.98] sm:w-auto dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
               >
-                See plans
+                Get started
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </a>
             </div>
@@ -54,7 +54,7 @@ export function Hero() {
               {[
                 { icon: CheckCircle2, label: "Works offline", tint: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10" },
                 { icon: Users, label: "From ₱399/mo", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
-                { icon: GraduationCap, label: "Free for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
+                { icon: GraduationCap, label: "Free to start for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
               ].map(({ icon: Icon, label, tint }) => (
                 <li key={label} className="flex items-center gap-1.5 rounded-full bg-white/80 py-1 pl-1.5 pr-3 ring-1 ring-slate-900/5 sm:justify-center sm:gap-2.5 sm:bg-transparent sm:p-0 sm:ring-0 lg:justify-start dark:bg-white/5 dark:ring-white/10 sm:dark:bg-transparent">
                   <span className={`grid h-6 w-6 place-items-center rounded-full sm:h-8 sm:w-8 sm:rounded-lg ${tint}`}>
