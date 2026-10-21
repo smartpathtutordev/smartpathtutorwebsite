@@ -31,9 +31,19 @@ export function Contact() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const subject = `${selectedTopic} — ${name}`;
+    const body = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Topic: ${selectedTopic}`,
+      "",
+      message,
+    ].join("\n");
+    window.location.href = `mailto:smartpathtutor.dev@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setStatus("sent");
-    (e.currentTarget as HTMLFormElement).reset();
-    setMessage("");
     setTimeout(() => setStatus("idle"), 5000);
   };
 
@@ -194,8 +204,11 @@ export function Contact() {
               className="mt-6 w-full rounded-full bg-gradient-sunset text-white font-bold shadow-lg shadow-orange-500/20 hover:opacity-95 transition-transform active:scale-[0.98]"
             >
               <Send className="mr-2 h-4 w-4" />
-              {status === "sent" ? "Salamat! We'll reply within a few hours." : "Send Message"}
+              {status === "sent" ? "Opening your email app…" : "Send Message"}
             </Button>
+            <p className="mt-2.5 text-center text-xs text-slate-500 dark:text-slate-400 font-sans">
+              This opens your email app with your message ready to send.
+            </p>
           </motion.form>
 
         </div>
