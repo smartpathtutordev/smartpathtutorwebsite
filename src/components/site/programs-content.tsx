@@ -233,7 +233,7 @@ function ProgramCard({
         variant="ghost"
         size="sm"
         onClick={onOpen}
-        className="mt-5 self-start rounded-full px-3 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/40 font-bold text-xs"
+        className="mt-5 min-h-11 self-start rounded-full px-4 text-sm text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/40 font-bold text-xs"
       >
         {cta}
         <ArrowRight className="ml-1 h-3.5 w-3.5" />
@@ -451,14 +451,14 @@ export function ProgramsContent() {
               Tell us about your child&apos;s grade level, school, or community — our local educator team will guide you to the easiest option.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button size="lg" className="rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold px-7 shadow-md" render={<a href="/#contact" />}>
+              <Button size="lg" className="h-12 rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold px-7 shadow-md" render={<a href="/#contact" />}>
                 Message an Educator
                 <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
               <Button
                 size="lg"
                 variant="ghost"
-                className="rounded-full text-white hover:bg-white/10 font-bold px-7"
+                className="h-12 rounded-full text-white hover:bg-white/10 font-bold px-7"
                 render={<a href="/#pricing" />}
               >
                 View Standard Pricing

@@ -96,7 +96,7 @@ export function Hero() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.45, duration: 0.5, ease }}
-                className="absolute top-[46%] -left-8 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-24 dark:border-white/10 dark:bg-slate-900/95"
+                className="absolute top-[46%] -left-8 z-20 hidden items-center sm:flex gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-24 dark:border-white/10 dark:bg-slate-900/95"
               >
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👧</span>
                 <div>
@@ -109,7 +109,7 @@ export function Hero() {
                 initial={{ opacity: 0, x: 12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6, duration: 0.5, ease }}
-                className="absolute bottom-14 -right-6 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-right-16 dark:border-white/10 dark:bg-slate-900/95"
+                className="absolute inset-x-0 -bottom-5 z-20 mx-auto flex w-max items-center gap-3 whitespace-nowrap rounded-2xl sm:inset-x-auto sm:bottom-14 sm:-right-16 sm:mx-0 border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur dark:border-white/10 dark:bg-slate-900/95"
               >
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-sunset text-white">
                   <Compass className="h-4.5 w-4.5" />

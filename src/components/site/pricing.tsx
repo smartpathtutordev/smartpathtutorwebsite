@@ -87,7 +87,7 @@ export function Pricing() {
                   key={c.id}
                   onClick={() => setCycle(c.id)}
                   aria-pressed={active}
-                  className={`relative flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-2.5 text-sm font-bold transition-colors sm:px-5 ${
+                  className={`relative flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full px-3.5 text-sm font-bold transition-colors sm:px-5 ${
                     active ? "text-white dark:text-slate-900" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                   }`}
                 >
@@ -194,7 +194,7 @@ export function Pricing() {
               <p className="text-sm text-slate-500 dark:text-slate-400">Prepaid codes. No auto-renewal, no bank account.</p>
             </div>
           </div>
-          <a href="/programs" className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 py-2.5 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10">
+          <a href="/programs" className="group inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10">
             Learn About Prepaid Vouchers
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </a>

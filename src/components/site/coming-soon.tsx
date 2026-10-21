@@ -206,7 +206,7 @@ export function ComingSoon() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 aria-label="Email address"
-                className="h-11 flex-1 rounded-full border border-border/70 bg-card px-4 text-sm outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-orange-400"
+                className="h-12 flex-1 rounded-full border border-border/70 bg-card px-4 text-base outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-orange-400"
               />
               <motion.button
                 type="submit"

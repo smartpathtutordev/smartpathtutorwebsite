@@ -188,7 +188,7 @@ export function AboutContent() {
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button
                 size="lg"
-                className="rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold px-7 shadow-md"
+                className="h-12 rounded-full bg-white text-slate-900 hover:bg-slate-100 font-bold px-7 shadow-md"
                 render={<a href="/#pricing" />}
               >
                 View Plans &amp; GCash
@@ -197,7 +197,7 @@ export function AboutContent() {
               <Button
                 size="lg"
                 variant="ghost"
-                className="rounded-full text-white hover:bg-white/10 font-bold px-7"
+                className="h-12 rounded-full text-white hover:bg-white/10 font-bold px-7"
                 render={<a href="/#contact" />}
               >
                 Talk to an Educator

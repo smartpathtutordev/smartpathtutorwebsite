@@ -49,7 +49,7 @@ export function Faq() {
           </p>
           <div className="mt-8 text-sm font-semibold text-slate-500 dark:text-slate-400">
             Have more questions?{" "}
-            <a href="mailto:smartpathtutor.dev@gmail.com" className="group inline-flex items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
+            <a href="mailto:smartpathtutor.dev@gmail.com" className="group inline-flex min-h-11 items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
               Email our Filipino educator team <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>

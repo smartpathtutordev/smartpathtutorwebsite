@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="relative border-t border-slate-900/5 bg-[#fbf8f2] dark:border-white/5 dark:bg-slate-950">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 py-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5 space-y-4">
-          <Link href="/" className="group flex items-center gap-2.5 font-bold">
+          <Link href="/" className="group flex min-h-11 items-center gap-2.5 font-bold">
             <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-black/5 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/spt_icon.png"
@@ -67,7 +67,7 @@ export function SiteFooter() {
           <span>© {new Date().getFullYear()} SmartPath Tutor. DepEd MATATAG Grades 1–3. All rights reserved.</span>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
             <span>GCash · Maya · Cards · Load Stations</span>
-            <span>·</span>
+            <span className="hidden sm:inline">·</span>
             <span>Cebu &amp; Manila, Philippines</span>
           </div>
         </div>

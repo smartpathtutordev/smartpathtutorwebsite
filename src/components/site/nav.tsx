@@ -43,7 +43,7 @@ export function SiteNav() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-6">
         {/* Brand */}
-        <Link href="/" className="group flex items-center gap-2.5">
+        <Link href="/" className="group flex min-h-11 items-center gap-2.5">
           <div className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-white shadow-xs ring-1 ring-slate-900/10 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/spt_icon.png"
@@ -70,7 +70,7 @@ export function SiteNav() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-4 py-2 transition-colors hover:text-slate-900 hover:bg-slate-900/5 dark:hover:text-white dark:hover:bg-white/10"
+              className="inline-flex min-h-11 items-center rounded-full px-4 transition-colors hover:text-slate-900 hover:bg-slate-900/5 dark:hover:text-white dark:hover:bg-white/10"
             >
               {l.label}
             </a>
@@ -82,7 +82,7 @@ export function SiteNav() {
           <ThemeToggle />
           <a
             href="#pricing"
-            className="group inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+            className="group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-slate-900 px-5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           >
             <span>Get Started</span>
             <ArrowRight className="h-3.5 w-3.5" />
