@@ -9,7 +9,7 @@ import { SiteFooter } from "@/components/site/footer";
 
 /**
  * The landing page carried 1,052 words. A parent deciding whether to spend
- * ₱599 a month does not read 1,052 words; they skim for what it is, what it
+ * ₱399 a month does not read 1,052 words; they skim for what it is, what it
  * costs, and whether it is real, and they do it on a phone between other
  * things.
  *

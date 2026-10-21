@@ -43,8 +43,8 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
             <li><a href="/#how-it-works" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Today&apos;s Path</a></li>
-            <li><a href="/#curriculum" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">DepEd Curriculum</a></li>
-            <li><a href="/#superpowers" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">App Features</a></li>
+            <li><a href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">DepEd Curriculum</a></li>
+            <li><a href="/programs" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">App Features</a></li>
             <li><a href="/#pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</a></li>
             <li><a href="/#faq" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent FAQs</a></li>
           </ul>

@@ -63,7 +63,7 @@ const familyPrograms: Program[] = [
     icon: Users,
     title: "Family Plan (Up to 3 Children)",
     badge: "Best for siblings",
-    body: "Add up to 3 child profiles under a single household account at ₱599/mo (or ₱5,990/yr). Each child maintains their own grade level, streaks, and stars.",
+    body: "Add up to 3 child profiles under a single household account at ₱399/mo per child. Each child maintains their own grade level, streaks, and stars.",
     cta: "Explore family pass",
     steps: [
       { title: "One Parent Dashboard", body: "Create your parent account once — manage screen time, review Bloom quiz scores, and monitor all siblings in one place." },

@@ -61,7 +61,7 @@ export function BentoFeatures() {
                 </div>
               </div>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-medium">
-                No per-child or per-device lock-in. The Family Plan (₱599/mo) covers up to 3 children with separate grade profiles, streaks, and Parent AI guidance. Plus, Teacher accounts are 100% Free!
+                No per-child or per-device lock-in. Each child is ₱399/mo, and up to 3 children share one account with separate grade profiles, streaks, and Parent AI guidance. Plus, Teacher accounts are 100% Free!
               </p>
             </div>
 

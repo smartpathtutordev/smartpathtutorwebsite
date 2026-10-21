@@ -43,7 +43,7 @@ const ECOSYSTEM = [
       "Early attention flags on tough topics",
       "100% ad-free & screen time caps",
     ],
-    ctaText: "See Family Plans",
+    ctaText: "See Plans",
     ctaLink: "/#pricing",
     external: false,
   },

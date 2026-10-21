@@ -21,7 +21,7 @@ const FAQS = [
   },
   {
     q: "How does family pricing work?",
-    a: "Per household, not per device. ₱299 for one child, ₱599 for up to three.",
+    a: "Per child, not per device. ₱399 a month for each child.",
   },
   {
     q: "Which grades?",

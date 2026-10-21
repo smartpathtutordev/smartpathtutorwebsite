@@ -39,7 +39,7 @@ export function CtaBanner() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
-              href="#curriculum"
+              href="/about"
               className="inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/5 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10 sm:w-auto"
             >
               Explore Curriculum

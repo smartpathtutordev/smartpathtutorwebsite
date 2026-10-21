@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Wallet, ArrowRight } from "lucide-react";
 
@@ -27,29 +26,15 @@ interface PlanConfig {
 // sit once underneath where they are stated a single time.
 const PLANS: PlanConfig[] = [
   {
-    name: "Tutor One",
-    monthlyPrice: "\u20b1299",
-    annualPrice: "\u20b12,990",
-    monthlyCadence: "/ month",
-    annualCadence: "/ year (\u20b1249/mo)",
+    name: "Per Child",
+    monthlyPrice: "\u20b1399",
+    annualPrice: "\u20b1399",
+    monthlyCadence: "/ child / month",
+    annualCadence: "/ child / month",
     features: [
-      "1 child",
+      "Each child gets their own profile and grade",
       "40 Parent AI questions a month",
       "7-day free trial",
-    ],
-    cta: "Start free trial",
-    badge: "1 child",
-  },
-  {
-    name: "Family Plan",
-    monthlyPrice: "\u20b1599",
-    annualPrice: "\u20b15,990",
-    monthlyCadence: "/ month",
-    annualCadence: "/ year (\u20b1499/mo)",
-    features: [
-      "Up to 3 children",
-      "80 Parent AI questions a month",
-      "One price for the household",
     ],
     cta: "Start free trial",
     highlight: true,
@@ -74,7 +59,9 @@ const PLANS: PlanConfig[] = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Pricing() {
-  const [cycle, setCycle] = useState<BillingCycle>("monthly");
+  // One price, billed monthly. The annual toggle was removed: there is no
+  // annual price for the per-child plan, so it could only show the same number.
+  const cycle: BillingCycle = "monthly";
 
   return (
     <section id="pricing" className="relative scroll-mt-20 overflow-hidden border-y border-slate-900/5 bg-[#fbf8f2] py-20 sm:py-28 dark:border-white/5 dark:bg-slate-950">
@@ -82,43 +69,17 @@ export function Pricing() {
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">
-            <span aria-hidden>👨‍👩‍👧‍👦</span> One price per household
+            <span aria-hidden>👧</span> One simple price per child
           </span>
           <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
             Pick a <span className="text-gradient-sunset">plan.</span>
           </h2>
           <p className="mt-3 text-lg text-slate-600 dark:text-slate-400">Cancel any time.</p>
 
-          {/* Toggle */}
-          <div role="group" aria-label="Billing cycle" className="mt-8 inline-flex items-center rounded-full border border-slate-900/10 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-slate-900">
-            {(["monthly", "annual"] as const).map((c) => {
-              const active = cycle === c;
-              return (
-                <button
-                  key={c}
-                  onClick={() => setCycle(c)}
-                  aria-pressed={active}
-                  className={`relative flex cursor-pointer items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-colors ${
-                    active ? "text-white dark:text-slate-900" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  }`}
-                >
-                  {active && (
-                    <motion.span layoutId="billing-pill" transition={{ duration: 0.35, ease }} className="absolute inset-0 rounded-full bg-slate-900 dark:bg-white" />
-                  )}
-                  <span className="relative">{c === "monthly" ? "Monthly" : "Annual"}</span>
-                  <span className={`relative rounded-full px-2 py-0.5 text-[10px] font-black ${
-                    c === "annual" ? "bg-amber-100 text-amber-900 dark:bg-amber-500/20 dark:text-amber-200" : active ? "bg-white/20 text-white dark:bg-slate-900/10 dark:text-slate-900" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
-                  }`}>
-                    {c === "monthly" ? "Standard" : "Save 2 Mos"}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
         </div>
 
         {/* Cards */}
-        <div className="mt-14 grid items-stretch gap-6 md:grid-cols-3 lg:gap-8">
+        <div className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 md:grid-cols-2 lg:gap-8">
           {PLANS.map((p, i) => {
             const price = cycle === "monthly" ? p.monthlyPrice : p.annualPrice;
             const cadence = cycle === "monthly" ? p.monthlyCadence : p.annualCadence;

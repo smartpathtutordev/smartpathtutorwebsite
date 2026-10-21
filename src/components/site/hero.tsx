@@ -8,7 +8,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32">
+    <section id="how-it-works" className="relative scroll-mt-20 overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32">
       {/* Background */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-amber-50 via-background to-background dark:from-slate-900/60" />
@@ -53,7 +53,7 @@ export function Hero() {
             <ul className="mt-10 grid grid-cols-1 gap-3 text-sm font-bold text-slate-700 sm:grid-cols-3 sm:gap-4 dark:text-slate-300">
               {[
                 { icon: CheckCircle2, label: "Works offline", tint: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10" },
-                { icon: Users, label: "One family plan", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
+                { icon: Users, label: "₱399 per child", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
                 { icon: GraduationCap, label: "Free for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
               ].map(({ icon: Icon, label, tint }) => (
                 <li key={label} className="flex items-center justify-center gap-2.5 lg:justify-start">
@@ -96,12 +96,12 @@ export function Hero() {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.45, duration: 0.5, ease }}
-                className="absolute top-10 -left-6 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-16 dark:border-white/10 dark:bg-slate-900/95"
+                className="absolute top-[46%] -left-8 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-24 dark:border-white/10 dark:bg-slate-900/95"
               >
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👨‍👩‍👧‍👦</span>
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👧</span>
                 <div>
-                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">1 Family Plan</p>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Up to 3 Learners</p>
+                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">₱399 per child</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">per month</p>
                 </div>
               </motion.div>
 

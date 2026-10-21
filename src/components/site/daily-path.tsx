@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
  *
  * This replaces HowItWorks (231 words), Subjects (111) and BentoFeatures
  * (218): 560 words explaining a routine that six photographs show at a
- * glance. A parent deciding whether to spend ₱599 wants to know what their
+ * glance. A parent deciding whether to spend ₱399 wants to know what their
  * child will actually DO. Prose makes them read for it; the pictures hand it
  * over in the time it takes to scroll past.
  *

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Sparkles,
@@ -25,36 +24,6 @@ const fadeUp = {
   }),
 };
 
-const characters = [
-  {
-    name: "Tala",
-    role: "AI Learning Companion",
-    image: "/assets/characters/tala_celebrate.png",
-    tagline: "Always patient, always encouraging",
-    description:
-      "A friendly Filipino girl with her iconic yellow sun hoodie. Tala breaks down tough math steps, reads along in English & Filipino, and celebrates every single breakthrough.",
-    badgeColor: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20",
-  },
-  {
-    name: "Teacher Saje",
-    role: "Curriculum & Educator Lead",
-    image: "/assets/characters/teacher_saje_guide.png",
-    tagline: "DepEd MATATAG Alignment & Slides",
-    description:
-      "Represents the dedicated Filipino teachers across public and private schools. Powers our 1-click PowerPoint and Canva exports, Bloom's Taxonomy quizzes, and lesson plans.",
-    badgeColor: "bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/20",
-  },
-  {
-    name: "Nanay & Bunso",
-    role: "The Filipino Family",
-    image: "/assets/characters/nanay_idle.png",
-    tagline: "Transparent Parent Dashboard",
-    description:
-      "Built so every nanay, tatay, or guardian can understand their child's daily progress without guessing. Available in English, Filipino, Cebuano, and Hiligaynon.",
-    badgeColor: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
-  },
-];
-
 const pillars = [
   {
     icon: Compass,
@@ -78,8 +47,8 @@ const pillars = [
   },
   {
     icon: Heart,
-    title: "Priced Per Family Household",
-    body: "No per-device penalties. Tutor One is ₱299/mo, or cover up to 3 children with the Family Plan at ₱599/mo with GCash, Maya, or prepaid activation voucher codes.",
+    title: "Simple Per-Child Pricing",
+    body: "No per-device penalties. ₱399/mo per child, paid with GCash, Maya, or prepaid activation voucher codes.",
   },
   {
     icon: ShieldCheck,
@@ -91,7 +60,7 @@ const pillars = [
 const stats = [
   { value: "Grades 1–3", label: "DepEd MATATAG Focus", sub: "Primary Grades 1, 2, and 3" },
   { value: "₱0 Free", label: "For Certified Teachers", sub: "Lifetime Educator Access" },
-  { value: "Per Family", label: "Household Pricing", sub: "Covers up to 3+ Children" },
+  { value: "₱399", label: "Per Child, Monthly", sub: "No per-device fees" },
   { value: "4", label: "PH Languages", sub: "English, Tagalog, Cebuano, Hiligaynon" },
 ];
 
@@ -160,63 +129,6 @@ export function AboutContent() {
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 font-sans">
                   {s.sub}
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Character Ecosystem ─────────────────────────────────── */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-5 sm:px-6">
-          <div className="mx-auto max-w-2xl text-center">
-            <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs gap-1.5 font-bold border border-purple-500/20 bg-purple-500/10 text-purple-700 dark:text-purple-300">
-              <GraduationCap className="h-3.5 w-3.5" />
-              The SmartPath Family
-            </Badge>
-            <h2 className="mt-4 font-heading font-extrabold tracking-[-0.02em] text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
-              Meet the companions behind the journey
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-sans">
-              Characters created with genuine Filipino cultural identity to inspire warmth, pride, and curiosity.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {characters.map((c, i) => (
-              <motion.div
-                key={c.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col card-premium p-6 sm:p-7 shadow-lg shadow-slate-200/30 dark:shadow-none hover:shadow-xl transition-all"
-              >
-                <div className="relative mb-5 flex h-44 w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50 to-orange-50/40 dark:from-slate-800 dark:to-slate-800/40 p-4">
-                  <Image
-                    src={c.image}
-                    alt={c.name}
-                    width={180}
-                    height={180}
-                    className="h-36 w-auto object-contain transition-transform duration-300 hover:scale-105"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary" className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold border ${c.badgeColor}`}>
-                    {c.role}
-                  </Badge>
-                </div>
-
-                <h3 className="mt-3 font-heading font-extrabold tracking-[-0.02em] text-xl text-slate-900 dark:text-white">
-                  {c.name}
-                </h3>
-                <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">
-                  {c.tagline}
-                </p>
-                <p className="mt-3 text-sm sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed font-sans flex-1">
-                  {c.description}
-                </p>
               </motion.div>
             ))}
           </div>
