@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Check, Sparkles, Wallet, ArrowRight } from "lucide-react";
+import { Check, Wallet, ArrowRight } from "lucide-react";
 
 type BillingCycle = "monthly" | "annual";
 
@@ -71,157 +71,142 @@ const PLANS: PlanConfig[] = [
   },
 ];
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function Pricing() {
   const [cycle, setCycle] = useState<BillingCycle>("monthly");
 
   return (
-    <section id="pricing" className="relative py-16 sm:py-24 overflow-hidden bg-amber-50/30 dark:bg-slate-900/30 border-y border-amber-100/80 dark:border-slate-800/80">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        
+    <section id="pricing" className="relative scroll-mt-20 overflow-hidden border-y border-slate-900/5 bg-[#fbf8f2] py-20 sm:py-28 dark:border-white/5 dark:bg-slate-950">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-300 bg-amber-50 px-4 py-1 text-xs font-black text-amber-800 dark:text-amber-300">
-            <span>👨‍👩‍👧‍👦</span>
-            <span>One price per household</span>
-          </div>
-          <h2 className="mt-4 font-heading text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            Pick a{" "}
-            <span className="text-orange-500">
-              plan.
-            </span>
+          <span className="eyebrow">
+            <span aria-hidden>👨‍👩‍👧‍👦</span> One price per household
+          </span>
+          <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
+            Pick a <span className="text-gradient-sunset">plan.</span>
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400 font-sans font-medium">
-            Cancel any time.
-          </p>
+          <p className="mt-3 text-lg text-slate-600 dark:text-slate-400">Cancel any time.</p>
 
           {/* Toggle */}
-          <div className="mt-8 inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1.5 shadow-xs">
-            <button
-              onClick={() => setCycle("monthly")}
-              className={`flex items-center gap-1.5 rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-                cycle === "monthly"
-                  ? "bg-gradient-sunset text-white shadow-sm"
-                  : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-              }`}
-            >
-              <span>Monthly</span>
-              <span className="rounded-full bg-white/25 px-2 py-0.5 text-[10px] font-black text-white">
-                Standard
-              </span>
-            </button>
-            <button
-              onClick={() => setCycle("annual")}
-              className={`flex items-center gap-1.5 rounded-full px-5 py-2 text-xs font-bold transition-all cursor-pointer ${
-                cycle === "annual"
-                  ? "bg-gradient-sunset text-white shadow-sm"
-                  : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-              }`}
-            >
-              <span>Annual</span>
-              <span className="rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200 px-2 py-0.5 text-[10px] font-black">
-                Save 2 Mos
-              </span>
-            </button>
+          <div role="group" aria-label="Billing cycle" className="mt-8 inline-flex items-center rounded-full border border-slate-900/10 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-slate-900">
+            {(["monthly", "annual"] as const).map((c) => {
+              const active = cycle === c;
+              return (
+                <button
+                  key={c}
+                  onClick={() => setCycle(c)}
+                  aria-pressed={active}
+                  className={`relative flex cursor-pointer items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-colors ${
+                    active ? "text-white dark:text-slate-900" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+                  }`}
+                >
+                  {active && (
+                    <motion.span layoutId="billing-pill" transition={{ duration: 0.35, ease }} className="absolute inset-0 rounded-full bg-slate-900 dark:bg-white" />
+                  )}
+                  <span className="relative">{c === "monthly" ? "Monthly" : "Annual"}</span>
+                  <span className={`relative rounded-full px-2 py-0.5 text-[10px] font-black ${
+                    c === "annual" ? "bg-amber-100 text-amber-900 dark:bg-amber-500/20 dark:text-amber-200" : active ? "bg-white/20 text-white dark:bg-slate-900/10 dark:text-slate-900" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                  }`}>
+                    {c === "monthly" ? "Standard" : "Save 2 Mos"}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-          {PLANS.map((p) => {
+        {/* Cards */}
+        <div className="mt-14 grid items-stretch gap-6 md:grid-cols-3 lg:gap-8">
+          {PLANS.map((p, i) => {
             const price = cycle === "monthly" ? p.monthlyPrice : p.annualPrice;
             const cadence = cycle === "monthly" ? p.monthlyCadence : p.annualCadence;
-
             return (
-              <div
+              <motion.div
                 key={p.name}
-                className={`relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 transition-all ${
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease }}
+                className={`relative flex flex-col rounded-[1.75rem] p-7 sm:p-8 ${
                   p.highlight
-                    ? "border-2 border-orange-500 bg-white dark:bg-slate-900 shadow-xl shadow-orange-500/10 sm:-translate-y-1 ring-4 ring-orange-500/10"
-                    : "border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs"
+                    ? "bg-slate-900 text-white shadow-2xl shadow-orange-900/20 ring-1 ring-slate-800 md:-my-4 md:py-12 dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 dark:ring-orange-400/30"
+                    : "card-premium text-slate-900 dark:text-white"
                 }`}
               >
-                {p.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className={`inline-block rounded-full font-black text-[10px] px-3.5 py-1 shadow-sm uppercase tracking-wider ${
-                      p.highlight
-                        ? "bg-gradient-sunset text-white"
-                        : "bg-amber-100 text-amber-900 dark:bg-slate-800 dark:text-amber-200 border border-amber-300 dark:border-slate-700"
+                {p.highlight && (
+                  <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
+                )}
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-heading text-xl font-extrabold">{p.name}</h3>
+                  {p.badge && (
+                    <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-wider ${
+                      p.highlight ? "bg-gradient-sunset text-white" : "bg-amber-50 text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-200 dark:ring-amber-500/20"
                     }`}>
                       {p.badge}
                     </span>
-                  </div>
-                )}
-
-                <div>
-                  <h3 className="font-heading font-black text-xl text-slate-900 dark:text-white">
-                    {p.name}
-                  </h3>
-                  <div className="mt-5 flex items-baseline gap-1.5">
-                    <span className="font-heading font-black text-4xl sm:text-5xl text-slate-900 dark:text-white tracking-tight">
-                      {price}
-                    </span>
-                    <span className="text-xs font-bold text-slate-500 font-sans">{cadence}</span>
-                  </div>
-
-                  <ul className="mt-6 space-y-3">
-                    {p.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 font-sans leading-relaxed">
-                        <Check className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  )}
                 </div>
 
-                <div className="mt-8 pt-5 border-t border-slate-100 dark:border-slate-800">
-                  <a
-                    href="/soon"
-                    className={`inline-flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-xs sm:text-sm font-bold transition-all ${
-                      p.highlight
-                        ? "bg-gradient-sunset text-white shadow-md shadow-orange-500/25 hover:brightness-105 active:scale-[0.98]"
-                        : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 shadow-xs active:scale-[0.98]"
-                    }`}
-                  >
-                    <span>{p.cta}</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
+                <div className="mt-6 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                  <span className="font-heading text-5xl font-extrabold tracking-tight tabular-nums">{price}</span>
+                  <span className={`text-sm font-semibold ${p.highlight ? "text-slate-300" : "text-slate-500 dark:text-slate-400"}`}>{cadence}</span>
                 </div>
-              </div>
+
+                <ul className={`mt-7 flex-1 space-y-3.5 border-t pt-7 ${p.highlight ? "border-white/10" : "border-slate-900/5 dark:border-white/10"}`}>
+                  {p.features.map((f) => (
+                    <li key={f} className={`flex items-start gap-3 text-[15px] font-medium leading-snug ${p.highlight ? "text-slate-200" : "text-slate-700 dark:text-slate-300"}`}>
+                      <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${p.highlight ? "bg-orange-500/20 text-orange-300" : "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"}`}>
+                        <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                      </span>
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="/soon"
+                  className={`group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-extrabold transition active:scale-[0.98] ${
+                    p.highlight
+                      ? "bg-gradient-sunset text-white shadow-lg shadow-orange-500/30 hover:brightness-105"
+                      : "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
+                  }`}
+                >
+                  {p.cta}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </motion.div>
             );
           })}
         </div>
 
+        {/* True of all three plans, so it is stated once rather than
+            three times inside the cards. */}
+        <p className="mx-auto mt-12 max-w-2xl text-center text-sm font-semibold text-slate-600 dark:text-slate-400">
+          Every plan is ad-free, works without signal, and never puts your
+          child in front of a chatbot.
+        </p>
+
         {/* GCash / Maya Voucher Banner */}
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 sm:p-6 shadow-xs">
-          <div className="flex items-center gap-3.5">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-orange-500/10 text-orange-600">
+        <div className="card-premium mx-auto mt-8 flex max-w-4xl flex-col items-start justify-between gap-5 p-5 sm:flex-row sm:items-center sm:p-6">
+          <div className="flex items-center gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400">
               <Wallet className="h-5 w-5" />
             </span>
-
-            {/* True of all three plans, so it is stated once rather than
-                three times inside the cards. */}
-            <p className="mt-8 text-center text-sm font-bold text-slate-600 dark:text-slate-400">
-              Every plan is ad-free, works without signal, and never puts your
-              child in front of a chatbot.
-            </p>
             <div>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                No credit card? GCash, Maya or 7-Eleven.
-              </p>
-              <p className="text-xs text-slate-500 font-sans">
-                Prepaid codes. No auto-renewal, no bank account.
-              </p>
+              <p className="text-sm font-extrabold text-slate-900 sm:text-base dark:text-white">No credit card? GCash, Maya or 7-Eleven.</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">Prepaid codes. No auto-renewal, no bank account.</p>
             </div>
           </div>
           <a
             href="/programs"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-600 hover:text-orange-700 dark:text-orange-400 shrink-0 px-4 py-2 rounded-full border border-orange-500/20 bg-orange-500/5 hover:bg-orange-500/10 transition-colors"
+            className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-orange-200 px-4 py-2.5 text-sm font-bold text-orange-700 transition hover:bg-orange-50 dark:border-orange-500/30 dark:text-orange-300 dark:hover:bg-orange-500/10"
           >
-            <span>Learn About Prepaid Vouchers</span>
-            <ArrowRight className="h-3.5 w-3.5" />
+            Learn About Prepaid Vouchers
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>
-
       </div>
     </section>
   );

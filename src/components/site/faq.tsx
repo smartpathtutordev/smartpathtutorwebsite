@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { HelpCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import {
   Accordion,
@@ -35,51 +35,50 @@ const FAQS = [
 
 export function Faq() {
   return (
-    <section id="faq" className="relative py-16 sm:py-24 overflow-hidden bg-amber-50/30 dark:bg-slate-900/30 border-t border-amber-100/80 dark:border-slate-800/80">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-300 bg-amber-50 px-4 py-1 text-xs font-black text-amber-800 dark:text-amber-300">
-            <span>❓</span>
-            <span>Questions &amp; Answers</span>
-          </div>
-          <h2 className="mt-4 font-heading text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-            Frequently asked{" "}
-            <span className="text-orange-500">
-              questions.
-            </span>
+    <section id="faq" className="relative scroll-mt-20 py-20 sm:py-28">
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-6 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <span className="eyebrow">
+            <span aria-hidden>❓</span> Questions &amp; Answers
+          </span>
+          <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
+            Frequently asked <span className="text-gradient-sunset">questions.</span>
           </h2>
-          <p className="mt-3 text-base text-slate-600 dark:text-slate-400 font-sans font-medium">
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-slate-600 dark:text-slate-400">
             Quick answers about kid safety, family plans, free teacher access, and GCash payment.
           </p>
+          <div className="mt-8 text-sm font-semibold text-slate-500 dark:text-slate-400">
+            Have more questions?{" "}
+            <a href="mailto:smartpathtutor.dev@gmail.com" className="group inline-flex items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
+              Email our Filipino educator team <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+            </a>
+          </div>
         </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="mt-10 rounded-3xl border-2 border-amber-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 sm:px-8 py-3 shadow-sm"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:col-span-7"
         >
-          <Accordion>
+          <Accordion className="space-y-3">
             {FAQS.map((f) => (
-              <AccordionItem key={f.q} value={f.q} className="border-b border-slate-100 dark:border-slate-800 last:border-b-0">
-                <AccordionTrigger className="py-4 text-left text-sm sm:text-base font-bold hover:no-underline text-slate-900 dark:text-white">
+              <AccordionItem
+                key={f.q}
+                value={f.q}
+                className="card-premium border-0 px-5 transition-shadow hover:shadow-lg sm:px-6"
+              >
+                <AccordionTrigger className="py-5 text-left text-base font-extrabold text-slate-900 hover:no-underline sm:text-lg dark:text-white">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed pb-4 font-sans">
+                <AccordionContent className="pb-5 text-[15px] leading-relaxed text-slate-600 dark:text-slate-400">
                   {f.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </motion.div>
-
-        <div className="mt-8 text-center text-xs text-slate-500 font-semibold font-sans">
-          Have more questions?{" "}
-          <a href="mailto:smartpathtutor.dev@gmail.com" className="font-bold text-orange-600 hover:underline inline-flex items-center gap-1">
-            Email our Filipino educator team <ArrowRight className="h-3 w-3" />
-          </a>
-        </div>
       </div>
     </section>
   );

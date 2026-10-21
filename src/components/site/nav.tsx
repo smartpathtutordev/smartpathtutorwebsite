@@ -37,11 +37,11 @@ export function SiteNav() {
       className={cn(
         "sticky top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "bg-white/90 dark:bg-slate-950/90 border-b border-slate-200/80 dark:border-slate-800/80 py-3 backdrop-blur-md shadow-xs"
-          : "bg-transparent py-4"
+          ? "bg-white/80 dark:bg-slate-950/80 border-b border-slate-900/5 dark:border-white/10 py-3 backdrop-blur-xl backdrop-saturate-150"
+          : "bg-transparent py-5"
       )}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-6">
         {/* Brand */}
         <Link href="/" className="group flex items-center gap-2.5">
           <div className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-white shadow-xs ring-1 ring-slate-900/10 transition-transform duration-300 group-hover:scale-105">
@@ -58,19 +58,19 @@ export function SiteNav() {
             <span className="font-heading text-lg font-black tracking-tight text-slate-900 dark:text-white">
               Smart<span className="text-orange-500">Path</span>
             </span>
-            <span className="rounded-full bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-700 dark:text-orange-300 border border-orange-500/20">
+            <span className="hidden rounded-full bg-slate-900/5 px-2 py-0.5 text-[10px] font-bold text-slate-600 ring-1 ring-slate-900/10 sm:inline dark:bg-white/10 dark:text-slate-300 dark:ring-white/10">
               Grades 1–3
             </span>
           </div>
         </Link>
 
         {/* Center Links */}
-        <nav className="hidden md:flex items-center gap-1 rounded-full border-2 border-amber-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 px-4 py-1.5 backdrop-blur-md text-xs font-black text-slate-700 dark:text-slate-300 shadow-xs">
+        <nav className="hidden md:flex items-center gap-1 text-sm font-bold text-slate-600 dark:text-slate-300">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-3.5 py-1.5 transition-colors hover:text-orange-600 dark:hover:text-white hover:bg-amber-50 dark:hover:bg-slate-800"
+              className="rounded-full px-4 py-2 transition-colors hover:text-slate-900 hover:bg-slate-900/5 dark:hover:text-white dark:hover:bg-white/10"
             >
               {l.label}
             </a>
@@ -82,7 +82,7 @@ export function SiteNav() {
           <ThemeToggle />
           <a
             href="#pricing"
-            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-sunset px-5 py-2 text-xs font-black text-white shadow-md shadow-orange-500/20 hover:brightness-105 transition-all active:scale-95"
+            className="group inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           >
             <span>Start Free</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -95,7 +95,8 @@ export function SiteNav() {
           <button
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200"
+            aria-expanded={open}
+            className="grid h-11 w-11 place-items-center rounded-full border border-slate-900/10 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -104,14 +105,14 @@ export function SiteNav() {
 
       {/* Mobile Drawer */}
       {open && (
-        <div className="md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-5 py-5 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden mt-3 border-y border-slate-900/5 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 px-5 py-5 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col gap-2">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-2 text-sm font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="rounded-xl px-3 py-3 text-base font-bold text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {l.label}
               </a>
@@ -120,7 +121,7 @@ export function SiteNav() {
             <a
               href="#pricing"
               onClick={() => setOpen(false)}
-              className="mt-2 text-center rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-2.5 text-sm font-bold shadow-md"
+              className="mt-1 text-center rounded-full bg-gradient-sunset text-white py-3.5 text-base font-extrabold shadow-lg shadow-orange-500/25"
             >
               Start Free Trial
             </a>

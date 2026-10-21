@@ -1,81 +1,58 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck, GraduationCap, BookOpen, Star } from "lucide-react";
+import { ArrowRight, Sparkles, ShieldCheck, GraduationCap, BookOpen } from "lucide-react";
 
 export function CtaBanner() {
   return (
-    <section className="relative py-16 sm:py-24 overflow-hidden">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-500 via-orange-500 to-rose-500 p-8 sm:p-14 text-center shadow-2xl shadow-orange-500/20 text-white"
-        >
-          {/* Subtle Background Glows */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-white/20 blur-2xl"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -left-16 -bottom-16 h-72 w-72 rounded-full bg-yellow-300/20 blur-2xl"
-          />
+    <section className="relative px-5 pb-20 sm:px-6 sm:pb-28">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-14 text-center text-white shadow-2xl shadow-slate-900/30 sm:px-14 sm:py-20 dark:ring-1 dark:ring-white/10"
+      >
+        <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[640px] -translate-x-1/2 rounded-full bg-gradient-sunset opacity-40 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-dots text-white opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
+        <Image aria-hidden src="/spt_icon.png" alt="" width={256} height={256} className="pointer-events-none absolute -right-10 -bottom-10 hidden h-56 w-56 rotate-12 opacity-10 sm:block" />
 
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-white/30 bg-white/15 backdrop-blur-xs px-4 py-1.5 text-xs font-bold text-white shadow-xs">
-              <Sparkles className="h-3.5 w-3.5 text-yellow-200" />
-              <span>Free 7-Day Trial for Kids</span>
-            </div>
-
-            <h2 className="mt-5 font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-tight">
-              Start{" "}
-              <span className="text-yellow-200">
-                today
-              </span>.
-            </h2>
-
-            <p className="mx-auto mt-4 max-w-xl text-base sm:text-lg text-white/95 font-sans leading-relaxed font-medium">
-              Seven days free. Cancel any time.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-              <a
-                href="/soon"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 font-heading font-black text-sm sm:text-base text-slate-900 shadow-xl shadow-black/10 hover:bg-yellow-50 active:scale-95 transition-all w-full sm:w-auto"
-              >
-                <span>Start Free 7-Day Trial</span>
-                <ArrowRight className="h-4 w-4 text-orange-600" />
-              </a>
-              <a
-                href="#curriculum"
-                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 bg-white/10 hover:bg-white/20 backdrop-blur-xs px-6 py-4 font-heading font-bold text-sm sm:text-base text-white transition-colors w-full sm:w-auto"
-              >
-                <span>Explore Curriculum</span>
-              </a>
-            </div>
-
-            {/* Badges row */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-white/20 text-xs sm:text-sm font-bold text-white/90">
-              <div className="flex items-center gap-1.5">
-                <GraduationCap className="h-4 w-4 text-yellow-200" />
-                <span>100% Free For Teachers</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-yellow-200" />
-                <span>100% Ad-Free Safe Haven</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <BookOpen className="h-4 w-4 text-yellow-200" />
-                <span>DepEd MATATAG Grades 1–3</span>
-              </div>
-            </div>
+        <div className="relative">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-bold backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+            Free 7-Day Trial for Kids
           </div>
-        </motion.div>
-      </div>
+
+          <h2 className="mt-6 font-heading text-5xl font-extrabold tracking-[-0.025em] sm:text-6xl lg:text-7xl">
+            Start <span className="text-gradient-sunset">today</span>.
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Seven days free. Cancel any time.</p>
+
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href="/soon"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset px-8 py-4 text-base font-extrabold text-white shadow-xl shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98] sm:w-auto"
+            >
+              Start Free 7-Day Trial
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </a>
+            <a
+              href="#curriculum"
+              className="inline-flex w-full items-center justify-center rounded-full border border-white/20 bg-white/5 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10 sm:w-auto"
+            >
+              Explore Curriculum
+            </a>
+          </div>
+
+          <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-sm font-semibold text-slate-300">
+            <span className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-amber-300" /> 100% Free For Teachers</span>
+            <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-amber-300" /> 100% Ad-Free Safe Haven</span>
+            <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-amber-300" /> DepEd MATATAG Grades 1–3</span>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
-

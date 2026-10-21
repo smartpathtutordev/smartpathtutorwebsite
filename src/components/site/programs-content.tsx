@@ -215,7 +215,7 @@ function ProgramCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="flex flex-col rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all"
+      className="flex flex-col card-premium p-6 hover:shadow-xl hover:-translate-y-0.5 transition-all"
     >
       <div className="flex items-center justify-between">
         <span className="grid h-11 w-11 place-items-center rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400">
@@ -227,8 +227,8 @@ function ProgramCard({
           </Badge>
         )}
       </div>
-      <h3 className="mt-5 font-heading font-black text-lg text-slate-900 dark:text-white">{title}</h3>
-      <p className="mt-2 flex-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">{body}</p>
+      <h3 className="mt-5 font-heading font-extrabold tracking-[-0.02em] text-lg text-slate-900 dark:text-white">{title}</h3>
+      <p className="mt-2 flex-1 text-sm sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed font-sans">{body}</p>
       <Button
         variant="ghost"
         size="sm"
@@ -289,7 +289,7 @@ function ProgramDialog({
         <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-sunset text-white shadow-md shadow-orange-500/20">
           <Icon className="h-6 w-6" />
         </span>
-        <h3 className="mt-4 font-heading font-black text-2xl tracking-tight text-slate-900 dark:text-white">{title}</h3>
+        <h3 className="mt-4 font-heading font-extrabold tracking-[-0.02em] text-2xl tracking-tight text-slate-900 dark:text-white">{title}</h3>
         <p className="mt-1 text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">Step-by-Step Guide</p>
 
         <ol className="mt-5 space-y-3.5">
@@ -346,7 +346,7 @@ export function ProgramsContent() {
       <section className="relative overflow-hidden pt-24 pb-16 sm:pt-32 sm:pb-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-background to-background dark:from-orange-950/20"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-amber-50 via-background to-background dark:from-slate-900/60"
         />
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
@@ -360,7 +360,7 @@ export function ProgramsContent() {
             animate="visible"
             custom={0.1}
             variants={fadeUp}
-            className="mt-6 font-heading font-black text-4xl tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-white"
+            className="mt-6 font-heading font-extrabold tracking-[-0.02em] text-4xl tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-white"
           >
             Affordable learning tailored for{" "}
             <span className="text-orange-500">
@@ -382,12 +382,12 @@ export function ProgramsContent() {
 
       {/* ── Family programs ──────────────────────────────────────── */}
       <section className="py-14 sm:py-18">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="max-w-2xl">
             <Badge variant="secondary" className="rounded-full px-3 py-0.5 text-xs font-bold border border-orange-500/20 bg-orange-500/10 text-orange-700 dark:text-orange-300">
               Family Options
             </Badge>
-            <h2 className="mt-3 font-heading font-black text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
+            <h2 className="mt-3 font-heading font-extrabold tracking-[-0.02em] text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
               Ways to pay &amp; get access
             </h2>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 font-sans">
@@ -404,7 +404,7 @@ export function ProgramsContent() {
 
       {/* ── Payment methods strip ────────────────────────────────── */}
       <section className="py-10 bg-slate-50/70 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="mr-2 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               <Wallet className="h-4 w-4 text-orange-500" /> Supported Payment Channels:
@@ -420,12 +420,12 @@ export function ProgramsContent() {
 
       {/* ── Give-back programs ───────────────────────────────────── */}
       <section className="py-14 sm:py-18">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="max-w-2xl">
             <Badge variant="secondary" className="rounded-full px-3 py-0.5 text-xs font-bold border border-purple-500/20 bg-purple-500/10 text-purple-700 dark:text-purple-300">
               Community &amp; Schools
             </Badge>
-            <h2 className="mt-3 font-heading font-black text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
+            <h2 className="mt-3 font-heading font-extrabold tracking-[-0.02em] text-2xl tracking-tight sm:text-3xl text-slate-900 dark:text-white">
               Programs that give back
             </h2>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400 font-sans">
@@ -441,10 +441,10 @@ export function ProgramsContent() {
       </section>
 
       {/* ── CTA band ─────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-24">
+      <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-sunset p-8 sm:p-14 text-center shadow-xl shadow-orange-500/20 text-white">
-            <h2 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-white">
+            <h2 className="font-heading font-extrabold tracking-[-0.02em] text-3xl sm:text-4xl tracking-tight text-white">
               Not sure which program is right for you?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base font-sans">

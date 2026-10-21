@@ -102,7 +102,7 @@ export function AboutContent() {
       <section className="relative overflow-hidden pt-24 pb-16 sm:pt-32 sm:pb-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-100/40 via-background to-background dark:from-orange-950/20"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-amber-50 via-background to-background dark:from-slate-900/60"
         />
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
           <motion.div initial="hidden" animate="visible" custom={0} variants={fadeUp}>
@@ -117,7 +117,7 @@ export function AboutContent() {
             animate="visible"
             custom={0.1}
             variants={fadeUp}
-            className="mt-6 font-heading font-black text-4xl tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-white"
+            className="mt-6 font-heading font-extrabold tracking-[-0.02em] text-4xl tracking-tight sm:text-5xl lg:text-6xl text-slate-900 dark:text-white"
           >
             Empowering every Filipino child with a{" "}
             <span className="text-orange-500">
@@ -151,7 +151,7 @@ export function AboutContent() {
                 transition={{ duration: 0.4, delay: i * 0.08 }}
                 className="text-center"
               >
-                <div className="font-heading font-black text-3xl sm:text-4xl text-orange-600 dark:text-orange-400">
+                <div className="font-heading font-extrabold tracking-[-0.02em] text-3xl sm:text-4xl text-orange-600 dark:text-orange-400">
                   {s.value}
                 </div>
                 <div className="mt-1 font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-sans">
@@ -168,13 +168,13 @@ export function AboutContent() {
 
       {/* ── Character Ecosystem ─────────────────────────────────── */}
       <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
             <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs gap-1.5 font-bold border border-purple-500/20 bg-purple-500/10 text-purple-700 dark:text-purple-300">
               <GraduationCap className="h-3.5 w-3.5" />
               The SmartPath Family
             </Badge>
-            <h2 className="mt-4 font-heading font-black text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
+            <h2 className="mt-4 font-heading font-extrabold tracking-[-0.02em] text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
               Meet the companions behind the journey
             </h2>
             <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-sans">
@@ -190,7 +190,7 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="flex flex-col rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-7 shadow-lg shadow-slate-200/30 dark:shadow-none hover:shadow-xl transition-all"
+                className="flex flex-col card-premium p-6 sm:p-7 shadow-lg shadow-slate-200/30 dark:shadow-none hover:shadow-xl transition-all"
               >
                 <div className="relative mb-5 flex h-44 w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50 to-orange-50/40 dark:from-slate-800 dark:to-slate-800/40 p-4">
                   <Image
@@ -208,13 +208,13 @@ export function AboutContent() {
                   </Badge>
                 </div>
 
-                <h3 className="mt-3 font-heading font-black text-xl text-slate-900 dark:text-white">
+                <h3 className="mt-3 font-heading font-extrabold tracking-[-0.02em] text-xl text-slate-900 dark:text-white">
                   {c.name}
                 </h3>
                 <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">
                   {c.tagline}
                 </p>
-                <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans flex-1">
+                <p className="mt-3 text-sm sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed font-sans flex-1">
                   {c.description}
                 </p>
               </motion.div>
@@ -225,9 +225,9 @@ export function AboutContent() {
 
       {/* ── Pillars ─────────────────────────────────────────────── */}
       <section className="py-20 sm:py-24 bg-slate-50/60 dark:bg-slate-900/30 border-y border-slate-100 dark:border-slate-800/80">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-heading font-black text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
+            <h2 className="font-heading font-extrabold tracking-[-0.02em] text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
               Built for the realities of the Philippines
             </h2>
             <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 font-sans">
@@ -245,15 +245,15 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
-                  className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:shadow-md transition-shadow"
+                  className="card-premium p-6 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <span className="grid h-11 w-11 place-items-center rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-4 font-heading font-black text-lg text-slate-900 dark:text-white">
+                  <h3 className="mt-4 font-heading font-extrabold tracking-[-0.02em] text-lg text-slate-900 dark:text-white">
                     {p.title}
                   </h3>
-                  <p className="mt-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                  <p className="mt-2 text-sm sm:text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
                     {p.body}
                   </p>
                 </motion.div>
@@ -267,7 +267,7 @@ export function AboutContent() {
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-sunset p-8 sm:p-14 text-center shadow-xl shadow-orange-500/20 text-white">
-            <h2 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-white">
+            <h2 className="font-heading font-extrabold tracking-[-0.02em] text-3xl sm:text-4xl tracking-tight text-white">
               Ready to give your child the smart path?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base font-sans">

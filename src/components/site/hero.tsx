@@ -2,156 +2,127 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Sparkles,
-  CheckCircle2,
-  Users,
-  GraduationCap,
-  Compass,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Users, GraduationCap, Compass } from "lucide-react";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
-
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 sm:pt-14 sm:pb-24">
-      {/* Background Lighting */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-100/60 via-amber-50/30 to-background dark:from-amber-950/20"
-      />
+    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-16 sm:pb-28 lg:pt-20 lg:pb-32">
+      {/* Background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-amber-50 via-background to-background dark:from-slate-900/60" />
+        <div className="absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-orange-300/30 blur-3xl dark:bg-orange-500/15" />
+        <div className="absolute top-40 -left-40 h-[420px] w-[420px] rounded-full bg-amber-200/40 blur-3xl dark:bg-amber-500/10" />
+        <div className="absolute inset-0 bg-dots text-slate-900 dark:text-white [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_70%)]" />
+      </div>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-10 items-center">
-          
-          {/* Left: Punchy Copy */}
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
+          {/* Copy */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6"
+            transition={{ duration: 0.6, ease }}
+            className="text-center lg:col-span-6 lg:text-left"
           >
-            {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-300 bg-amber-50 dark:bg-amber-950/40 px-4 py-1.5 text-xs font-black text-amber-800 dark:text-amber-300 shadow-xs">
-              <span className="text-sm">🌟</span>
-              <span>DepEd MATATAG · Grades 1–3</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/80 py-1 pl-1 pr-3.5 text-xs font-bold text-slate-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-sunset text-[11px]">🌟</span>
+              DepEd MATATAG · Grades 1–3
             </div>
 
-            {/* Headline */}
-            <h1 className="mt-5 font-heading font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight text-slate-900 dark:text-white leading-[1.08]">
-              The <span className="text-orange-500">smart path</span> to confident learning.
+            <h1 className="mt-6 font-heading text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.025em] text-slate-900 sm:text-6xl lg:text-[4.5rem] dark:text-white">
+              The <span className="text-gradient-sunset">smart path</span>
+              <br className="hidden sm:block" /> to confident learning.
             </h1>
 
-            {/* Subhead */}
-            <p className="mt-5 text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-sans max-w-lg font-medium">
+            <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-600 sm:text-xl lg:mx-0 dark:text-slate-300">
               Ten minutes a day of Math, English and Science — on your child&apos;s phone.
             </p>
 
-            {/* CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-3.5">
+            <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <a
                 href="#pricing"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-sunset px-7 py-3.5 text-sm sm:text-base font-heading font-black text-white shadow-xl shadow-orange-500/20 hover:brightness-105 transition-all active:scale-95"
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-base font-extrabold text-white shadow-xl shadow-slate-900/20 transition hover:bg-slate-800 active:scale-[0.98] sm:w-auto dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
               >
-                <span>See plans</span>
-                <ArrowRight className="h-4 w-4" />
+                See plans
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </a>
-
-              {/* The "Watch a day" button lived here and pointed at
-                  #how-it-works. That section is gone, so the button had
-                  nothing to scroll to. One clear action beats two, and the
-                  second one was the weaker of the pair. */}
             </div>
 
-            {/* Micro Feature Proof */}
-            <div className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-400 font-sans">
-              <span className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" /> Works offline
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                <Users className="h-4 w-4 text-orange-500" /> One family plan
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
-                <GraduationCap className="h-4 w-4 text-purple-600" /> Free for teachers
-              </span>
-            </div>
+            <ul className="mt-10 grid grid-cols-1 gap-3 text-sm font-bold text-slate-700 sm:grid-cols-3 sm:gap-4 dark:text-slate-300">
+              {[
+                { icon: CheckCircle2, label: "Works offline", tint: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10" },
+                { icon: Users, label: "One family plan", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
+                { icon: GraduationCap, label: "Free for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
+              ].map(({ icon: Icon, label, tint }) => (
+                <li key={label} className="flex items-center justify-center gap-2.5 lg:justify-start">
+                  <span className={`grid h-8 w-8 place-items-center rounded-lg ${tint}`}>
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  {label}
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
-          {/* Right: Smartphone Showing The Real SmartPath App */}
+          {/* Phone */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-6 flex justify-center"
+            initial={{ opacity: 0, y: 24, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.1, ease }}
+            className="relative flex justify-center lg:col-span-6"
           >
-            {/* Phone Outer Chassis Container */}
-            <div className="relative w-full max-w-[320px] sm:max-w-[340px]">
-              
-              {/* Outer Phone Shell with Titanium/Slate Bezel & Physical Buttons */}
-              <div className="relative rounded-[48px] p-2.5 sm:p-3 bg-slate-900 border-[4px] border-slate-800 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.12)]">
-                
-                {/* Physical Side Buttons */}
-                <div className="absolute -left-[7px] top-24 w-[3px] h-7 bg-slate-700 rounded-l-md" />
-                <div className="absolute -left-[7px] top-36 w-[3px] h-12 bg-slate-700 rounded-l-md" />
-                <div className="absolute -left-[7px] top-52 w-[3px] h-12 bg-slate-700 rounded-l-md" />
-                <div className="absolute -right-[7px] top-32 w-[3px] h-16 bg-slate-700 rounded-r-md" />
+            <div aria-hidden className="absolute top-1/2 left-1/2 h-[440px] w-[440px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-sunset opacity-25 blur-3xl sm:h-[520px] sm:w-[520px]" />
+            <div aria-hidden className="absolute top-1/2 left-1/2 hidden h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-300/40 sm:block dark:border-orange-400/15" />
+            <div aria-hidden className="absolute top-1/2 left-1/2 hidden h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-300/25 lg:block dark:border-orange-400/10" />
 
-                {/* Top Bezel Speaker Slit */}
-                <div className="w-12 h-1 bg-slate-700/80 rounded-full mx-auto mb-2" />
-
-                {/* Inner Screen Displaying The Actual App */}
-                <div className="relative rounded-[36px] overflow-hidden bg-white shadow-inner">
+            <div className="relative w-full max-w-[290px] sm:max-w-[320px]">
+              <div className="relative rounded-[46px] bg-slate-900 p-2.5 shadow-[0_40px_80px_-20px_rgba(15,23,42,0.45),0_0_0_1px_rgba(255,255,255,0.08)_inset] ring-1 ring-slate-800">
+                <div className="absolute top-4 left-1/2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-slate-900" />
+                <div className="relative overflow-hidden rounded-[38px] bg-white">
                   <Image
                     src="/images/app-screen.png"
                     alt="SmartPath Tutor App - Today's Trip (Math, English, Science)"
                     width={554}
                     height={1024}
-                    className="w-full h-auto object-cover block select-none"
+                    className="block h-auto w-full select-none object-cover"
                     priority
                   />
                 </div>
-
-                {/* Bottom Bezel Home Bar Accent */}
-                <div className="w-24 h-1 bg-slate-700/60 rounded-full mx-auto mt-2" />
               </div>
 
-              {/* Floating Badges outside the phone */}
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="absolute -top-3 -left-3 sm:-left-6 rounded-2xl border-2 border-amber-300 bg-white dark:bg-slate-900 px-3.5 py-2 shadow-xl flex items-center gap-2.5 z-20"
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.45, duration: 0.5, ease }}
+                className="absolute top-10 -left-6 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-16 dark:border-white/10 dark:bg-slate-900/95"
               >
-                <span className="text-base">👨‍👩‍👧‍👦</span>
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👨‍👩‍👧‍👦</span>
                 <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white leading-tight">1 Family Plan</p>
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400">Up to 3 Learners</p>
+                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">1 Family Plan</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Up to 3 Learners</p>
                 </div>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="absolute -bottom-3 -right-3 sm:-right-6 rounded-2xl border-2 border-amber-300 bg-white dark:bg-slate-900 px-3.5 py-2 shadow-xl flex items-center gap-2.5 z-20"
+                initial={{ opacity: 0, x: 12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.5, ease }}
+                className="absolute bottom-14 -right-6 z-20 flex items-center gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-right-16 dark:border-white/10 dark:bg-slate-900/95"
               >
-                <div className="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white shadow-xs">
-                  <Compass className="h-4 w-4" />
-                </div>
+                <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-sunset text-white">
+                  <Compass className="h-4.5 w-4.5" />
+                </span>
                 <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white leading-tight">Today&apos;s Trip</p>
-                  <p className="text-[10px] font-bold text-orange-600 dark:text-orange-400">Math · English · Science</p>
+                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">Today&apos;s Trip</p>
+                  <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">Math · English · Science</p>
                 </div>
               </motion.div>
-
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>
   );
 }
-

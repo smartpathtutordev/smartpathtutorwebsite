@@ -224,3 +224,35 @@
     animation: none;
   }
 }
+/* ---- Redesign tokens ---- */
+@utility bg-dots {
+  background-image: radial-gradient(color-mix(in srgb, currentColor 14%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c2410c;
+}
+
+.dark .eyebrow {
+  color: #fdba74;
+}
+
+@utility card-premium {
+  border-radius: 1.75rem;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, #0f172a 8%, transparent);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.12);
+}
+
+.dark .card-premium {
+  border-color: rgb(255 255 255 / 0.08);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -16px rgb(0 0 0 / 0.6);
+}
