@@ -43,12 +43,12 @@ const pillars = [
   {
     icon: Languages,
     title: "Multilingual Support",
-    body: "Early literacy thrives when children understand the context. Tala and the parent dashboard support English, Tagalog/Filipino, Cebuano, and Hiligaynon to build early fluency.",
+    body: "Early literacy thrives when children understand the context. The app works in English and Filipino, with regional-language narration support to build early fluency.",
   },
   {
     icon: Heart,
     title: "Simple Per-Child Pricing",
-    body: "No per-device penalties. ₱399/mo per child, paid with GCash, Maya, or prepaid activation voucher codes.",
+    body: "No per-device penalties. Pro is ₱399/mo for one child, siblings add ₱199/mo each, paid with GCash, Maya, or prepaid activation voucher codes.",
   },
   {
     icon: ShieldCheck,
@@ -59,9 +59,9 @@ const pillars = [
 
 const stats = [
   { value: "Grades 1–3", label: "DepEd MATATAG Focus", sub: "Primary Grades 1, 2, and 3" },
-  { value: "₱0 Free", label: "For Certified Teachers", sub: "Lifetime Educator Access" },
-  { value: "₱399", label: "Per Child, Monthly", sub: "No per-device fees" },
-  { value: "4", label: "PH Languages", sub: "English, Tagalog, Cebuano, Hiligaynon" },
+  { value: "₱0", label: "Free to Start for Teachers", sub: "30 credits · editing & export free" },
+  { value: "₱399", label: "Pro, Per Month", sub: "+₱199 per sibling" },
+  { value: "EN + FIL", label: "English & Filipino", sub: "Regional-language narration support" },
 ];
 
 export function AboutContent() {
@@ -183,7 +183,7 @@ export function AboutContent() {
               Ready to give your child the smart path?
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base font-sans">
-              Start a 7-day free trial. Experience DepEd MATATAG lessons, Tala&apos;s audio guidance, and Today&apos;s Path learning today.
+              Get started with the free Parents app. Experience DepEd MATATAG lessons, Tala&apos;s audio guidance, and Today&apos;s Path learning today.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

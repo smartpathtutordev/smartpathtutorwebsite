@@ -27,7 +27,7 @@ const ECOSYSTEM = [
       "12 cultural Fun Zone missions",
       "Real-time progress & streak sync",
     ],
-    ctaText: "Start 7-Day Free Trial",
+    ctaText: "Get Started",
     ctaLink: "#pricing",
   },
   {

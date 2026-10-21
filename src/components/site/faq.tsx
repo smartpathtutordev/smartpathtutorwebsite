@@ -17,11 +17,11 @@ const FAQS = [
   },
   {
     q: "Is it really free for teachers?",
-    a: "Yes. Verified Philippine teachers get lesson planners, slide exports and competency trackers, free for good.",
+    a: "Yes. Verified Philippine teachers get 30 free credits to start, and editing and slide exports are always free.",
   },
   {
     q: "How does family pricing work?",
-    a: "Per child, not per device. ₱399 a month for each child.",
+    a: "Per child, not per device. The Parents app is free. Pro is ₱399 a month for one child, Premium ₱649 adds a weekly guided catch-up and more Parent AI, and each extra child is ₱199 a month. Term and school-year plans cost less per month.",
   },
   {
     q: "Which grades?",
@@ -45,7 +45,7 @@ export function Faq() {
             Frequently asked <span className="text-gradient-sunset">questions.</span>
           </h2>
           <p className="mt-4 max-w-md text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-            Quick answers about kid safety, family plans, free teacher access, and GCash payment.
+            Quick answers about kid safety, plans and pricing, teacher access, and GCash payment.
           </p>
           <div className="mt-8 text-sm font-semibold text-slate-500 dark:text-slate-400">
             Have more questions?{" "}

@@ -61,10 +61,10 @@ const familyPrograms: Program[] = [
   },
   {
     icon: Users,
-    title: "Family Plan (Up to 3 Children)",
+    title: "Siblings: Add a Child for ₱199/mo",
     badge: "Best for siblings",
-    body: "Add up to 3 child profiles under a single household account at ₱399/mo per child. Each child maintains their own grade level, streaks, and stars.",
-    cta: "Explore family pass",
+    body: "Add a sibling to Pro or Premium for ₱199/mo (₱549/term, ₱1,990/school year). Each child maintains their own grade level, streaks, and stars.",
+    cta: "Explore sibling add-on",
     steps: [
       { title: "One Parent Dashboard", body: "Create your parent account once — manage screen time, review Bloom quiz scores, and monitor all siblings in one place." },
       { title: "Add up to 3 Child Profiles", body: "Configure individual grades for Grades 1, 2, and 3 with custom avatar choices." },
@@ -86,7 +86,7 @@ const familyPrograms: Program[] = [
     steps: [
       { title: "Get your invite link", body: "Find your unique Kapamilya referral code in the SmartPath app." },
       { title: "Share on Messenger or Viber", body: "Send your link to parents, family group chats, or school PTA groups." },
-      { title: "Friend starts 7-day trial", body: "They explore DepEd MATATAG lessons with Tala with zero payment required." },
+      { title: "Friend gets started", body: "They explore SmartPath with the free Parents app, no payment required." },
       { title: "Both get 30 days free", body: "Upon their first voucher or plan activation, 30 days are automatically credited to both accounts." },
     ],
     goodToKnow: [
@@ -164,7 +164,7 @@ const givebackPrograms: Program[] = [
     goodToKnow: [
       "Teacher console includes slides exporter for TV/projector display",
       "Fully compliant with DepEd Order No. 10 s. 2024 (MATATAG Curriculum)",
-      "100% Free forever for verified Philippine educators",
+      "Free to start: 30 credits; editing & export free",
     ],
   },
   {

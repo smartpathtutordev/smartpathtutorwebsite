@@ -53,7 +53,7 @@ export function Hero() {
             <ul className="mt-10 grid grid-cols-1 gap-3 text-sm font-bold text-slate-700 sm:grid-cols-3 sm:gap-4 dark:text-slate-300">
               {[
                 { icon: CheckCircle2, label: "Works offline", tint: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10" },
-                { icon: Users, label: "₱399 per child", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
+                { icon: Users, label: "From ₱399/mo", tint: "text-orange-600 bg-orange-50 dark:bg-orange-500/10" },
                 { icon: GraduationCap, label: "Free for teachers", tint: "text-violet-600 bg-violet-50 dark:bg-violet-500/10" },
               ].map(({ icon: Icon, label, tint }) => (
                 <li key={label} className="flex items-center justify-center gap-2.5 lg:justify-start">
@@ -100,8 +100,8 @@ export function Hero() {
               >
                 <span className="grid h-9 w-9 place-items-center rounded-xl bg-amber-100 text-lg dark:bg-amber-500/15">👧</span>
                 <div>
-                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">₱399 per child</p>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">per month</p>
+                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">From ₱399/mo</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Free Parents app</p>
                 </div>
               </motion.div>
 

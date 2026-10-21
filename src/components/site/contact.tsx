@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const TOPICS = [
-  "Free 7-Day Trial",
+  "Getting Started",
   "Prepaid Voucher / GCash / Maya",
-  "Family Plan (3+ Learners)",
+  "Siblings (Add a child for ₱199/mo)",
   "Free Teacher Access & Slides",
   "DepEd MATATAG Grades 1–3",
   "Today's Path & App Support",
@@ -18,7 +18,7 @@ const TOPICS = [
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "sent">("idle");
-  const [selectedTopic, setSelectedTopic] = useState("Free Week Trial");
+  const [selectedTopic, setSelectedTopic] = useState("Getting Started");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -184,7 +184,7 @@ export function Contact() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 p-3.5 text-sm text-slate-900 dark:text-white outline-none transition-colors focus:border-orange-500 focus:bg-white dark:focus:bg-slate-900 focus:ring-2 focus:ring-orange-500/20"
-                placeholder="What grade is your child in? Ask anything about subjects, trials, or payment..."
+                placeholder="What grade is your child in? Ask anything about subjects, plans, or payment..."
               />
             </div>
 

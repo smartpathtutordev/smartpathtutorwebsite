@@ -84,7 +84,7 @@ export function SiteNav() {
             href="#pricing"
             className="group inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           >
-            <span>Start Free</span>
+            <span>Get Started</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
@@ -123,7 +123,7 @@ export function SiteNav() {
               onClick={() => setOpen(false)}
               className="mt-1 text-center rounded-full bg-gradient-sunset text-white py-3.5 text-base font-extrabold shadow-lg shadow-orange-500/25"
             >
-              Start Free Trial
+              Get Started
             </a>
           </div>
         </div>
