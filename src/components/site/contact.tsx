@@ -66,11 +66,11 @@ export function Contact() {
             </Badge>
 
             <h2 className="mt-4 font-heading font-black text-3xl tracking-tight sm:text-4xl text-slate-900 dark:text-white">
-              We&rsquo;re here to guide every step.
+              Talk to us.
             </h2>
             
             <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-              Questions about grades, plans, payment (GCash, bank or cash), teacher access or pilot schools? Send us a message and we will reply by email.
+              Message us. We reply by email.
             </p>
 
             <div className="mt-8 space-y-3.5 text-xs sm:text-sm font-sans">

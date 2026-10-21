@@ -37,7 +37,7 @@ export function Hero() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-600 sm:text-xl lg:mx-0 dark:text-slate-300">
-              A short daily path of Math and English (plus Science from Grade 3) that reads aloud, works offline, and keeps parents in the loop.
+              Daily lessons for Grades 1–3. Parents stay in the loop.
             </p>
 
             <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">

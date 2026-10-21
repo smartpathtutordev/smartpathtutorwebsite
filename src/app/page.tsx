@@ -4,10 +4,9 @@ import { SiteNav } from "@/components/site/nav";
 import { Hero } from "@/components/site/hero";
 import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
-import { CtaBanner } from "@/components/site/cta-banner";
 import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
-import { Features, TeacherSaje, HowItWorks, Safety, Teachers, PilotAndApps, About } from "@/components/site/startup-sections";
+import { Features, TeacherSaje, HowItWorks, Safety, Teachers } from "@/components/site/startup-sections";
 import { FAQS } from "@/lib/faqs";
 
 /**
@@ -57,11 +56,8 @@ export default function HomePage() {
         <Safety />
         <Teachers />
         <Pricing />
-        <PilotAndApps />
         <Faq />
-        <CtaBanner />
         <Contact />
-        <About />
       </main>
       <SiteFooter />
     </>

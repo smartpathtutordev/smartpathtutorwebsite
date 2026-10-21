@@ -20,20 +20,15 @@ export function SiteFooter() {
               SmartPath<span className="text-orange-500">.</span> Tutor
             </span>
           </Link>
-          <p className="max-w-sm text-[15px] text-slate-600 dark:text-slate-400 leading-relaxed font-sans font-medium">
-            The smart path to confident learning. DepEd MATATAG curriculum for Grades 1 to 3 reimagined as an adaptive daily journey.
+          <p className="max-w-sm text-[15px] font-medium text-slate-600 dark:text-slate-400">
+            By SmartPath Educational Technologies. A strong start for every Filipino child.
           </p>
-
-          <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-slate-600 dark:text-slate-300 font-bold font-sans">
-            <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-900/10 dark:bg-white/5 dark:ring-white/10">
-              🇵🇭 Built for Filipino Learners
-            </span>
-            <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-900/10 dark:bg-white/5 dark:ring-white/10">
-              📚 DepEd MATATAG Grades 1–3
-            </span>
-            <span className="rounded-full bg-white px-3 py-1.5 ring-1 ring-slate-900/10 dark:bg-white/5 dark:ring-white/10">
-              👩‍🏫 Free to start for teachers
-            </span>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {["App Store", "Google Play"].map((l) => (
+              <span key={l} className="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white dark:bg-white/10">
+                {l} · <span className="text-amber-300">soon</span>
+              </span>
+            ))}
           </div>
         </div>
 
