@@ -38,10 +38,13 @@ export function SiteNav() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        // Height must never depend on scroll position: a sticky header that
+        // shrinks past the threshold moves the page, which flips the threshold
+        // back, and the page shakes. Only colours change on scroll.
+        "sticky top-0 z-50 w-full border-b py-3 transition-colors duration-300",
         scrolled
-          ? "bg-white/80 dark:bg-slate-950/80 border-b border-slate-900/5 dark:border-white/10 py-3 backdrop-blur-xl backdrop-saturate-150"
-          : "bg-transparent py-5"
+          ? "bg-white/80 dark:bg-slate-950/80 border-slate-900/5 dark:border-white/10 backdrop-blur-xl backdrop-saturate-150"
+          : "bg-transparent border-transparent"
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-6">
