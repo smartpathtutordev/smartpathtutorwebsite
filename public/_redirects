@@ -18,3 +18,5 @@
 /parent/*      /app/parent/:splat  302!
 /teacher       /app/teacher/ 302!
 /teacher/*     /app/teacher/:splat 302!
+/portal        /app/parent/  302!
+/portal/*      /app/parent/  302!

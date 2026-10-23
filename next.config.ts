@@ -23,6 +23,16 @@ const nextConfig: NextConfig = {
         destination: "/app/teacher/",
         permanent: false,
       },
+      {
+        source: "/portal",
+        destination: "/app/parent/",
+        permanent: false,
+      },
+      {
+        source: "/portal/:path*",
+        destination: "/app/parent/",
+        permanent: false,
+      },
     ];
   },
   async rewrites() {
