@@ -1,0 +1,20 @@
+# SmartPath Application Routing on smartpathtutor.ph
+
+# 1. Admin Ops Console proxy
+/admin         https://portal.smartpathtutor.ph/admin          200!
+/admin/*       https://portal.smartpathtutor.ph/admin/:splat   200!
+/vendor/*      https://portal.smartpathtutor.ph/vendor/:splat  200!
+
+# 2. Flutter Web Apps Assets & Shell proxy
+/app/tutor/*   https://smartpath-apps.pages.dev/app/tutor/:splat   200!
+/app/parent/*  https://smartpath-apps.pages.dev/app/parent/:splat  200!
+/app/teacher/* https://smartpath-apps.pages.dev/app/teacher/:splat 200!
+
+# 3. Clean user-friendly URLs to app shells
+/tutor         /app/tutor/   302!
+/tutor/*       /app/tutor/:splat   302!
+/parent        /app/parent/  302!
+/parents       /app/parent/  302!
+/parent/*      /app/parent/:splat  302!
+/teacher       /app/teacher/ 302!
+/teacher/*     /app/teacher/:splat 302!

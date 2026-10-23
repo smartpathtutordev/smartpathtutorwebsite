@@ -5,7 +5,7 @@ export function SiteFooter() {
   return (
     <footer className="relative border-t border-slate-900/5 bg-[#fbf8f2] dark:border-white/5 dark:bg-slate-950">
       <div className="mx-auto max-w-6xl px-5 sm:px-6 py-16 grid gap-12 md:grid-cols-12">
-        <div className="md:col-span-5 space-y-4">
+        <div className="md:col-span-4 space-y-4">
           <Link href="/" className="group flex min-h-11 items-center gap-2.5 font-bold">
             <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-black/5 transition-transform duration-300 group-hover:scale-105">
               <Image
@@ -32,9 +32,21 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="md:col-span-3 md:col-start-7">
+        <div className="md:col-span-3 md:col-start-5">
           <h4 className="text-xs font-extrabold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
-            The Smart Path
+            Web Apps
+          </h4>
+          <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
+            <li><a href="/tutor" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App (K–3)</a></li>
+            <li><a href="/parent" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parents App &amp; AI</a></li>
+            <li><a href="/teacher" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teachers Portal</a></li>
+            <li><a href="/admin" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors text-slate-500">Staff Admin</a></li>
+          </ul>
+        </div>
+
+        <div className="md:col-span-2">
+          <h4 className="text-xs font-extrabold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+            Learn More
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
             <li><a href="/#features" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Features</a></li>
