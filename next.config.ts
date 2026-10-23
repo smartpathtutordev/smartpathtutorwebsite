@@ -24,6 +24,16 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
+        source: "/admin",
+        destination: "/app/admin/",
+        permanent: false,
+      },
+      {
+        source: "/admin/:path*",
+        destination: "/app/admin/",
+        permanent: false,
+      },
+      {
         source: "/portal",
         destination: "/app/parent/",
         permanent: false,
@@ -37,14 +47,6 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
-      {
-        source: "/admin",
-        destination: "https://smartpath-portal-live.pages.dev/admin",
-      },
-      {
-        source: "/admin/:path*",
-        destination: "https://smartpath-portal-live.pages.dev/admin/:path*",
-      },
       {
         source: "/vendor/:path*",
         destination: "https://smartpath-portal-live.pages.dev/vendor/:path*",
@@ -60,6 +62,10 @@ const nextConfig: NextConfig = {
       {
         source: "/app/teacher/:path*",
         destination: "https://smartpath-apps-live.pages.dev/app/teacher/:path*",
+      },
+      {
+        source: "/app/admin/:path*",
+        destination: "https://smartpath-apps-live.pages.dev/app/admin/:path*",
       },
     ];
   },
