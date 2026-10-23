@@ -29,15 +29,15 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/admin",
-        destination: "https://portal.smartpathtutor.ph/admin",
+        destination: "https://smartpath-portal-live.pages.dev/admin",
       },
       {
         source: "/admin/:path*",
-        destination: "https://portal.smartpathtutor.ph/admin/:path*",
+        destination: "https://smartpath-portal-live.pages.dev/admin/:path*",
       },
       {
         source: "/vendor/:path*",
-        destination: "https://portal.smartpathtutor.ph/vendor/:path*",
+        destination: "https://smartpath-portal-live.pages.dev/vendor/:path*",
       },
       {
         source: "/app/tutor/:path*",
