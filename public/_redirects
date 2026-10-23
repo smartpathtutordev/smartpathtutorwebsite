@@ -6,9 +6,9 @@
 /vendor/*      https://portal.smartpathtutor.ph/vendor/:splat  200!
 
 # 2. Flutter Web Apps Assets & Shell proxy
-/app/tutor/*   https://smartpath-apps.pages.dev/app/tutor/:splat   200!
-/app/parent/*  https://smartpath-apps.pages.dev/app/parent/:splat  200!
-/app/teacher/* https://smartpath-apps.pages.dev/app/teacher/:splat 200!
+/app/tutor/*   https://smartpath-apps-live.pages.dev/app/tutor/:splat   200!
+/app/parent/*  https://smartpath-apps-live.pages.dev/app/parent/:splat  200!
+/app/teacher/* https://smartpath-apps-live.pages.dev/app/teacher/:splat 200!
 
 # 3. Clean user-friendly URLs to app shells
 /tutor         /app/tutor/   302!

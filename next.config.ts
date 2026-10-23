@@ -41,15 +41,15 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/app/tutor/:path*",
-        destination: "https://smartpath-apps.pages.dev/app/tutor/:path*",
+        destination: "https://smartpath-apps-live.pages.dev/app/tutor/:path*",
       },
       {
         source: "/app/parent/:path*",
-        destination: "https://smartpath-apps.pages.dev/app/parent/:path*",
+        destination: "https://smartpath-apps-live.pages.dev/app/parent/:path*",
       },
       {
         source: "/app/teacher/:path*",
-        destination: "https://smartpath-apps.pages.dev/app/teacher/:path*",
+        destination: "https://smartpath-apps-live.pages.dev/app/teacher/:path*",
       },
     ];
   },
