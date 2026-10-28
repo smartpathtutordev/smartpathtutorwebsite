@@ -22,6 +22,8 @@ const links = [
   { href: "/#pricing", label: "Pricing" },
   { href: "/#faq", label: "Questions" },
   { href: "/#contact", label: "Contact" },
+  // TEMPORARY (UAT pilot): remove with src/app/testers when testing ends.
+  { href: "/testers", label: "Testers" },
 ];
 
 export function SiteNav() {
