@@ -67,7 +67,7 @@ export function TeacherSaje() {
           <ul className="mt-6 space-y-3 text-[15px] font-bold text-slate-700 dark:text-slate-300">
             <li className="flex gap-3"><Camera className="h-5 w-5 text-orange-500" /> Homework coaching</li>
             <li className="flex gap-3"><MessageCircleHeart className="h-5 w-5 text-orange-500" /> Filipino or English</li>
-            <li className="flex gap-3"><Sparkles className="h-5 w-5 text-orange-500" /> 40 questions/mo on Pro, 100 on Premium</li>
+            <li className="flex gap-3"><Sparkles className="h-5 w-5 text-orange-500" /> 40 questions a month on Pro, more anytime</li>
           </ul>
         </div>
         <div className="card-premium space-y-3 p-5">

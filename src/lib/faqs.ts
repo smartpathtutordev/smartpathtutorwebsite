@@ -7,7 +7,7 @@ export const FAQS = [
   },
   {
     q: "How much does it cost?",
-    a: "Pro is ₱399 a month, ₱1,099 a term (about 90 days) or ₱3,990 a school year for one child, with 40 Parent AI questions a month. Premium is ₱649 a month, ₱1,799 a term or ₱6,490 a school year, with 100 Parent AI questions a month and catch-up support. Extra Parent AI questions are 40 for ₱99.",
+    a: "Pro is ₱399 a month, ₱1,099 a term (about 90 days) or ₱3,990 a school year for one child, with 40 Parent AI questions a month. Extra Parent AI questions are 40 for ₱99.",
   },
   {
     q: "What if I have more than one child?",

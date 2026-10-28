@@ -142,10 +142,6 @@ export function Pricing() {
               {PRO_FEATURES.map((f) => <Feature key={f} text={f} dark />)}
             </ul>
 
-            <p className="mt-6 text-sm font-semibold text-slate-400">
-              Premium from {peso(649)}/mo: 100 Parent AI questions a month and catch-up support.
-            </p>
-
             <a href="#contact" className="group mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98]">
               Get started
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
