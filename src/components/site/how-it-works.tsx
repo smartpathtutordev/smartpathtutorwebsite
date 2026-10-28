@@ -45,7 +45,7 @@ const STEPS = [
     title: "Fun Zone Rewards",
     time: "Earn tickets",
     icon: Trophy,
-    description: "Completing daily trips earns game tickets and streak fire, unlocking 12 cultural mini-games, island stories, and avatars in My Room.",
+    description: "Completing daily trips earns game tickets and streak fire, unlocking Fun Zone mini-games.",
     tag: "12 Cultural Mini-Games",
     accent: "text-rose-600 dark:text-rose-400",
     border: "border-rose-300",

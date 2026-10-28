@@ -47,7 +47,7 @@ export function CtaBanner() {
           </div>
 
           <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8 text-sm font-semibold text-slate-300">
-            <span className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-amber-300" /> Free to start for teachers</span>
+            <span className="flex items-center gap-2"><GraduationCap className="h-4 w-4 text-amber-300" /> Free for teachers</span>
             <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-amber-300" /> No ads, no outside links</span>
             <span className="flex items-center gap-2"><BookOpen className="h-4 w-4 text-amber-300" /> DepEd MATATAG Grades 1–3</span>
           </div>

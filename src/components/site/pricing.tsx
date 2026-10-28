@@ -23,12 +23,12 @@ const CADENCE: Record<Cycle, string> = {
 const PRO: Record<Cycle, number> = { monthly: 399, term: 1099, year: 3990 };
 const SIBLING: Record<Cycle, number> = { monthly: 199, term: 549, year: 1990 };
 const MIN_KIDS = 1;
-const MAX_KIDS = 6;
+const MAX_KIDS = 5;
 
 const peso = (n: number) => "\u20b1" + n.toLocaleString("en-PH");
 
-const PRO_FEATURES = ["Tutor app per child", "Parent app", "40 AI questions/mo", "Works offline"];
-const TEACHER_FEATURES = ["30 credits to start", "Free class tools", "Worksheet scanning"];
+const PRO_FEATURES = ["Tutor app per child", "Parent app", "40 Parent AI questions/mo", "No ads"];
+const TEACHER_FEATURES = ["Set up a class", "Recommend lessons", "Write multiple-choice questions", "See topics done"];
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -142,7 +142,11 @@ export function Pricing() {
               {PRO_FEATURES.map((f) => <Feature key={f} text={f} dark />)}
             </ul>
 
-            <a href="#contact" className="group mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98]">
+            <p className="mt-6 text-sm font-semibold text-slate-400">
+              Premium from {peso(649)}/mo: 100 Parent AI questions a month and catch-up support.
+            </p>
+
+            <a href="#contact" className="group mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-gradient-sunset py-3.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30 transition hover:brightness-105 active:scale-[0.98]">
               Get started
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
@@ -165,7 +169,7 @@ export function Pricing() {
             </div>
             <div className="mt-6 flex flex-wrap items-baseline gap-x-2 gap-y-1">
               <span className="font-heading text-5xl font-extrabold leading-none tracking-tight tabular-nums">{"\u20b10"}</span>
-              <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">Free to start</span>
+              <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">Nothing to buy</span>
             </div>
             <ul className="mt-6 flex-1 space-y-3 border-t border-slate-900/5 pt-6 dark:border-white/10">
               {TEACHER_FEATURES.map((f) => <Feature key={f} text={f} />)}
@@ -178,7 +182,7 @@ export function Pricing() {
         </div>
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm font-semibold text-slate-600 dark:text-slate-400">
-          GCash, bank or cash · No auto-renewal · +40 AI questions ₱99
+          GCash, bank or cash · No card · No auto-renewal · Up to 5 children · +40 AI questions ₱99
         </p>
 
       </div>

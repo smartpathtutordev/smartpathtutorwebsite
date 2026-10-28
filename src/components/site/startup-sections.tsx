@@ -1,8 +1,8 @@
 import Image from "next/image";
 import {
-  CalendarDays, WifiOff, Volume2, PenLine, Sparkles, Gamepad2, Accessibility,
+  CalendarDays, FlaskConical, Volume2, Clock, BookOpen, ListChecks, BarChart3, UserPlus, PenLine, Sparkles, Gamepad2, Accessibility,
   Camera, MessageCircleHeart, ShieldCheck, Ban, UserCheck, Lock,
-  Mail, Receipt, BadgeCheck, Users, ClipboardList, ScanLine, FileSpreadsheet, ArrowRight,
+  Receipt, BadgeCheck, Users, ArrowRight,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -30,8 +30,8 @@ function Tile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
 }
 
 const FEATURES: [LucideIcon, string][] = [
-  [CalendarDays, "4-day MATATAG lessons"],
-  [WifiOff, "Works offline"],
+  [CalendarDays, "Short daily lessons"],
+  [FlaskConical, "Science sims (Grade 3)"],
   [Volume2, "Reads aloud"],
   [PenLine, "Letter tracing"],
   [Sparkles, "Tala gives hints"],
@@ -63,11 +63,11 @@ export function TeacherSaje() {
           <h2 className="mt-3 font-heading text-3xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
             Homework help: <span className="text-gradient-sunset">Teacher Saje.</span>
           </h2>
-          <p className="mt-3 text-base text-slate-600 sm:text-lg dark:text-slate-400">Snap the homework. Get steps to teach it.</p>
+          <p className="mt-3 text-base text-slate-600 sm:text-lg dark:text-slate-400">Ask about the homework. Get steps to teach it.</p>
           <ul className="mt-6 space-y-3 text-[15px] font-bold text-slate-700 dark:text-slate-300">
-            <li className="flex gap-3"><Camera className="h-5 w-5 text-orange-500" /> Photo or PDF</li>
+            <li className="flex gap-3"><Camera className="h-5 w-5 text-orange-500" /> Homework coaching</li>
             <li className="flex gap-3"><MessageCircleHeart className="h-5 w-5 text-orange-500" /> Filipino or English</li>
-            <li className="flex gap-3"><Sparkles className="h-5 w-5 text-orange-500" /> 40 questions/mo on Pro</li>
+            <li className="flex gap-3"><Sparkles className="h-5 w-5 text-orange-500" /> 40 questions/mo on Pro, 100 on Premium</li>
           </ul>
         </div>
         <div className="card-premium space-y-3 p-5">
@@ -85,7 +85,7 @@ export function TeacherSaje() {
 }
 
 const STEPS: [LucideIcon, string][] = [
-  [Mail, "Contact us"],
+  [UserPlus, "Sign up"],
   [Receipt, "Pay & send receipt"],
   [BadgeCheck, "We activate"],
   [CalendarDays, "Learn daily"],
@@ -114,9 +114,10 @@ export function HowItWorks() {
 
 const SAFETY: [LucideIcon, string][] = [
   [Ban, "No ads or links"],
-  [ShieldCheck, "AI talks to parents only"],
+  [ShieldCheck, "No open AI chat for kids"],
   [UserCheck, "You approve teachers"],
   [Lock, "Data never sold"],
+  [Clock, "Screen-time & bedtime limits"],
 ];
 
 export function Safety() {
@@ -138,20 +139,23 @@ export function Safety() {
 }
 
 const TEACH: [LucideIcon, string][] = [
-  [Users, "Classes"],
-  [ClipboardList, "Attendance & tasks"],
-  [ScanLine, "Scan worksheets"],
-  [FileSpreadsheet, "CSV export"],
+  [Users, "Set up a class"],
+  [BookOpen, "Recommend lessons"],
+  [ListChecks, "Write multiple-choice questions"],
+  [BarChart3, "See topics done"],
 ];
 
 export function Teachers() {
   return (
     <section id="teachers" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-5 sm:px-6">
-        <Head eyebrow="For teachers" title="Teachers start" accent="free." sub="30 credits to start." />
+        <Head eyebrow="For teachers" title="Free for" accent="teachers." sub="Class tools included. Nothing to buy." />
         <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {TEACH.map(([i, l]) => <Tile key={l} icon={i} label={l} />)}
         </div>
+        <p className="mt-5 text-center text-sm font-semibold text-slate-500 dark:text-slate-400">
+          Teachers see topic progress. Individual scores only with consent.
+        </p>
         <div className="mt-8 text-center">
           <a href="#contact" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-slate-900 px-6 py-3 font-extrabold text-white dark:bg-white dark:text-slate-900">
             Request access <ArrowRight className="h-4 w-4" />

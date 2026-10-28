@@ -23,13 +23,9 @@ export function SiteFooter() {
           <p className="max-w-sm text-[15px] font-medium text-slate-600 dark:text-slate-400">
             By SmartPath Educational Technologies. A strong start for every Filipino child.
           </p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {["App Store", "Google Play"].map((l) => (
-              <span key={l} className="rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white dark:bg-white/10">
-                {l} · <span className="text-amber-300">soon</span>
-              </span>
-            ))}
-          </div>
+          <p className="max-w-sm text-sm font-semibold text-slate-500 dark:text-slate-400">
+            Use it in your phone, tablet or computer browser at smartpathtutor.ph.
+          </p>
         </div>
 
         <div className="md:col-span-3 md:col-start-5">
@@ -37,7 +33,7 @@ export function SiteFooter() {
             Web Apps
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
-            <li><a href="/tutor" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App (K–3)</a></li>
+            <li><a href="/tutor" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App (Grades 1–3)</a></li>
             <li><a href="/parent" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parents App &amp; AI</a></li>
             <li><a href="/teacher" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teachers Portal</a></li>
             <li><a href="/admin" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors text-slate-500">Staff Admin</a></li>
@@ -63,7 +59,7 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
             <li><a href="/#contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Contact Us</a></li>
-            <li><a href="mailto:smartpathtutor.dev@gmail.com" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">smartpathtutor.dev@gmail.com</a></li>
+            <li><a href="mailto:sptutor.ph@gmail.com" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">sptutor.ph@gmail.com</a></li>
             <li><Link href="/privacy" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
             <li><Link href="/terms" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Terms of Service</Link></li>
           </ul>

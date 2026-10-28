@@ -6,7 +6,6 @@ import {
   Calculator,
   FlaskConical,
   BookOpen,
-  Compass,
   Sparkles,
   ArrowUpRight,
 } from "lucide-react";
@@ -91,47 +90,20 @@ const SUBJECTS: SubjectData[] = [
     bg: "bg-emerald-500/10",
     grades: {
       "1": {
-        code: "Discovery",
-        headline: "Observation of living things, 5 senses & local Philippine weather",
-        skills: ["5 Human Senses", "Living Things", "Weather Observation"],
-        note: "Foundational nature discovery preparing for formal Grade 3 science",
+        code: "Grade 3",
+        headline: "Science starts in Grade 3. Grade 1 learners focus on Math and English.",
+        skills: ["Starts in Grade 3"],
       },
       "2": {
-        code: "Discovery",
-        headline: "Plant life, animal habitats, light, shadows & material properties",
-        skills: ["Plant Parts", "Animal Habitats", "Sun & Shadows"],
-        note: "Everyday environment exploration aligned with MATATAG competencies",
+        code: "Grade 3",
+        headline: "Science starts in Grade 3. Grade 2 learners focus on Math and English.",
+        skills: ["Starts in Grade 3"],
       },
       "3": {
         code: "S3LT-IIa-b-1",
-        headline: "Official DepEd Science: Human sense organs, states of matter & ecosystems",
+        headline: "DepEd MATATAG Science: sense organs, states of matter & ecosystems",
         skills: ["States of Matter", "Sense Organs", "Ecosystem Interactions"],
         note: "DepEd MATATAG formal Science begins in Grade 3!",
-      },
-    },
-  },
-  {
-    id: "makabansa",
-    title: "Makabansa & Values",
-    icon: Compass,
-    accent: "text-rose-600 dark:text-rose-400",
-    border: "border-rose-500/20",
-    bg: "bg-rose-500/10",
-    grades: {
-      "1": {
-        code: "AP1PAM-IIa-1",
-        headline: "Self-identity, family roles, Philippine symbols & community helpers",
-        skills: ["Family Structure", "Community Helpers", "National Symbols"],
-      },
-      "2": {
-        code: "AP2KOM-Ia-1",
-        headline: "Barangay geography, cultural traditions & respectful civic awareness",
-        skills: ["Community Map", "Cultural Traditions", "Civic Habits"],
-      },
-      "3": {
-        code: "AP3LAR-Ia-1",
-        headline: "Philippine regions, provincial history, local landmarks & heritage",
-        skills: ["Provincial Maps", "Natural Resources", "Filipino Heroes"],
       },
     },
   },
@@ -164,7 +136,7 @@ export function Subjects() {
             for Grades 1, 2, and 3.
           </h2>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400 font-sans font-medium">
-            Every quest maps directly to official Department of Education learning standards. (Grades 4–6 in active development).
+            Lessons are aligned to DepEd MATATAG. Math and English in every grade, Science in Grade 3.
           </p>
 
           {/* Grade Pill Tabs */}
@@ -196,7 +168,7 @@ export function Subjects() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
-            className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
           >
             {SUBJECTS.map((s) => {
               const gradeData = s.grades[activeTab];

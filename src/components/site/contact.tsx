@@ -11,7 +11,7 @@ const TOPICS = [
   "Getting Started",
   "Payment (GCash / bank / cash)",
   "Siblings (Add a child for ₱199/mo)",
-  "Teacher access (free to start)",
+  "Teacher access (free)",
   "DepEd MATATAG Grades 1–3",
   "Today's Path & App Support",
 ];
@@ -42,7 +42,7 @@ export function Contact() {
       "",
       message,
     ].join("\n");
-    window.location.href = `mailto:smartpathtutor.dev@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:sptutor.ph@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setStatus("sent");
     setTimeout(() => setStatus("idle"), 5000);
   };
@@ -80,8 +80,8 @@ export function Contact() {
                 </span>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Email Support</div>
-                  <a href="mailto:smartpathtutor.dev@gmail.com" className="font-bold text-slate-900 dark:text-slate-100 hover:text-orange-600 transition-colors">
-                    smartpathtutor.dev@gmail.com
+                  <a href="mailto:sptutor.ph@gmail.com" className="font-bold text-slate-900 dark:text-slate-100 hover:text-orange-600 transition-colors">
+                    sptutor.ph@gmail.com
                   </a>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export function Contact() {
                 </span>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Headquarters</div>
-                  <span className="font-bold text-slate-900 dark:text-slate-100">Philippines · Serving learners nationwide</span>
+                  <span className="font-bold text-slate-900 dark:text-slate-100">Philippines</span>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ export function Contact() {
                 <p className="text-xs text-slate-500 dark:text-slate-400">Select a topic to speed up assistance</p>
               </div>
               <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="h-3.5 w-3.5" /> Rapid Reply
+                <CheckCircle2 className="h-3.5 w-3.5" /> Reply by email
               </span>
             </div>
 

@@ -16,7 +16,7 @@ export default async function OG() {
     readFile(pub("fonts/Baloo2-ExtraBold.ttf")),
     readFile(pub("fonts/Nunito-ExtraBold.ttf")),
   ]);
-  const chips = ["DepEd MATATAG", "Grades 1–3", "Works offline", "From ₱399/mo"];
+  const chips = ["DepEd MATATAG", "Grades 1–3", "Reads aloud", "From ₱399/mo"];
   return new ImageResponse(
     (
       <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", overflow: "hidden", background: "linear-gradient(135deg,#f59e0b 0%,#f97316 45%,#ea580c 100%)", fontFamily: "Nunito" }}>

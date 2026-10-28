@@ -25,11 +25,11 @@ export function Faq() {
             Frequently asked <span className="text-gradient-sunset">questions.</span>
           </h2>
           <p className="mt-4 max-w-md text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-            Quick answers about kid safety, plans and pricing, teacher access, and GCash payment.
+            Short answers about grades, prices, paying, signing in and keeping your child safe.
           </p>
           <div className="mt-8 text-sm font-semibold text-slate-500 dark:text-slate-400">
             Have more questions?{" "}
-            <a href="mailto:smartpathtutor.dev@gmail.com" className="group inline-flex min-h-11 items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
+            <a href="mailto:sptutor.ph@gmail.com" className="group inline-flex min-h-11 items-center gap-1 font-extrabold text-orange-700 hover:underline dark:text-orange-300">
               Email us <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>

@@ -4,7 +4,7 @@ import path from "path";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Local dev backup only. The real delivery to smartpathtutor.dev@gmail.com happens
+// Local dev backup only. The real delivery to sptutor.ph@gmail.com happens
 // client-side via Web3Forms (its free plan blocks server-side calls). This just
 // keeps a running list in dev so nothing is lost while testing.
 export async function POST(req: Request) {

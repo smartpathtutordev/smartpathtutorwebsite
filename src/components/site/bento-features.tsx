@@ -31,7 +31,7 @@ export function BentoFeatures() {
             built for Philippine families.
           </h2>
           <p className="mt-3 text-base text-slate-600 dark:text-slate-400 font-sans font-medium">
-            Priced per family household, 100% free for certified educators, and tailored for Grades 1 to 3.
+            One household account, free for teachers, and made for Grades 1 to 3.
           </p>
         </div>
 
@@ -61,7 +61,7 @@ export function BentoFeatures() {
                 </div>
               </div>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-medium">
-                No per-child or per-device lock-in. Each child is ₱399/mo, and up to 3 children share one account with separate grade profiles, streaks, and Parent AI guidance. Plus, Teacher accounts are 100% Free!
+                The first child is ₱399/mo and each extra child is ₱199/mo, with up to 5 children in one household account. Each child gets their own profile, and parents get Parent AI homework coaching. Teachers are free.
               </p>
             </div>
 
@@ -70,7 +70,7 @@ export function BentoFeatures() {
               <div className="flex items-center justify-between text-orange-600 dark:text-orange-400 font-bold mb-3">
                 <span className="flex items-center gap-1.5">
                   <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Household Active · Parent App Connected
+                  Example · Parent app view
                 </span>
                 <span className="text-[10px] bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300 px-2 py-0.5 rounded-full font-bold">1 Family Plan</span>
               </div>
@@ -104,13 +104,13 @@ export function BentoFeatures() {
 
             <div className="flex flex-wrap gap-2 pt-2">
               <span className="rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-900 dark:text-slate-300">
-                👨‍👩‍👧‍👦 Up to 3+ Children
+                👨‍👩‍👧‍👦 Up to 5 Children
               </span>
               <span className="rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-900 dark:text-slate-300">
-                👩‍🏫 100% Free For Teachers
+                👩‍🏫 Free for Teachers
               </span>
               <span className="rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-900 dark:text-slate-300">
-                📱 Real-Time Parent App
+                📱 Parent App Included
               </span>
             </div>
           </motion.div>
@@ -130,15 +130,15 @@ export function BentoFeatures() {
                 </span>
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-orange-600 dark:text-orange-400">
-                    Bilingual Voice
+                    Reads Aloud
                   </span>
                   <h3 className="font-heading text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                    4 Mother-Tongue Languages
+                    Filipino & English
                   </h3>
                 </div>
               </div>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
-                Concepts explained in the child&apos;s natural language to eliminate English-only learning barriers.
+                Lessons are read aloud, and reading moves step by step from Filipino to English.
               </p>
             </div>
 
@@ -152,14 +152,6 @@ export function BentoFeatures() {
                 <span className="text-xs font-bold text-slate-900 dark:text-white">English</span>
                 <p className="text-[10px] text-slate-400 mt-0.5">Global Literacy</p>
               </div>
-              <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-3">
-                <span className="text-xs font-bold text-slate-900 dark:text-white">Cebuano / Bisaya</span>
-                <p className="text-[10px] text-slate-400 mt-0.5">Visayas &amp; Mindanao</p>
-              </div>
-              <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-3">
-                <span className="text-xs font-bold text-slate-900 dark:text-white">Hiligaynon</span>
-                <p className="text-[10px] text-slate-400 mt-0.5">Western Visayas</p>
-              </div>
             </div>
 
             <div className="flex gap-2 pt-2">
@@ -172,7 +164,7 @@ export function BentoFeatures() {
             </div>
           </motion.div>
 
-          {/* Card 3: 1-Click Slide Exporter (Span 4) */}
+          {/* Card 3: Teacher class tools (Span 4) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -187,33 +179,33 @@ export function BentoFeatures() {
                 </span>
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                    Educator Platform
+                    For Teachers
                   </span>
                   <h3 className="font-heading text-lg font-black text-slate-900 dark:text-white">
-                    1-Click Slide Export
+                    Free Class Tools
                   </h3>
                 </div>
               </div>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-medium">
-                Generate animated classroom presentations formatted directly for TV and projectors.
+                Set up a class, recommend lessons, write multiple-choice questions and see which topics the class has done.
               </p>
             </div>
 
             <div className="my-5 flex items-center justify-center gap-2 rounded-2xl bg-amber-50/60 dark:bg-slate-800/40 p-3 border border-amber-100">
               <span className="rounded-lg bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-black shadow-xs border border-amber-200 dark:border-slate-700">
-                .PPTX
+                Classes
               </span>
               <span className="rounded-lg bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-black shadow-xs border border-amber-200 dark:border-slate-700">
-                Canva
+                Lessons
               </span>
               <span className="rounded-lg bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-black shadow-xs border border-amber-200 dark:border-slate-700">
-                Slides
+                Quizzes
               </span>
             </div>
 
             <div className="pt-2">
               <span className="rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950/40 px-3 py-1 text-xs font-black">
-                Classroom Ready
+                Nothing to buy
               </span>
             </div>
           </motion.div>
@@ -280,26 +272,26 @@ export function BentoFeatures() {
                     Child Safety
                   </span>
                   <h3 className="font-heading text-lg font-black text-slate-900 dark:text-white">
-                    100% Ad-Free Haven
+                    Ad-Free
                   </h3>
                 </div>
               </div>
               <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-sans leading-relaxed font-medium">
-                Zero third-party advertising, zero unmonitored feeds, and full parent screen-time limits.
+                No ads, no outside links, and parent screen-time & bedtime limits.
               </p>
             </div>
 
             <div className="my-5 flex items-center justify-center gap-3 rounded-2xl bg-rose-50/50 dark:bg-slate-800/40 p-3 border border-rose-100">
               <span className="text-xs font-black text-slate-800 dark:text-slate-300">0 Ads</span>
               <span className="text-slate-400 dark:text-slate-600">•</span>
-              <span className="text-xs font-black text-slate-800 dark:text-slate-300">0 Trackers</span>
+              <span className="text-xs font-black text-slate-800 dark:text-slate-300">No outside links</span>
               <span className="text-slate-400 dark:text-slate-600">•</span>
               <span className="text-xs font-black text-slate-800 dark:text-slate-300">PIN Locked</span>
             </div>
 
             <div className="pt-2">
               <span className="rounded-full bg-rose-100 text-rose-900 dark:bg-rose-950/40 px-3 py-1 text-xs font-black">
-                Child-Safe Guaranteed
+                Made for kids
               </span>
             </div>
           </motion.div>

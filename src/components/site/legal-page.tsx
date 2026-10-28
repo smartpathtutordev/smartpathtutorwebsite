@@ -21,7 +21,7 @@ export function LegalPage({ title, sections }: { title: string; sections: { h: s
           ))}
         </div>
         <p className="mt-12 text-[15px] text-slate-600 dark:text-slate-300">
-          Questions? Email <a className="font-bold text-orange-700 underline dark:text-orange-300" href="mailto:smartpathtutor.dev@gmail.com">smartpathtutor.dev@gmail.com</a> or <Link className="font-bold text-orange-700 underline dark:text-orange-300" href="/#contact">contact us</Link>.
+          Questions? Email <a className="font-bold text-orange-700 underline dark:text-orange-300" href="mailto:sptutor.ph@gmail.com">sptutor.ph@gmail.com</a> or <Link className="font-bold text-orange-700 underline dark:text-orange-300" href="/#contact">contact us</Link>.
         </p>
       </main>
       <SiteFooter />
