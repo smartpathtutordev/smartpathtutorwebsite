@@ -125,7 +125,7 @@ export function Subjects() {
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-300 bg-amber-50 px-4 py-1 text-xs font-black text-amber-800 dark:text-amber-300">
-            <span>📚</span>
+            <BookOpen className="h-3.5 w-3.5" />
             <span>DepEd MATATAG Grades 1–3</span>
           </div>
           <h2 className="mt-4 font-heading text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">

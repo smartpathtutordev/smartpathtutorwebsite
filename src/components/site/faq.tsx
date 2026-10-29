@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, HelpCircle } from "lucide-react";
 
 import {
   Accordion,
@@ -19,7 +19,7 @@ export function Faq() {
       <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-6 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
           <span className="eyebrow">
-            <span aria-hidden>❓</span> Questions &amp; Answers
+            <HelpCircle className="h-3.5 w-3.5 text-orange-500" /> Questions &amp; Answers
           </span>
           <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
             Frequently asked <span className="text-gradient-sunset">questions.</span>

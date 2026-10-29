@@ -9,19 +9,11 @@ import { ThemeToggle } from "@/components/site/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  // Only ids the home page actually renders.
-  //
-  // "Today's Trip", "Curriculum" and "Features" pointed at #how-it-works,
-  // #curriculum and #superpowers. Those sections are no longer on the page, so
-  // all three scrolled nowhere — a click that does nothing, throws nothing and
-  // logs nothing, which is the hardest kind of broken to notice.
-  //
-  // Anything added back here has to have a section with that id on the page.
-  { href: "/#features", label: "Features" },
-  { href: "/#teachers", label: "Teachers" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/#faq", label: "Questions" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/tutor-app", label: "Tutor" },
+  { href: "/parent-app", label: "Parent" },
+  { href: "/teacher-app", label: "Teacher" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/about", label: "About Us" },
   // TEMPORARY (UAT pilot): remove with src/app/testers when testing ends.
   { href: "/testers", label: "Testers" },
 ];
@@ -75,26 +67,26 @@ export function SiteNav() {
         {/* Center Links */}
         <nav className="hidden md:flex items-center gap-1 text-sm font-bold text-slate-600 dark:text-slate-300">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="inline-flex min-h-11 items-center rounded-full px-4 transition-colors hover:text-slate-900 hover:bg-slate-900/5 dark:hover:text-white dark:hover:bg-white/10"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
-          <a
-            href="/#contact"
+          <Link
+            href="/get-started"
             className="group inline-flex min-h-11 items-center gap-1.5 rounded-full bg-slate-900 px-5 text-sm font-extrabold text-white shadow-md shadow-slate-900/15 transition hover:bg-slate-800 active:scale-95 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           >
             <span>Get Started</span>
             <ArrowRight className="h-3.5 w-3.5" />
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -116,23 +108,23 @@ export function SiteNav() {
         <div className="md:hidden mt-3 border-y border-slate-900/5 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 px-5 py-5 backdrop-blur-xl animate-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col gap-2">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
                 className="rounded-xl px-3 py-3 text-base font-bold text-slate-800 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
             <div className="my-2 border-t border-slate-100 dark:border-slate-800" />
-            <a
-              href="/#contact"
+            <Link
+              href="/get-started"
               onClick={() => setOpen(false)}
               className="mt-1 text-center rounded-full bg-gradient-sunset text-white py-3.5 text-base font-extrabold shadow-lg shadow-orange-500/25"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       )}

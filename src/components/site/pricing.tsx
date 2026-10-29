@@ -54,7 +54,7 @@ export function Pricing() {
       <div className="mx-auto max-w-6xl px-5 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <span className="eyebrow">
-            <span aria-hidden>👧</span> Simple plans per child
+            <Sparkles className="h-3.5 w-3.5 text-orange-500" /> Simple plans per child
           </span>
           <h2 className="mt-4 font-heading text-4xl font-extrabold tracking-[-0.02em] text-slate-900 sm:text-5xl dark:text-white">
             Pick a <span className="text-gradient-sunset">plan.</span>

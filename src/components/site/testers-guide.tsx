@@ -3,243 +3,384 @@
 // TEMPORARY — UAT pilot guide. Remove with src/app/testers/page.tsx and the
 // "Testers" link in nav.tsx when UAT ends.
 
-import { useState } from "react";
-import { Users, Baby, GraduationCap, Mail, CreditCard, ShieldAlert, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Users,
+  Compass,
+  GraduationCap,
+  Mail,
+  CreditCard,
+  ShieldAlert,
+  ExternalLink,
+  CheckCircle2,
+  Circle,
+  Copy,
+  Check,
+  Sparkles,
+  Trophy,
+  Clock,
+  RotateCcw,
+  ThumbsUp,
+  HelpCircle,
+  Bug,
+  Layers,
+} from "lucide-react";
 
 type Lang = "en" | "tl";
+type RoleFilter = "all" | "parent" | "child" | "teacher";
 
 const APP = "https://smartpathtutor.ph/app";
 const SUPPORT = "sptutor.ph@gmail.com";
+const STORAGE_KEY = "smartpath_uat_quest_v1";
+const TEST_CARD = "4343 4343 4343 4345";
 
-const reportLink = (role: string) =>
-  `mailto:${SUPPORT}?subject=${encodeURIComponent(`UAT – ${role}`)}&body=${encodeURIComponent(
-    "What I was doing:\n\nWhat happened:\n\nWhat I expected:\n\nPhone/computer and browser:\n\n(Attach a screenshot if you can.)",
+const buildReportLink = (role: string, status: string, completedCount: number, totalCount: number) =>
+  `mailto:${SUPPORT}?subject=${encodeURIComponent(`UAT Feedback – ${role} (${status})`)}&body=${encodeURIComponent(
+    `Role tested: ${role}\nChecklist progress: ${completedCount}/${totalCount} completed\nOverall experience: ${status}\n\nWhat I was doing:\n\nWhat happened:\n\nWhat I expected:\n\nPhone/computer and browser:\n\n(Attach a screenshot if you can.)`,
   )}`;
 
 const T = {
   en: {
-    badge: "Temporary · User testing (UAT)",
-    title: "Help us test SmartPath",
+    badge: "Pilot Quest · User Testing (UAT)",
+    title: "SmartPath",
+    titleAccent: "Tester Quest.",
     intro:
-      "Thank you for testing! Choose your role below, follow the steps, and tell us anything that is confusing or does not work. It takes about 15–20 minutes.",
-    before: "Before you start",
+      "Pick your mission below, tap each step as you finish it, and help us make SmartPath awesome for Filipino kids! Your progress saves automatically.",
+    questProgress: "Your Quest Progress",
+    completedLabel: "tasks completed",
+    resetLabel: "Reset progress",
+    allMissions: "All 3 Missions",
+    before: "Quick Rules Before You Start",
     beforeItems: [
-      "Use your phone or computer browser (Chrome or Safari). There is nothing to install.",
-      "Use an email address you can open. You will get a confirmation email.",
-      "Payments are in TEST MODE. No real money is taken.",
-      "Test accounts may be deleted after testing ends.",
+      "Works right in Chrome or Safari on phone, tablet, or laptop — nothing to install.",
+      "Use a real email address you can open for the confirmation link.",
+      "Payments are in TEST MODE — zero real money is charged.",
+      "Facebook login only works for pre-added testers; use Google or email if prompted.",
     ],
-    payTitle: "How to pay in test mode",
-    payItems: [
-      "In the Parent app, open Plan, choose a plan, then tap Pay online.",
-      "On the PayMongo page, choose GCash or Maya and tap Authorize Test Payment.",
-      "Or choose card and type 4343 4343 4343 4345, any future date (e.g. 12/30) and any 3 digits.",
-      "You come back to SmartPath. Your plan turns on within a few seconds.",
-    ],
-    fbNote:
-      "Continue with Facebook works only if we added your Facebook account as a tester. If it says “App not active”, use Google or email instead.",
-    steps: "Steps",
-    check: "Please check",
-    report: "Report a problem",
+    payTitle: "Test Payment Pass (Free)",
+    paySubtitle: "In Parent → Plan → Pay online, use either option on PayMongo:",
+    payGcash: "Option A: Tap GCash or Maya → Tap Authorize Test Payment.",
+    payCardLabel: "Option B: Tap Card and copy this test card:",
+    copyBtn: "Copy Card",
+    copiedBtn: "Copied!",
+    cardMeta: "Exp: 12/30 · CVC: 123",
+    steps: "Mission Steps (Tap as you go)",
+    check: "Bonus Checks (Tap to verify)",
+    quickFeedback: "Send 1-Tap Feedback:",
+    fbSmooth: "Worked smoothly!",
+    fbConfusing: "A bit confusing",
+    fbBug: "Found a bug",
+    missionDone: "Mission Complete!",
+    allDoneTitle: "All Tester Missions Complete!",
+    allDoneSub: "Salamat! Tap below to send your final tester summary to the SmartPath team.",
+    sendFinalBtn: "Send Final Quest Report",
     roles: [
       {
-        key: "parent",
+        key: "parent" as const,
+        missionBadge: "Mission 1 · ~7 mins",
         icon: Users,
-        title: "I am a parent",
-        who: "Start here. A parent account is needed before a child can use SmartPath.",
+        character: "/assets/characters/nanay_idle.png",
+        accentColor: "from-orange-500/20 via-amber-500/10 to-transparent",
+        badgeClass: "bg-orange-500/10 text-orange-600 dark:bg-orange-400/15 dark:text-orange-300",
+        title: "Parent Mission",
+        who: "Start here first! Set up your family account and unlock your child's learning path.",
         buttons: [
-          { label: "Create a parent account", href: `${APP}/parent/#/auth`, primary: true },
-          { label: "Sign in", href: `${APP}/parent/#/auth` },
-          { label: "We'll set it up for you", href: `${APP}/parent/#/setup-help` },
+          { label: "Open Parent App", href: `${APP}/parent/#/auth`, primary: true },
+          { label: "Need Setup Help?", href: `${APP}/parent/#/setup-help` },
         ],
         steps: [
-          "Tap Create a parent account, then tap the Create account tab.",
-          "Type your name, email and a password twice (or use Continue with Google).",
-          "Open the confirmation email and tap the link, then sign in.",
-          "Open Plan, choose a plan and pay in test mode (see “How to pay in test mode”).",
-          "Add your child: name and grade (Grades 1–3).",
-          "Have a class code from a teacher tester? Enter it under Class code from the teacher.",
-          "Sign out, then sign in again. Your email should already be filled in.",
+          "Open Parent App and tap the Create account tab.",
+          "Sign up with your name, email & password (or Continue with Google).",
+          "Open the confirmation email, tap the link, and sign in.",
+          "Open Plan, choose a plan, and activate with the Test Payment Pass above.",
+          "Add your child's name and grade level (Grades 1–3).",
+          "Optional: Enter a class code under Class code from the teacher.",
+          "Sign out and sign back in — verify your email is remembered.",
         ],
         checks: [
-          "Was creating the account easy to understand?",
-          "Did the plan turn on after paying? Did the Subscribe banner on Home disappear?",
-          "Can you see your child's progress after they do a lesson?",
-          "Try Teacher Saje (Ask AI) with a homework question.",
+          "Creating the parent account felt clear and fast",
+          "Plan activated right after test payment & Subscribe banner disappeared",
+          "Child's live progress appeared after they did a lesson",
+          "Asked Teacher Saje (Ask AI) a homework question",
         ],
         role: "Parent",
       },
       {
-        key: "child",
-        icon: Baby,
-        title: "My child will test",
-        who: "For Grades 1–3. Do this after the parent account has an active plan.",
-        buttons: [{ label: "Open the Tutor app", href: `${APP}/tutor/`, primary: true }],
+        key: "child" as const,
+        missionBadge: "Mission 2 · ~8 mins",
+        icon: Compass,
+        character: "/assets/characters/kuya_idle.png",
+        accentColor: "from-sky-500/20 via-cyan-500/10 to-transparent",
+        badgeClass: "bg-sky-500/10 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300",
+        title: "Kid & Tutor Mission",
+        who: "For Grades 1–3! Do this right after your Parent account has an active plan.",
+        buttons: [{ label: "Open Tutor App", href: `${APP}/tutor/`, primary: true }],
         steps: [
-          "On your child's phone, tablet or computer, open the Tutor app.",
-          "A grown-up signs in once with the parent email and password.",
-          "Your child taps their picture. No password needed for kids.",
-          "Let your child do today's lesson: reading aloud, tracing and the activities.",
-          "Close the app and open it again. Your child should still be signed in.",
+          "Open the Tutor App on your phone, tablet, or laptop.",
+          "Sign in once with your parent email and password.",
+          "Let your child tap their avatar picture (no password needed for kids!).",
+          "Try Today's Trip: complete a Math, English, or Science activity with audio.",
+          "Close the tab and reopen it — verify your child stays signed in.",
         ],
         checks: [
-          "Could your child use it alone after you signed in?",
-          "Were the instructions and voice clear for your child?",
-          "Did anything freeze, look broken or feel too hard?",
+          "My child could navigate independently after sign-in",
+          "Read-aloud voice and instructions were clear",
+          "Lessons, tracing, and animations ran smoothly without freezing",
         ],
-        role: "Child",
+        role: "Child / Tutor",
       },
       {
-        key: "teacher",
+        key: "teacher" as const,
+        missionBadge: "Mission 3 · ~5 mins",
         icon: GraduationCap,
-        title: "I am a teacher",
-        who: "Free for teachers. Best tested together with a parent tester.",
-        buttons: [
-          { label: "Create a teacher account", href: `${APP}/teacher/`, primary: true },
-          { label: "Sign in", href: `${APP}/teacher/` },
-        ],
+        character: "/assets/characters/teacher_idle.png",
+        accentColor: "from-indigo-500/20 via-violet-500/10 to-transparent",
+        badgeClass: "bg-indigo-500/10 text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300",
+        title: "Teacher Mission",
+        who: "100% Free for teachers! Best tested alongside a Parent account.",
+        buttons: [{ label: "Open Teacher App", href: `${APP}/teacher/`, primary: true }],
         steps: [
-          "Open the Teacher app and create an account (or use Continue with Google).",
-          "Create a class.",
-          "Share the class code with a parent tester. They enter it in the Parent app, then you approve the request on the class page.",
-          "Recommend a lesson and write a multiple-choice question for the class.",
-          "Look at which topics your class has done.",
+          "Open the Teacher App and create an account (or Continue with Google).",
+          "Create a new class for your section (or tap Try a sample class).",
+          "Share your 1-time class code with a Parent account and approve their join request.",
+          "Recommend a lesson and create a quick multiple-choice question for the class.",
+          "Check the class topic completion dashboard.",
         ],
         checks: [
-          "Was creating a class and sharing the class code clear?",
-          "Did the family's request show up for you to approve?",
-          "Is anything missing that you need in class?",
+          "Creating a class and sharing the code was effortless",
+          "Parent join request appeared right away for approval",
+          "Topic progress and lesson recommendations worked as expected",
         ],
         role: "Teacher",
       },
     ],
-    reportTitle: "Found a problem or have an idea?",
+    reportTitle: "Spotted a bug or have a cool idea?",
     reportBody:
-      "Email us what you were doing, what happened, and what you expected. A screenshot helps a lot. Every report is read.",
-    thanks: "Salamat! Thank you for helping make SmartPath better for Filipino families.",
+      "Send us a quick note with what you were doing and what happened. Screenshots are super helpful!",
+    thanks: "Salamat! Every box you check helps us build a better learning companion for Filipino kids.",
   },
   tl: {
-    badge: "Pansamantala · Pagsubok ng user (UAT)",
-    title: "Tulungan kaming subukan ang SmartPath",
+    badge: "Pilot Quest · Pagsubok ng User (UAT)",
+    title: "SmartPath",
+    titleAccent: "Tester Quest.",
     intro:
-      "Salamat sa pagsubok! Piliin ang iyong papel sa ibaba, sundin ang mga hakbang, at sabihin sa amin kung may nakakalito o hindi gumagana. Mga 15–20 minuto lang ito.",
-    before: "Bago ka magsimula",
+      "Piliin ang iyong misyon sa ibaba, i-tap ang bawat hakbang kapag natapos mo, at tulungan kaming pagandahin ang SmartPath! Awtomatikong nase-save ang iyong progreso.",
+    questProgress: "Progreso ng Iyong Quest",
+    completedLabel: "natapos na gawain",
+    resetLabel: "I-reset",
+    allMissions: "Lahat ng 3 Misyon",
+    before: "Mahalagang Paalala Bago Magsimula",
     beforeItems: [
-      "Gamitin ang browser ng iyong phone o computer (Chrome o Safari). Walang kailangang i-install.",
-      "Gumamit ng email na nabubuksan mo. Makakatanggap ka ng confirmation email.",
-      "Ang bayad ay nasa TEST MODE. Walang totoong perang kukunin.",
-      "Maaaring burahin ang mga test account pagkatapos ng testing.",
+      "buksan sa Chrome o Safari sa phone, tablet, o laptop — walang kailangang i-install.",
+      "Gumamit ng totoong email na nabubuksan mo para sa confirmation link.",
+      "TEST MODE lang ang bayad — walang totoong perang mababawas.",
+      "Kung hindi gumana ang Facebook login, gamitin ang Continue with Google o email.",
     ],
-    payTitle: "Paano magbayad sa test mode",
-    payItems: [
-      "Sa Parent app, buksan ang Plan, pumili ng plan, at i-tap ang Pay online.",
-      "Sa PayMongo page, piliin ang GCash o Maya at i-tap ang Authorize Test Payment.",
-      "O piliin ang card at i-type ang 4343 4343 4343 4345, kahit anong petsa sa hinaharap (hal. 12/30) at kahit anong 3 numero.",
-      "Babalik ka sa SmartPath. Bubukas ang iyong plan sa loob ng ilang segundo.",
-    ],
-    fbNote:
-      "Gumagana lang ang Continue with Facebook kung idinagdag namin ang iyong Facebook bilang tester. Kung lumabas ang “App not active”, gamitin ang Google o email.",
-    steps: "Mga hakbang",
-    check: "Pakisuri",
-    report: "Mag-ulat ng problema",
+    payTitle: "Test Payment Pass (Libre)",
+    paySubtitle: "Sa Parent → Plan → Pay online, piliin ang alinman sa PayMongo:",
+    payGcash: "Option A: Piliin ang GCash o Maya → I-tap ang Authorize Test Payment.",
+    payCardLabel: "Option B: Piliin ang Card at kopyahin ang test card na ito:",
+    copyBtn: "Kopyahin",
+    copiedBtn: "Nakopya!",
+    cardMeta: "Exp: 12/30 · CVC: 123",
+    steps: "Mga Hakbang sa Misyon (I-tap kapag tapos na)",
+    check: "Bonus Checks (I-tap para kumpirmahin)",
+    quickFeedback: "Magpadala ng Feedback:",
+    fbSmooth: "Maayos lahat!",
+    fbConfusing: "Medyo nakakalito",
+    fbBug: "May nakitang bug",
+    missionDone: "Tapos na ang Misyon!",
+    allDoneTitle: "Tapos na ang Lahat ng Misyon!",
+    allDoneSub: "Salamat! I-tap sa ibaba para ipadala ang iyong ulat sa SmartPath team.",
+    sendFinalBtn: "Ipadala ang Final Quest Report",
     roles: [
       {
-        key: "parent",
+        key: "parent" as const,
+        missionBadge: "Misyon 1 · ~7 min",
         icon: Users,
-        title: "Magulang ako",
-        who: "Dito magsimula. Kailangan muna ng parent account bago magamit ng bata ang SmartPath.",
+        character: "/assets/characters/nanay_idle.png",
+        accentColor: "from-orange-500/20 via-amber-500/10 to-transparent",
+        badgeClass: "bg-orange-500/10 text-orange-600 dark:bg-orange-400/15 dark:text-orange-300",
+        title: "Misyon ng Magulang",
+        who: "Magsimula rito! Gumawa ng parent account bago magamit ng bata ang SmartPath.",
         buttons: [
-          { label: "Gumawa ng parent account", href: `${APP}/parent/#/auth`, primary: true },
-          { label: "Mag-sign in", href: `${APP}/parent/#/auth` },
-          { label: "Kami na ang mag-aayos para sa iyo", href: `${APP}/parent/#/setup-help` },
+          { label: "Buksan ang Parent App", href: `${APP}/parent/#/auth`, primary: true },
+          { label: "Tulong sa Pag-setup", href: `${APP}/parent/#/setup-help` },
         ],
         steps: [
-          "I-tap ang Gumawa ng parent account, tapos i-tap ang Create account.",
-          "I-type ang iyong pangalan, email at password nang dalawang beses (o gamitin ang Continue with Google).",
-          "Buksan ang confirmation email at i-tap ang link, tapos mag-sign in.",
-          "Buksan ang Plan, pumili ng plan at magbayad sa test mode (tingnan ang “Paano magbayad sa test mode”).",
-          "Idagdag ang iyong anak: pangalan at baitang (Grade 1–3).",
-          "May class code ka mula sa isang teacher tester? Ilagay ito sa Class code from the teacher.",
-          "Mag-sign out, tapos mag-sign in ulit. Dapat nakalagay na ang iyong email.",
+          "Buksan ang Parent App at i-tap ang Create account tab.",
+          "Mag-sign up gamit ang pangalan, email at password (o Continue with Google).",
+          "Buksan ang confirmation email, i-tap ang link, at mag-sign in.",
+          "Buksan ang Plan, pumili ng plan, at gamitin ang Test Payment Pass sa itaas.",
+          "Idagdag ang pangalan at baitang ng iyong anak (Grade 1–3).",
+          "Opsyonal: Ilagay ang class code mula sa guro.",
+          "Mag-sign out at mag-sign in ulit — tingnan kung nakalagay na ang iyong email.",
         ],
         checks: [
-          "Madali bang intindihin ang paggawa ng account?",
-          "Bumukas ba ang plan pagkatapos magbayad? Nawala ba ang Subscribe banner sa Home?",
-          "Nakikita mo ba ang progreso ng iyong anak pagkatapos niyang gumawa ng aralin?",
-          "Subukan si Teacher Saje (Ask AI) gamit ang isang tanong sa takdang-aralin.",
+          "Madaling maintindihan ang paggawa ng parent account",
+          "Agad bumukas ang plan pagkatapos ng test payment",
+          "Lumabas nang live ang progreso ng anak pagkatapos ng aralin",
+          "Nasubukan si Teacher Saje (Ask AI) sa isang tanong",
         ],
         role: "Parent",
       },
       {
-        key: "child",
-        icon: Baby,
-        title: "Susubok ang anak ko",
-        who: "Para sa Grade 1–3. Gawin ito kapag may aktibong plan na ang parent account.",
-        buttons: [{ label: "Buksan ang Tutor app", href: `${APP}/tutor/`, primary: true }],
+        key: "child" as const,
+        missionBadge: "Misyon 2 · ~8 min",
+        icon: Compass,
+        character: "/assets/characters/kuya_idle.png",
+        accentColor: "from-sky-500/20 via-cyan-500/10 to-transparent",
+        badgeClass: "bg-sky-500/10 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300",
+        title: "Misyon ng Bata (Tutor)",
+        who: "Para sa Grade 1–3! Gawin ito kapag aktibo na ang plan sa Parent account.",
+        buttons: [{ label: "Buksan ang Tutor App", href: `${APP}/tutor/`, primary: true }],
         steps: [
-          "Sa phone, tablet o computer ng iyong anak, buksan ang Tutor app.",
-          "Isang beses lang mag-sign in ang magulang gamit ang email at password ng parent account.",
-          "I-tap ng bata ang kanyang larawan. Walang password para sa mga bata.",
-          "Hayaang gawin ng bata ang aralin ngayong araw: pagbasa nang malakas, pagsulat at mga gawain.",
-          "Isara ang app at buksan ulit. Dapat naka-sign in pa rin ang bata.",
+          "Buksan ang Tutor App sa phone, tablet, o laptop ng bata.",
+          "Mag-sign in nang isang beses gamit ang email at password ng magulang.",
+          "Hayaang i-tap ng bata ang kanyang larawan (walang password para sa bata!).",
+          "Subukan ang Today's Trip: Math, English, o Science kasama ang boses.",
+          "Isara ang app at buksan ulit — dapat naka-sign in pa rin ang bata.",
         ],
         checks: [
-          "Nagamit ba ito ng bata nang mag-isa pagkatapos mong mag-sign in?",
-          "Malinaw ba ang mga tagubilin at boses para sa bata?",
-          "May tumigil ba, mukhang sira, o masyadong mahirap?",
+          "Nagamit ng bata nang mag-isa pagkatapos mag-sign in",
+          "Malinaw ang boses at mga panuto para sa bata",
+          "Maayos at hindi nag-freeze ang mga laro at pagsulat",
         ],
-        role: "Child",
+        role: "Child / Tutor",
       },
       {
-        key: "teacher",
+        key: "teacher" as const,
+        missionBadge: "Misyon 3 · ~5 min",
         icon: GraduationCap,
-        title: "Guro ako",
-        who: "Libre para sa mga guro. Mas mainam subukan kasama ang isang parent tester.",
-        buttons: [
-          { label: "Gumawa ng teacher account", href: `${APP}/teacher/`, primary: true },
-          { label: "Mag-sign in", href: `${APP}/teacher/` },
-        ],
+        character: "/assets/characters/teacher_idle.png",
+        accentColor: "from-indigo-500/20 via-violet-500/10 to-transparent",
+        badgeClass: "bg-indigo-500/10 text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300",
+        title: "Misyon ng Guro",
+        who: "100% Libre para sa mga guro! Mas masayang subukan kasama ang Parent account.",
+        buttons: [{ label: "Buksan ang Teacher App", href: `${APP}/teacher/`, primary: true }],
         steps: [
-          "Buksan ang Teacher app at gumawa ng account (o gamitin ang Continue with Google).",
-          "Gumawa ng klase.",
-          "Ibahagi ang class code sa isang parent tester. Ilalagay nila ito sa Parent app, tapos aaprubahan mo ang request sa pahina ng klase.",
-          "Magrekomenda ng aralin at sumulat ng multiple-choice na tanong para sa klase.",
-          "Tingnan kung aling mga paksa na ang natapos ng klase.",
+          "Buksan ang Teacher App at gumawa ng account (o Continue with Google).",
+          "Gumawa ng klase para sa iyong seksyon (o i-tap ang Try a sample class).",
+          "Ibahagi ang class code sa Parent tester at aprubahan ang kanilang request.",
+          "Magrekomenda ng aralin at gumawa ng multiple-choice na tanong.",
+          "Tingnan ang progreso ng mga paksa ng iyong klase.",
         ],
         checks: [
-          "Malinaw ba ang paggawa ng klase at pagbahagi ng class code?",
-          "Lumabas ba sa iyo ang request ng pamilya para aprubahan?",
-          "May kulang ba na kailangan mo sa klase?",
+          "Madaling gumawa ng klase at magbahagi ng class code",
+          "Agad lumabas ang request ng pamilya para maaprubahan",
+          "Malinaw ang progreso ng klase at rekomendasyon ng aralin",
         ],
         role: "Teacher",
       },
     ],
-    reportTitle: "May nakitang problema o may ideya?",
+    reportTitle: "May nakitang problema o magandang ideya?",
     reportBody:
-      "I-email sa amin kung ano ang ginagawa mo, ano ang nangyari, at ano ang inaasahan mo. Malaking tulong ang screenshot. Binabasa namin ang bawat ulat.",
-    thanks: "Salamat sa pagtulong na mapaganda ang SmartPath para sa mga pamilyang Pilipino!",
+      "Magpadala ng maikling email kung ano ang nangyari. Malaking tulong ang screenshot!",
+    thanks: "Salamat sa pagtulong na mapaganda ang SmartPath para sa mga batang Pilipino!",
   },
 } as const;
 
 export function TestersGuide() {
   const [lang, setLang] = useState<Lang>("en");
+  const [activeRole, setActiveRole] = useState<RoleFilter>("all");
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [copiedCard, setCopiedCard] = useState(false);
+
   const t = T[lang];
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setChecked(JSON.parse(saved));
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
+  const toggleItem = (id: string) => {
+    setChecked((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // ignore storage errors
+      }
+      return next;
+    });
+  };
+
+  const resetProgress = () => {
+    setChecked({});
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  };
+
+  const copyCardNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(TEST_CARD);
+      setCopiedCard(true);
+      setTimeout(() => setCopiedCard(false), 2000);
+    } catch {
+      // fallback
+    }
+  };
+
+  // Compute totals across all roles
+  const getRoleStats = (roleKey: "parent" | "child" | "teacher") => {
+    const roleObj = t.roles.find((r) => r.key === roleKey)!;
+    const total = roleObj.steps.length + roleObj.checks.length;
+    let done = 0;
+    roleObj.steps.forEach((_, i) => {
+      if (checked[`${roleKey}-step-${i}`]) done++;
+    });
+    roleObj.checks.forEach((_, i) => {
+      if (checked[`${roleKey}-check-${i}`]) done++;
+    });
+    return { done, total, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+  };
+
+  const parentStats = getRoleStats("parent");
+  const childStats = getRoleStats("child");
+  const teacherStats = getRoleStats("teacher");
+
+  const totalTasks = parentStats.total + childStats.total + teacherStats.total;
+  const totalDone = parentStats.done + childStats.done + teacherStats.done;
+  const totalPercent = totalTasks > 0 ? Math.round((totalDone / totalTasks) * 100) : 0;
+
+  const visibleRoles =
+    activeRole === "all" ? t.roles : t.roles.filter((r) => r.key === activeRole);
+
   return (
-    <div>
+    <div className="space-y-8">
+      {/* Top Bar: Badge + Language Switcher */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-200 dark:ring-amber-500/20">
+        <span className="eyebrow">
+          <Sparkles className="h-3.5 w-3.5 text-orange-500" />
           {t.badge}
         </span>
-        <div role="group" aria-label="Language" className="inline-flex rounded-full bg-slate-100 p-1 dark:bg-white/10">
+
+        <div
+          role="group"
+          aria-label="Language"
+          className="inline-flex rounded-full border border-slate-900/10 bg-white/80 p-1 shadow-xs backdrop-blur dark:border-white/10 dark:bg-slate-900/80"
+        >
           {(["en", "tl"] as const).map((l) => (
             <button
               key={l}
               type="button"
               onClick={() => setLang(l)}
               aria-pressed={lang === l}
-              className={`min-h-10 rounded-full px-4 text-sm font-bold transition ${
-                lang === l ? "bg-white text-slate-900 shadow-sm dark:bg-slate-800 dark:text-white" : "text-slate-500 dark:text-slate-300"
+              className={`rounded-full px-4 py-1.5 text-xs font-extrabold transition ${
+                lang === l
+                  ? "bg-slate-900 text-white shadow-xs dark:bg-white dark:text-slate-900"
+                  : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               }`}
             >
               {l === "en" ? "English" : "Tagalog"}
@@ -248,94 +389,386 @@ export function TestersGuide() {
         </div>
       </div>
 
-      <h1 className="mt-6 font-heading text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl dark:text-white">{t.title}</h1>
-      <p className="mt-3 max-w-2xl text-lg text-slate-600 dark:text-slate-300">{t.intro}</p>
+      {/* Hero Header */}
+      <div className="text-center">
+        <h1 className="font-heading text-3xl font-extrabold tracking-[-0.025em] text-slate-900 sm:text-5xl dark:text-white">
+          {t.title} <span className="text-gradient-sunset">{t.titleAccent}</span>
+        </h1>
+        <p className="mx-auto mt-2.5 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base dark:text-slate-300">
+          {t.intro}
+        </p>
+      </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <section className="rounded-2xl bg-white p-5 ring-1 ring-slate-900/10 dark:bg-slate-900 dark:ring-white/10">
-          <h2 className="flex items-center gap-2 font-heading text-lg font-extrabold text-slate-900 dark:text-white">
-            <ShieldAlert className="h-5 w-5 text-orange-600" /> {t.before}
-          </h2>
-          <ul className="mt-3 space-y-2 text-[15px] text-slate-600 dark:text-slate-300">
-            {t.beforeItems.map((x) => <li key={x} className="flex gap-2"><span aria-hidden>•</span><span>{x}</span></li>)}
-          </ul>
+      {/* Quick Rules + Interactive Test Payment Pass */}
+      <div className="grid gap-5 lg:grid-cols-12">
+        <section className="card-premium flex flex-col justify-between p-5 sm:p-6 lg:col-span-6">
+          <div>
+            <h2 className="flex items-center gap-2 font-heading text-lg font-extrabold text-slate-900 dark:text-white">
+              <span className="grid h-8 w-8 place-items-center rounded-xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300">
+                <ShieldAlert className="h-4.5 w-4.5" />
+              </span>
+              {t.before}
+            </h2>
+            <ul className="mt-4 space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+              {t.beforeItems.map((x) => (
+                <li key={x} className="flex items-start gap-2.5">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+                  <span>{x}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
-        <section className="rounded-2xl bg-white p-5 ring-1 ring-slate-900/10 dark:bg-slate-900 dark:ring-white/10">
-          <h2 className="flex items-center gap-2 font-heading text-lg font-extrabold text-slate-900 dark:text-white">
-            <CreditCard className="h-5 w-5 text-orange-600" /> {t.payTitle}
-          </h2>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-[15px] text-slate-600 dark:text-slate-300">
-            {t.payItems.map((x) => <li key={x}>{x}</li>)}
-          </ol>
+
+        {/* Interactive Test Payment Pass Card */}
+        <section className="card-premium flex flex-col justify-between p-5 sm:p-6 lg:col-span-6">
+          <div>
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="flex items-center gap-2 font-heading text-lg font-extrabold text-slate-900 dark:text-white">
+                <span className="grid h-8 w-8 place-items-center rounded-xl bg-orange-500/10 text-orange-600 dark:bg-orange-400/15 dark:text-orange-300">
+                  <CreditCard className="h-4.5 w-4.5" />
+                </span>
+                {t.payTitle}
+              </h2>
+              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[11px] font-extrabold text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-300">
+                ₱0 Real Money
+              </span>
+            </div>
+
+            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              {t.paySubtitle}
+            </p>
+
+            <div className="mt-3 rounded-xl border border-slate-900/5 bg-slate-50 px-3.5 py-2.5 text-xs font-bold text-slate-700 dark:border-white/10 dark:bg-slate-800/60 dark:text-slate-200">
+              {t.payGcash}
+            </div>
+
+            <p className="mt-3 text-xs font-bold text-slate-600 dark:text-slate-300">
+              {t.payCardLabel}
+            </p>
+
+            {/* Simulated Copyable Credit Card Box */}
+            <div className="mt-2 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-900 px-4 py-3 text-white shadow-sm dark:bg-slate-800">
+              <div>
+                <p className="font-mono text-sm font-extrabold tracking-wider text-amber-300 sm:text-base">
+                  {TEST_CARD}
+                </p>
+                <p className="mt-0.5 text-[11px] font-semibold text-slate-300">{t.cardMeta}</p>
+              </div>
+              <button
+                type="button"
+                onClick={copyCardNumber}
+                className="inline-flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-xs font-extrabold text-slate-900 transition hover:bg-amber-100"
+              >
+                {copiedCard ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-emerald-600" />
+                    {t.copiedBtn}
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5" />
+                    {t.copyBtn}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
         </section>
       </div>
 
-      <p className="mt-4 rounded-xl bg-sky-50 px-4 py-3 text-sm font-semibold text-sky-900 ring-1 ring-sky-200 dark:bg-sky-500/10 dark:text-sky-100 dark:ring-sky-500/20">
-        {t.fbNote}
-      </p>
+      {/* Role Mission Filter Tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <button
+          type="button"
+          onClick={() => setActiveRole("all")}
+          className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-extrabold transition sm:text-sm ${
+            activeRole === "all"
+              ? "bg-slate-900 text-white shadow-sm dark:bg-white dark:text-slate-900"
+              : "border border-slate-900/10 bg-white text-slate-600 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
+          }`}
+        >
+          <Layers className="h-4 w-4" />
+          {t.allMissions}
+        </button>
 
-      <div className="mt-10 space-y-6">
         {t.roles.map((r) => {
           const Icon = r.icon;
+          const stats = getRoleStats(r.key);
+          const isActive = activeRole === r.key;
           return (
-            <section key={r.key} id={r.key} className="scroll-mt-24 rounded-3xl bg-white p-6 ring-1 ring-slate-900/10 sm:p-8 dark:bg-slate-900 dark:ring-white/10">
-              <div className="flex items-start gap-4">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600 dark:bg-orange-500/10">
-                  <Icon className="h-6 w-6" />
-                </span>
-                <div>
-                  <h2 className="font-heading text-2xl font-extrabold text-slate-900 dark:text-white">{r.title}</h2>
-                  <p className="mt-1 text-[15px] text-slate-600 dark:text-slate-300">{r.who}</p>
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-wrap gap-3">
-                {r.buttons.map((b) => (
-                  <a
-                    key={b.label}
-                    href={b.href}
-                    target="_blank"
-                    rel="noopener"
-                    className={`inline-flex min-h-12 items-center gap-2 rounded-full px-5 text-[15px] font-bold transition ${
-                      "primary" in b && b.primary
-                        ? "bg-orange-600 text-white hover:bg-orange-700"
-                        : "bg-slate-100 text-slate-800 hover:bg-slate-200 dark:bg-white/10 dark:text-white"
-                    }`}
-                  >
-                    {b.label} <ExternalLink className="h-4 w-4" aria-hidden />
-                  </a>
-                ))}
-              </div>
-
-              <div className="mt-6 grid gap-6 md:grid-cols-2">
-                <div>
-                  <h3 className="text-sm font-black uppercase tracking-wider text-slate-500">{t.steps}</h3>
-                  <ol className="mt-2 list-decimal space-y-2 pl-5 text-[15px] text-slate-700 dark:text-slate-200">
-                    {r.steps.map((s) => <li key={s}>{s}</li>)}
-                  </ol>
-                </div>
-                <div>
-                  <h3 className="text-sm font-black uppercase tracking-wider text-slate-500">{t.check}</h3>
-                  <ul className="mt-2 space-y-2 text-[15px] text-slate-700 dark:text-slate-200">
-                    {r.checks.map((c) => <li key={c} className="flex gap-2"><span aria-hidden>☐</span><span>{c}</span></li>)}
-                  </ul>
-                  <a href={reportLink(r.role)} className="mt-4 inline-flex min-h-11 items-center gap-2 text-[15px] font-bold text-orange-700 underline dark:text-orange-300">
-                    <Mail className="h-4 w-4" aria-hidden /> {t.report}
-                  </a>
-                </div>
-              </div>
-            </section>
+            <button
+              key={r.key}
+              type="button"
+              onClick={() => setActiveRole(r.key)}
+              className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-xs font-extrabold transition sm:text-sm ${
+                isActive
+                  ? "bg-slate-900 text-white shadow-sm dark:bg-white dark:text-slate-900"
+                  : "border border-slate-900/10 bg-white text-slate-600 hover:text-slate-900 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
+              }`}
+            >
+              <Icon className="h-4 w-4 text-orange-500" />
+              <span>{r.title}</span>
+              <span
+                className={`rounded-full px-2 py-0.5 text-[11px] ${
+                  stats.done === stats.total
+                    ? "bg-emerald-500 text-white"
+                    : "bg-slate-200/80 text-slate-700 dark:bg-slate-700 dark:text-slate-200"
+                }`}
+              >
+                {stats.done}/{stats.total}
+              </span>
+            </button>
           );
         })}
       </div>
 
-      <section className="mt-10 rounded-3xl bg-slate-900 p-6 text-white sm:p-8">
-        <h2 className="font-heading text-2xl font-extrabold">{t.reportTitle}</h2>
-        <p className="mt-2 text-slate-300">{t.reportBody}</p>
-        <a href={reportLink("General")} className="mt-4 inline-flex min-h-12 items-center gap-2 rounded-full bg-white px-5 font-bold text-slate-900">
-          <Mail className="h-4 w-4" aria-hidden /> {SUPPORT}
-        </a>
-        <p className="mt-6 text-sm text-slate-400">{t.thanks}</p>
+      {/* Mission Cards */}
+      <div className="space-y-6">
+        {visibleRoles.map((r) => {
+          const Icon = r.icon;
+          const stats = getRoleStats(r.key);
+          const isComplete = stats.done === stats.total;
+
+          return (
+            <motion.section
+              key={r.key}
+              id={r.key}
+              layout
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`card-premium relative overflow-hidden p-6 sm:p-8 ${
+                isComplete ? "ring-2 ring-emerald-500/70" : ""
+              }`}
+            >
+              <div
+                aria-hidden
+                className={`pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b ${r.accentColor}`}
+              />
+
+              {/* Mission Header */}
+              <div className="relative flex flex-wrap items-center justify-between gap-4 border-b border-slate-900/5 pb-5 dark:border-white/10">
+                <div className="flex items-center gap-4">
+                  <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-slate-900/10 bg-white p-1 shadow-xs dark:border-white/10 dark:bg-slate-800">
+                    <Image
+                      src={`${r.character}?v=2`}
+                      alt={r.title}
+                      width={64}
+                      height={64}
+                      unoptimized
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-extrabold ${r.badgeClass}`}
+                      >
+                        <Clock className="h-3 w-3" />
+                        {r.missionBadge}
+                      </span>
+                      {isComplete && (
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500 px-2.5 py-0.5 text-xs font-extrabold text-white">
+                          <CheckCircle2 className="h-3 w-3" />
+                          {t.missionDone}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="mt-1 flex items-center gap-2 font-heading text-2xl font-extrabold text-slate-900 dark:text-white">
+                      <Icon className="h-5 w-5 text-orange-500" />
+                      {r.title}
+                    </h2>
+                    <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">{r.who}</p>
+                  </div>
+                </div>
+
+                {/* Launch App Buttons */}
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {r.buttons.map((b) => (
+                    <a
+                      key={b.label}
+                      href={b.href}
+                      target="_blank"
+                      rel="noopener"
+                      className={`inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-extrabold transition ${
+                        "primary" in b && b.primary
+                          ? "bg-slate-900 text-white shadow-sm hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                          : "border border-slate-900/10 bg-white text-slate-800 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-white"
+                      }`}
+                    >
+                      {b.label}
+                      <ExternalLink className="h-4 w-4" aria-hidden />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mission Progress Bar */}
+              <div className="mt-4 flex items-center gap-3">
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+                  <div
+                    style={{ width: `${stats.percent}%` }}
+                    className="h-full rounded-full bg-gradient-sunset transition-all duration-300"
+                  />
+                </div>
+                <span className="text-xs font-extrabold text-slate-500 dark:text-slate-400">
+                  {stats.done}/{stats.total} ({stats.percent}%)
+                </span>
+              </div>
+
+              {/* Interactive Checklist Grid */}
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                {/* Column 1: Steps */}
+                <div>
+                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    {t.steps}
+                  </h3>
+                  <div className="mt-3 space-y-2">
+                    {r.steps.map((stepText, idx) => {
+                      const id = `${r.key}-step-${idx}`;
+                      const isChecked = !!checked[id];
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => toggleItem(id)}
+                          className={`flex w-full items-start gap-3 rounded-2xl border p-3 text-left text-sm transition ${
+                            isChecked
+                              ? "border-emerald-500/30 bg-emerald-500/5 text-slate-500 line-through dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-slate-400"
+                              : "border-slate-900/8 bg-slate-50/70 text-slate-800 hover:border-orange-500/40 hover:bg-white dark:border-white/10 dark:bg-slate-800/50 dark:text-slate-100 dark:hover:bg-slate-800"
+                          }`}
+                        >
+                          <span
+                            className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-xs font-extrabold ${
+                              isChecked
+                                ? "bg-emerald-500 text-white"
+                                : "bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200"
+                            }`}
+                          >
+                            {isChecked ? <Check className="h-3 w-3" /> : idx + 1}
+                          </span>
+                          <span className="flex-1 leading-snug font-medium">{stepText}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Column 2: Verification Checks + Quick Feedback */}
+                <div className="flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      {t.check}
+                    </h3>
+                    <div className="mt-3 space-y-2">
+                      {r.checks.map((checkText, idx) => {
+                        const id = `${r.key}-check-${idx}`;
+                        const isChecked = !!checked[id];
+                        return (
+                          <button
+                            key={id}
+                            type="button"
+                            onClick={() => toggleItem(id)}
+                            className={`flex w-full items-start gap-3 rounded-2xl border p-3 text-left text-sm transition ${
+                              isChecked
+                                ? "border-emerald-500/30 bg-emerald-500/5 text-slate-500 line-through dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-slate-400"
+                                : "border-slate-900/8 bg-slate-50/70 text-slate-800 hover:border-orange-500/40 hover:bg-white dark:border-white/10 dark:bg-slate-800/50 dark:text-slate-100 dark:hover:bg-slate-800"
+                            }`}
+                          >
+                            {isChecked ? (
+                              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
+                            ) : (
+                              <Circle className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
+                            )}
+                            <span className="flex-1 leading-snug font-medium">{checkText}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Quick 1-Tap Feedback Pills */}
+                  <div className="mt-6 rounded-2xl border border-slate-900/5 bg-slate-50/80 p-4 dark:border-white/10 dark:bg-slate-800/40">
+                    <p className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                      {t.quickFeedback}
+                    </p>
+                    <div className="mt-2.5 flex flex-wrap gap-2">
+                      <a
+                        href={buildReportLink(r.role, "Worked Smoothly", stats.done, stats.total)}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-extrabold text-emerald-700 transition hover:bg-emerald-500/20 dark:bg-emerald-400/15 dark:text-emerald-300"
+                      >
+                        <ThumbsUp className="h-3.5 w-3.5" />
+                        {t.fbSmooth}
+                      </a>
+                      <a
+                        href={buildReportLink(r.role, "Confusing Step", stats.done, stats.total)}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1.5 text-xs font-extrabold text-amber-700 transition hover:bg-amber-500/20 dark:bg-amber-400/15 dark:text-amber-300"
+                      >
+                        <HelpCircle className="h-3.5 w-3.5" />
+                        {t.fbConfusing}
+                      </a>
+                      <a
+                        href={buildReportLink(r.role, "Bug Report", stats.done, stats.total)}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-3 py-1.5 text-xs font-extrabold text-rose-700 transition hover:bg-rose-500/20 dark:bg-rose-400/15 dark:text-rose-300"
+                      >
+                        <Bug className="h-3.5 w-3.5" />
+                        {t.fbBug}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          );
+        })}
+      </div>
+
+      {/* All Missions Complete Banner */}
+      <AnimatePresence>
+        {totalDone === totalTasks && totalTasks > 0 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            className="rounded-3xl bg-gradient-sunset p-6 text-center text-white shadow-xl sm:p-8"
+          >
+            <Trophy className="mx-auto h-10 w-10" />
+            <h2 className="mt-2 font-heading text-2xl font-extrabold sm:text-3xl">
+              {t.allDoneTitle}
+            </h2>
+            <p className="mx-auto mt-1 max-w-xl text-sm text-white/90 sm:text-base">
+              {t.allDoneSub}
+            </p>
+            <a
+              href={buildReportLink("All 3 Missions", "Completed Quest", totalDone, totalTasks)}
+              className="mt-4 inline-flex h-11 items-center gap-2 rounded-full bg-white px-6 text-sm font-extrabold text-slate-900 shadow-sm transition hover:bg-amber-50"
+            >
+              <Mail className="h-4 w-4" />
+              {t.sendFinalBtn}
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Bottom Support Footer Card */}
+      <section className="rounded-3xl bg-slate-900 p-6 text-white sm:p-8 dark:bg-slate-800/90">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <h2 className="font-heading text-xl font-extrabold sm:text-2xl">{t.reportTitle}</h2>
+            <p className="mt-1 max-w-xl text-sm text-slate-300">{t.reportBody}</p>
+          </div>
+          <a
+            href={buildReportLink("General", "Feedback", totalDone, totalTasks)}
+            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-white px-5 text-sm font-extrabold text-slate-900 transition hover:bg-slate-100"
+          >
+            <Mail className="h-4 w-4" aria-hidden />
+            {SUPPORT}
+          </a>
+        </div>
+        <p className="mt-5 border-t border-white/10 pt-4 text-xs font-semibold text-slate-400">
+          {t.thanks}
+        </p>
       </section>
     </div>
   );

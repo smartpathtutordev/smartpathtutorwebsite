@@ -14,7 +14,6 @@ const STEPS = [
     accent: "text-amber-600 dark:text-amber-400",
     border: "border-amber-300",
     bg: "bg-amber-100 dark:bg-amber-950/40",
-    emoji: "🧭",
   },
   {
     step: "02",
@@ -26,7 +25,6 @@ const STEPS = [
     accent: "text-blue-600 dark:text-blue-400",
     border: "border-blue-300",
     bg: "bg-blue-100 dark:bg-blue-950/40",
-    emoji: "✨",
   },
   {
     step: "03",
@@ -38,7 +36,6 @@ const STEPS = [
     accent: "text-emerald-600 dark:text-emerald-400",
     border: "border-emerald-300",
     bg: "bg-emerald-100 dark:bg-emerald-950/40",
-    emoji: "❤️",
   },
   {
     step: "04",
@@ -50,7 +47,6 @@ const STEPS = [
     accent: "text-rose-600 dark:text-rose-400",
     border: "border-rose-300",
     bg: "bg-rose-100 dark:bg-rose-950/40",
-    emoji: "🎟️",
   },
 ];
 
@@ -62,7 +58,7 @@ export function HowItWorks() {
         {/* Header */}
         <div className="mx-auto max-w-2xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border-2 border-amber-300 bg-amber-50 px-4 py-1 text-xs font-black text-amber-800 dark:text-amber-300">
-            <span>🧭</span>
+            <Compass className="h-3.5 w-3.5" />
             <span>Inside Today&apos;s Trip</span>
           </div>
           <h2 className="mt-4 font-heading text-3xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
@@ -109,7 +105,6 @@ export function HowItWorks() {
 
                   {/* Content */}
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-lg">{s.emoji}</span>
                     <h3 className="font-heading font-black text-xl text-slate-900 dark:text-white">
                       {s.title}
                     </h3>

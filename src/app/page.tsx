@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 
 import { SiteNav } from "@/components/site/nav";
 import { Hero } from "@/components/site/hero";
+import { AppShowcase } from "@/components/site/app-showcase";
 import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
-import { Features, TeacherSaje, HowItWorks, Safety, Teachers } from "@/components/site/startup-sections";
 import { FAQS } from "@/lib/faqs";
 
 /**
@@ -50,11 +50,7 @@ export default function HomePage() {
       <main className="flex-1">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }) }} />
         <Hero />
-        <Features />
-        <TeacherSaje />
-        <HowItWorks />
-        <Safety />
-        <Teachers />
+        <AppShowcase />
         <Pricing />
         <Faq />
         <Contact />

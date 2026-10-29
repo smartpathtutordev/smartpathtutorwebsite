@@ -15,7 +15,7 @@ export default function Testers() {
   return (
     <>
       <SiteNav />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-5 py-12 sm:px-6 sm:py-16">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-8 sm:px-6 sm:py-12">
         <TestersGuide />
       </main>
       <SiteFooter />

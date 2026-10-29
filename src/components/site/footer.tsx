@@ -28,28 +28,16 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="md:col-span-3 md:col-start-5">
-          <h4 className="text-xs font-extrabold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
-            Web Apps
-          </h4>
-          <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
-            <li><a href="/tutor" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App (Grades 1–3)</a></li>
-            <li><a href="/parent" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parents App &amp; AI</a></li>
-            <li><a href="/teacher" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teachers Portal</a></li>
-            <li><a href="/admin" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors text-slate-500">Staff Admin</a></li>
-          </ul>
-        </div>
-
-        <div className="md:col-span-2">
+        <div className="md:col-span-3 md:col-start-7">
           <h4 className="text-xs font-extrabold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
             Learn More
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
-            <li><a href="/#features" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Features</a></li>
-            <li><a href="/#safety" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Safety &amp; privacy</a></li>
-            <li><a href="/#teachers" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">For teachers</a></li>
-            <li><a href="/#pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</a></li>
-            <li><a href="/#faq" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent FAQs</a></li>
+            <li><Link href="/tutor-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App Showcase</Link></li>
+            <li><Link href="/parent-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent App Showcase</Link></li>
+            <li><Link href="/teacher-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teacher App Showcase</Link></li>
+            <li><Link href="/pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</Link></li>
+            <li><Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">About Us</Link></li>
           </ul>
         </div>
 
