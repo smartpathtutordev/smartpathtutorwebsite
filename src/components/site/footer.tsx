@@ -7,13 +7,13 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-5 sm:px-6 py-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4 space-y-4">
           <Link href="/" className="group flex min-h-11 items-center gap-2.5 font-bold">
-            <span className="grid h-10 w-10 place-items-center overflow-hidden rounded-2xl bg-white shadow-xs ring-1 ring-black/5 transition-transform duration-300 group-hover:scale-105">
+            <span className="grid h-11 w-11 place-items-center transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/spt_icon.png"
                 alt="SmartPath Tutor logo"
-                width={40}
-                height={40}
-                className="h-8 w-8 object-contain"
+                width={44}
+                height={44}
+                className="h-11 w-11 object-contain"
               />
             </span>
             <span className="font-heading font-black text-xl tracking-tight text-slate-900 dark:text-white">

@@ -52,13 +52,13 @@ export function SiteNav() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-6">
         {/* Brand */}
         <Link href="/" className="group flex min-h-11 items-center gap-2.5">
-          <div className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-white shadow-xs ring-1 ring-slate-900/10 transition-transform duration-300 group-hover:scale-105">
+          <div className="relative grid h-10 w-10 place-items-center transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/spt_icon.png"
               alt="SmartPath logo"
-              width={36}
-              height={36}
-              className="h-7 w-7 object-contain"
+              width={40}
+              height={40}
+              className="h-10 w-10 object-contain drop-shadow-sm"
               priority
             />
           </div>
