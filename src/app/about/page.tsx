@@ -28,6 +28,8 @@ import {
   FlaskConical,
   Calculator,
   Palette,
+  Newspaper,
+  ExternalLink,
 } from "lucide-react";
 
 import { SiteNav } from "@/components/site/nav";
@@ -39,26 +41,26 @@ const ease = [0.22, 1, 0.36, 1] as const;
 // 3 Core Crisis Numbers — High visual punch
 const STAT_HIGHLIGHTS = [
   {
-    value: "91%",
-    label: "Learning Poverty",
-    caption: "Filipino 10-year-olds who cannot read a simple story",
-    badge: "World Bank / EDCOM II",
+    value: "1 in 3",
+    label: "Low-Emerging Readers",
+    caption: "Grades 1–3 pupils struggling with basic letters & sounds (DepEd CRLA)",
+    badge: "EDCOM II / GMA News",
     color: "text-rose-600 dark:text-rose-400",
     bg: "bg-rose-500/10 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
   },
   {
-    value: "#77",
-    label: "Out of 81 Countries",
-    caption: "Philippines ranking in international reading & math (PISA)",
-    badge: "Global Assessment",
+    value: "91%",
+    label: "Learning Poverty",
+    caption: "Filipino 10-year-olds who cannot read a simple story",
+    badge: "World Bank / UNICEF",
     color: "text-orange-600 dark:text-orange-400",
     bg: "bg-orange-500/10 text-orange-700 dark:bg-orange-500/20 dark:text-orange-300",
   },
   {
-    value: "45+",
-    label: "Kids Per Classroom",
-    caption: "Teachers lack 1-on-1 diagnostic time for early reading",
-    badge: "Classroom Overload",
+    value: "#77",
+    label: "Out of 81 Countries",
+    caption: "Philippines global rank in reading & math assessments (PISA)",
+    badge: "Global Assessment",
     color: "text-amber-600 dark:text-amber-400",
     bg: "bg-amber-500/10 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
   },
@@ -205,22 +207,60 @@ export default function AboutPage() {
             >
               <span className="eyebrow inline-flex items-center gap-1.5 rounded-full border border-rose-300/60 bg-rose-50 px-3.5 py-1 text-xs font-extrabold text-rose-700 dark:border-rose-500/20 dark:bg-rose-500/10 dark:text-rose-300">
                 <AlertTriangle className="h-3.5 w-3.5 text-rose-600 dark:text-rose-400" />
-                The Reason Behind SmartPath
+                The Motivation Behind SmartPath · The Early Reading Crisis
               </span>
 
               <h1 className="mt-4 font-heading text-3xl font-extrabold tracking-[-0.025em] text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
-                91% of Filipino kids struggle to read.
+                1 out of 3 pupils in Grades 1 to 3
                 <br />
-                <span className="text-gradient-sunset">We are here to fix that.</span>
+                are <span className="text-gradient-sunset">&apos;low-emerging readers.&apos;</span>
               </h1>
 
               <p className="mx-auto mt-4 max-w-2xl text-base font-medium text-slate-600 sm:text-lg dark:text-slate-300">
-                Starting with the make-or-break foundation in <span className="font-bold text-slate-900 dark:text-white">Grades 1–3</span>, and expanding across the entire elementary journey.
+                We built SmartPath to give every Filipino child a joyful, guided start in <span className="font-bold text-slate-900 dark:text-white">Grades 1–3</span>, expanding to complete primary education so no child enters Grade 4 left behind.
               </p>
             </motion.div>
 
+            {/* Featured National Study Card — GMA Integrated News / EDCOM II */}
+            <div className="card-premium mt-8 border-2 border-rose-500/25 bg-white p-6 sm:p-7 dark:bg-slate-900">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-rose-500/10 text-rose-600 dark:bg-rose-500/20 dark:text-rose-400">
+                    <Newspaper className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <span className="inline-block rounded-full bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-rose-700 dark:bg-rose-500/20 dark:text-rose-300">
+                      GMA Integrated News · EDCOM II National Study
+                    </span>
+                    <h3 className="mt-1.5 font-heading text-lg font-black text-slate-900 sm:text-xl dark:text-white">
+                      &ldquo;One out of three pupils in Grade 1 to 3 are &apos;low-emerging readers,&apos; study shows&rdquo;
+                    </h3>
+                  </div>
+                </div>
+
+                <a
+                  href="https://www.gmanetwork.com/news/topstories/nation/957822/edcom-2-low-emerging-readers-comprehensive-rapid-literacy-assessment-low/story/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-slate-900/10 bg-slate-50 px-4 text-xs font-extrabold text-slate-800 transition hover:bg-slate-100 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                >
+                  Read Source Article
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+
+              <p className="mt-3.5 text-xs leading-relaxed text-slate-600 sm:text-sm dark:text-slate-300">
+                Analysis of the Department of Education&apos;s Comprehensive Rapid Literacy Assessment (CRLA) by the Second Congressional Commission on Education (EDCOM II) revealed that over 30% of Filipino children in Grades 1 to 3 struggle with the most foundational reading skills—identifying letters, sounding out syllables, and decoding familiar words.
+              </p>
+
+              <div className="mt-4 rounded-xl border border-orange-500/20 bg-orange-500/5 p-3.5 text-xs leading-relaxed text-slate-700 dark:text-slate-200">
+                <span className="font-black text-orange-600 dark:text-orange-400">Why this is our core motivation: </span>
+                When early reading confusion is missed during Grades 1 to 3, it snowballs into the nationwide 91% learning poverty rate by Grade 4. SmartPath provides patient 10-minute daily audio trips with stroke-by-stroke phonics and real-time parent coaching while the brain is most receptive.
+              </div>
+            </div>
+
             {/* 3 High-Impact Stat Tiles */}
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {STAT_HIGHLIGHTS.map((s) => (
                 <div
                   key={s.label}
@@ -242,48 +282,64 @@ export default function AboutPage() {
               ))}
             </div>
 
-            {/* Visual 10-Child Infographic */}
+            {/* Visual 1-in-3 Primary Grades Infographic */}
             <div className="card-premium mt-8 p-6 sm:p-7">
               <div className="flex flex-col items-center justify-between gap-4 border-b border-slate-900/5 pb-4 sm:flex-row dark:border-white/10">
                 <div>
                   <h3 className="font-heading text-base font-extrabold text-slate-900 dark:text-white sm:text-lg">
-                    The 9-out-of-10 Reality: Visualized
+                    The 1-out-of-3 Reality in Grades 1–3
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    For every 10 Filipino children at age 10, only 1 reads at grade level on time.
+                    Across primary schools, 1 out of every 3 pupils is a low-emerging reader needing immediate phonics intervention.
                   </p>
                 </div>
                 <span className="rounded-full bg-rose-500/10 px-3 py-1 text-xs font-black text-rose-700 dark:bg-rose-500/20 dark:text-rose-300">
-                  91% Urgent Need
+                  CRLA / EDCOM II Assessment
                 </span>
               </div>
 
-              {/* Visual Grid of 10 Learner Icons */}
-              <div className="mt-6 grid grid-cols-5 gap-3 sm:grid-cols-10 sm:gap-2">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => {
-                  const isStruggling = num <= 9;
-                  return (
-                    <div
-                      key={num}
-                      className={`flex flex-col items-center rounded-xl p-3 text-center transition ${
-                        isStruggling
-                          ? "bg-rose-50/80 text-rose-600 ring-1 ring-rose-200/60 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-500/20"
-                          : "bg-emerald-50 text-emerald-600 ring-2 ring-emerald-500 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-400"
-                      }`}
-                    >
-                      <Users className="h-6 w-6" />
-                      <span className="mt-1 text-[11px] font-black">
-                        {isStruggling ? "Behind" : "On Track"}
-                      </span>
-                      <span className="text-[9px] opacity-70">Child #{num}</span>
-                    </div>
-                  );
-                })}
+              {/* 3-Child Visual Breakdown */}
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border-2 border-rose-500/30 bg-rose-50/70 p-4 text-center dark:bg-rose-500/10">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-rose-500 text-white shadow-sm">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <span className="mt-2.5 inline-block rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-black uppercase text-white">
+                    Child #1: Low-Emerging
+                  </span>
+                  <p className="mt-2 text-xs font-semibold text-rose-900 dark:text-rose-200">
+                    Struggles with letter sounds, alphabet recognition, and decoding simple words.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-slate-900/10 bg-slate-50/70 p-4 text-center dark:border-white/10 dark:bg-slate-800/50">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <span className="mt-2.5 inline-block rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-black uppercase text-slate-700 dark:bg-slate-700 dark:text-slate-200">
+                    Child #2: Developing
+                  </span>
+                  <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
+                    Knows some letters but needs regular guided practice to build reading confidence.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-50/70 p-4 text-center dark:bg-emerald-500/10">
+                  <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500 text-white shadow-sm">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <span className="mt-2.5 inline-block rounded-full bg-emerald-500 px-2 py-0.5 text-[10px] font-black uppercase text-white">
+                    Child #3: Grade-Ready
+                  </span>
+                  <p className="mt-2 text-xs font-semibold text-emerald-900 dark:text-emerald-200">
+                    Reading sentences smoothly and ready for independent reading comprehension.
+                  </p>
+                </div>
               </div>
 
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-slate-50 px-4 py-3 text-xs font-bold text-slate-700 dark:bg-slate-800/60 dark:text-slate-300">
-                <span>Source: World Bank, UNICEF &amp; EDCOM II National Education Commission</span>
-                <span className="text-orange-600 dark:text-orange-400">Why early home practice is non-negotiable</span>
+                <span>Source: GMA Integrated News · EDCOM II Analysis of DepEd CRLA</span>
+                <span className="text-orange-600 dark:text-orange-400">Caught in Grades 1–3, fixable in 10 minutes a day</span>
               </div>
             </div>
           </div>
