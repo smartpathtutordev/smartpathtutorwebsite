@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/site/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/tutor-app", label: "Tutor" },
+  { href: "/tutor-app", label: "Kids" },
   { href: "/parent-app", label: "Parent" },
   { href: "/teacher-app", label: "Teacher" },
   { href: "/pricing", label: "Pricing" },
