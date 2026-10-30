@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Users,
   Compass,
@@ -22,8 +22,6 @@ import {
   Volume2,
   Smile,
   ShieldCheck,
-  ChevronDown,
-  ChevronUp,
   ArrowRight,
   Heart,
   Tablet,
@@ -48,7 +46,6 @@ export function TestersGuide() {
   const [activeTab, setActiveTab] = useState<"all" | RoleKey>("all");
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [copiedCard, setCopiedCard] = useState(false);
-  const [showFullUat, setShowFullUat] = useState(false);
 
   // Load progress from localStorage
   useEffect(() => {
@@ -263,9 +260,6 @@ export function TestersGuide() {
       fbSmooth: "Worked smoothly!",
       fbConfusing: "A bit confusing",
       fbBug: "Found a bug",
-      fullUatBtnShow: "View Full 58-Point Quality Matrix (For QA)",
-      fullUatBtnHide: "Hide Technical Matrix",
-      fullUatNotice: "Automated test suites passed 1,440+ unit and security checks. Human UAT verifies real device feel, child learnability, and family workflows.",
     },
 
     tl: {
@@ -442,9 +436,6 @@ export function TestersGuide() {
       fbSmooth: "Maayos lahat!",
       fbConfusing: "Medyo nakakalito",
       fbBug: "May nakitang bug",
-      fullUatBtnShow: "Ipakita ang Buong 58-Point Quality Matrix (Para sa QA)",
-      fullUatBtnHide: "Itago ang Technical Matrix",
-      fullUatNotice: "Pumasa ang 1,440+ awtomatikong tests. Ang pagsusuri ng tao ang nagpapatunay sa tunay na karanasan ng pamilya.",
     },
   }[lang];
 
@@ -804,84 +795,6 @@ export function TestersGuide() {
               </div>
             );
           })}
-        </div>
-
-        {/* Collapsible 58-Point Technical Checklist for QA & Pilots */}
-        <div className="mt-8 border-t border-slate-900/10 pt-5 dark:border-white/10">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-extrabold text-slate-900 dark:text-white">
-                58-Point Pilot &amp; QA Verification Matrix
-              </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                {t.fullUatNotice}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowFullUat((prev) => !prev)}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border border-slate-900/10 bg-slate-50 px-3 text-[11px] font-bold text-slate-700 hover:bg-slate-100 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
-            >
-              {showFullUat ? (
-                <>
-                  <ChevronUp className="h-3.5 w-3.5" />
-                  {t.fullUatBtnHide}
-                </>
-              ) : (
-                <>
-                  <ChevronDown className="h-3.5 w-3.5" />
-                  {t.fullUatBtnShow}
-                </>
-              )}
-            </button>
-          </div>
-
-          <AnimatePresence>
-            {showFullUat && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25 }}
-                className="mt-4 space-y-3 overflow-hidden rounded-2xl bg-slate-50 p-4 text-xs dark:bg-slate-800/50"
-              >
-                <div className="grid gap-2 sm:grid-cols-2">
-                  <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
-                    <span className="font-extrabold text-slate-900 dark:text-white block">
-                      1. Functional &amp; Accounts (Items 1–15)
-                    </span>
-                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                      Email signup, Google login, session persistence across tabs, GCash test payments, parent plan unlock, zero data loss on refresh.
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
-                    <span className="font-extrabold text-slate-900 dark:text-white block">
-                      2. Usability &amp; Audio (Items 16–25)
-                    </span>
-                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                      Child avatar tap-in, clear bilingual voice clips, warm praise sounds, simple back navigation, 40px+ buttons without tap delay.
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
-                    <span className="font-extrabold text-slate-900 dark:text-white block">
-                      3. Device &amp; Screen (Items 26–47)
-                    </span>
-                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                      iPhone &amp; budget Android testing, auto-rotation sideways, offline PWA reopen under 1.5s, fast 3G loading screen with spinner.
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-white p-3 shadow-xs dark:bg-slate-800">
-                    <span className="font-extrabold text-slate-900 dark:text-white block">
-                      4. Security &amp; Safety (Items 48–58)
-                    </span>
-                    <p className="mt-1 text-[11px] text-slate-600 dark:text-slate-300">
-                      Zero child data tracking, lesson content protected by signed passes, Admin 30-min idle timeout, TLS 1.2+ encryption verified.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </section>
     </div>
