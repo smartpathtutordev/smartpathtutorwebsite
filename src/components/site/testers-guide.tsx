@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Users,
@@ -106,6 +107,31 @@ export function TestersGuide() {
       copyCardBtn: "Copy Card",
       copiedCardBtn: "Copied!",
 
+      // Tester Agreement & Parental Consent
+      agreementBadge: "RA 10173 Compliant · 100% Safe",
+      agreementTitle: "Pilot Tester Agreement & Privacy Notice",
+      agreementSubtitle: "By participating in this pilot test, you agree to these 3 simple points:",
+      agreements: [
+        {
+          num: "1",
+          title: "Guided by an Adult",
+          desc: "You confirm you are a parent, legal guardian, or teacher guiding your learner. Children explore under adult supervision.",
+        },
+        {
+          num: "2",
+          title: "100% Free · No Real Charges",
+          desc: "All test passes, cards, and GCash/Maya buttons are simulated. Zero real money is ever billed to your bank or e-wallet.",
+        },
+        {
+          num: "3",
+          title: "Child Privacy Protected",
+          desc: "Compliant with the Philippine Data Privacy Act (RA 10173). We never sell, track, or share child data. Feedback is voluntary to help improve SmartPath.",
+        },
+      ],
+      agreementFooter: "By testing SmartPath, you acknowledge our",
+      termsLink: "Terms of Service",
+      privacyLink: "Privacy Policy",
+
       // 3 Straightforward Role Tracks
       roles: [
         {
@@ -126,13 +152,13 @@ export function TestersGuide() {
             },
             {
               id: "p2",
-              title: "Add your child's profile",
-              desc: "Enter your child's name and grade level (Grade 1, 2, or 3).",
+              title: "Activate test plan (Subscribe Free)",
+              desc: "Go to Plan, choose any plan, and use the Free Test Pass (GCash or Card above). Verify it unlocks instantly.",
             },
             {
               id: "p3",
-              title: "Activate test plan (Free)",
-              desc: "Tap Plan, choose any plan, and use the Free Test Pass (GCash or Card above). Verify it unlocks instantly.",
+              title: "Add your child's profile",
+              desc: "Now add your child's name and grade level (Grade 1, 2, or 3) to your active plan.",
             },
             {
               id: "p4",
@@ -282,6 +308,31 @@ export function TestersGuide() {
       copyCardBtn: "Kopyahin",
       copiedCardBtn: "Nakopya!",
 
+      // Kasunduan at Pahintulot
+      agreementBadge: "Ayon sa RA 10173 · 100% Ligtas",
+      agreementTitle: "Kasunduan sa Pagsubok at Paunawa sa Privacy",
+      agreementSubtitle: "Sa paglahok sa pilot test na ito, sumasang-ayon ka sa 3 simpleng puntong ito:",
+      agreements: [
+        {
+          num: "1",
+          title: "May Gabay ng Nakatatanda",
+          desc: "Pinatutunayan mong ikaw ay magulang, tagapangalaga, o guro na gumagabay sa bata. Ang bata ay sumusubok sa ilalim ng iyong patnubay.",
+        },
+        {
+          num: "2",
+          title: "100% Libre · Walang Bawas sa Pera",
+          desc: "Ang test pass at test card ay pawang simulation lamang. Walang anumang bawas sa iyong totoong pera, GCash, o bangko.",
+        },
+        {
+          num: "3",
+          title: "Protektado ang Datos ng Bata",
+          desc: "Alinsunod sa Data Privacy Act (RA 10173). Hindi namin ibinebenta o ipinapamahagi ang impormasyon ng bata. Ang feedback ay kusang-loob upang mapaganda ang SmartPath.",
+        },
+      ],
+      agreementFooter: "Sa pagsusuri ng SmartPath, sumasang-ayon ka sa aming",
+      termsLink: "Terms of Service",
+      privacyLink: "Privacy Policy",
+
       // 3 Straightforward Role Tracks
       roles: [
         {
@@ -302,13 +353,13 @@ export function TestersGuide() {
             },
             {
               id: "p2",
-              title: "Idagdag ang iyong anak",
-              desc: "Ilagay ang pangalan at baitang ng anak (Grade 1, 2, o 3).",
+              title: "I-activate ang test plan (Libreng Subscription)",
+              desc: "Pumunta sa Plan, pumili ng plan, at gamitin ang Test Pass (GCash o Card). Tiyaking bumukas agad.",
             },
             {
               id: "p3",
-              title: "I-activate ang test plan (Libre)",
-              desc: "Pumunta sa Plan, pumili ng plan, at gamitin ang Test Pass (GCash o Card). Tiyaking bumukas agad.",
+              title: "Idagdag ang iyong anak",
+              desc: "Ngayon ilagay ang pangalan at baitang ng anak (Grade 1, 2, o 3) sa iyong aktibong plan.",
             },
             {
               id: "p4",
@@ -585,6 +636,66 @@ export function TestersGuide() {
           <span className="text-slate-400">or</span>
           <span className="rounded-lg bg-sky-500/10 px-2.5 py-1 text-sky-700 dark:text-sky-300">
             {t.cardOpt} {TEST_CARD}
+          </span>
+        </div>
+      </section>
+
+      {/* Pilot Tester Agreement & Privacy Notice */}
+      <section className="card-premium border border-slate-900/10 bg-slate-50/70 p-5 sm:p-6 dark:border-white/10 dark:bg-slate-850">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-900/5 pb-4 dark:border-white/10">
+          <div className="flex items-center gap-2.5">
+            <span className="grid h-8 w-8 place-items-center rounded-xl bg-orange-500/10 text-orange-600 dark:bg-orange-400/15 dark:text-orange-300">
+              <ShieldCheck className="h-4 w-4" />
+            </span>
+            <div>
+              <h3 className="font-heading text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
+                {t.agreementTitle}
+              </h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                {t.agreementSubtitle}
+              </p>
+            </div>
+          </div>
+          <span className="inline-block self-start sm:self-auto rounded-full bg-emerald-500/10 px-3 py-1 text-[10px] font-extrabold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+            {t.agreementBadge}
+          </span>
+        </div>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {t.agreements.map((item) => (
+            <div
+              key={item.num}
+              className="rounded-xl border border-slate-900/5 bg-white p-3.5 shadow-2xs dark:border-white/5 dark:bg-slate-800"
+            >
+              <div className="flex items-center gap-2">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-orange-100 text-[11px] font-black text-orange-700 dark:bg-orange-500/20 dark:text-orange-300">
+                  {item.num}
+                </span>
+                <h4 className="font-heading text-xs font-extrabold text-slate-900 dark:text-white">
+                  {item.title}
+                </h4>
+              </div>
+              <p className="mt-1.5 text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-900/5 pt-3 text-[11px] text-slate-500 dark:border-white/10 dark:text-slate-400">
+          <span>
+            {t.agreementFooter}{" "}
+            <Link href="/terms" className="font-bold text-orange-600 underline hover:text-orange-700 dark:text-orange-400">
+              {t.termsLink}
+            </Link>{" "}
+            &amp;{" "}
+            <Link href="/privacy" className="font-bold text-orange-600 underline hover:text-orange-700 dark:text-orange-400">
+              {t.privacyLink}
+            </Link>
+            .
+          </span>
+          <span className="font-semibold text-slate-400">
+            Republic Act No. 10173 (Data Privacy Act of 2012)
           </span>
         </div>
       </section>
