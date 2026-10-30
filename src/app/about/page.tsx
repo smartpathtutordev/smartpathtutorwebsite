@@ -74,7 +74,7 @@ const THREE_CHILDREN = [
     badgeClass: "bg-rose-500 text-white",
     cardBorder: "border-rose-500/30 bg-rose-50/60 dark:bg-rose-500/10",
     pain: "Guesses words from pictures. Confuses letter sounds (like 'b' and 'd'). Hides when asked to read aloud in class.",
-    smartpathSolution: "Stroke-by-stroke phonics with Tala reading aloud patiently until it clicks. Zero shame.",
+    smartpathSolution: "Stroke-by-stroke phonics with Teacher Saje reading aloud patiently until it clicks. Zero shame.",
   },
   {
     character: "/assets/characters/ate_idle.png",
@@ -102,7 +102,7 @@ const PARENT_FIXES = [
     icon: Volume2,
     color: "bg-sky-500/10 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300",
     title: "It reads aloud with your child",
-    desc: "Tala speaks patient English and Filipino. Your child taps any word to hear it pronounced and sounded out.",
+    desc: "Teacher Saje speaks patient English and Filipino. Your child taps any word to hear it pronounced and sounded out.",
   },
   {
     icon: Clock,

@@ -170,7 +170,7 @@ export function TestersGuide() {
             {
               id: "c3",
               title: "Check read-aloud voice clarity",
-              desc: "Listen to Tala reading aloud. Is the voice warm, clear, and easy to understand in English & Filipino?",
+              desc: "Listen to Teacher Saje reading aloud. Is the voice warm, clear, and easy to understand in English & Filipino?",
             },
             {
               id: "c4",
@@ -241,7 +241,7 @@ export function TestersGuide() {
         {
           icon: Volume2,
           title: "Voice & Audio",
-          desc: "Tala speaks clearly in English & Tagalog. Pronunciation is natural and friendly.",
+          desc: "Teacher Saje speaks clearly in English & Tagalog. Pronunciation is natural and friendly.",
         },
         {
           icon: Wifi,
@@ -345,8 +345,8 @@ export function TestersGuide() {
             },
             {
               id: "c3",
-              title: "Pakinggan ang boses ni Tala",
-              desc: "Malinaw at magiliw ba ang boses ni Tala sa Ingles at Tagalog? Madali bang maintindihan?",
+              title: "Pakinggan ang boses ni Teacher Saje",
+              desc: "Malinaw at magiliw ba ang boses ni Teacher Saje sa Ingles at Tagalog? Madali bang maintindihan?",
             },
             {
               id: "c4",
@@ -417,7 +417,7 @@ export function TestersGuide() {
         {
           icon: Volume2,
           title: "Boses at Tunog",
-          desc: "Malinaw at magiliw magsalita si Tala sa Tagalog at English. Natural ang bigkas.",
+          desc: "Malinaw at magiliw magsalita si Teacher Saje sa Tagalog at English. Natural ang bigkas.",
         },
         {
           icon: Wifi,
