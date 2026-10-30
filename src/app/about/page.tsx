@@ -332,7 +332,7 @@ export default function AboutPage() {
 
                       {/* What happens at school / home */}
                       <div className="mt-4">
-                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                        <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                           At School &amp; Homework:
                         </span>
                         <p className="mt-1 text-xs leading-relaxed text-slate-700 dark:text-slate-200">

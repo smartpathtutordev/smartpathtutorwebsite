@@ -80,7 +80,7 @@ export function BentoFeatures() {
                     <span className="grid h-7 w-7 place-items-center rounded-full bg-orange-100 text-orange-700 font-bold text-xs">M</span>
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-xs">Maya · Grade 2</p>
-                      <p className="text-[10px] text-slate-500">Today&apos;s Path: 3/4 Quests Done</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">Today&apos;s Path: 3/4 Quests Done</p>
                     </div>
                   </div>
                   <span className="text-emerald-600 font-bold flex items-center gap-1 text-xs">
@@ -92,7 +92,7 @@ export function BentoFeatures() {
                     <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-100 text-blue-700 font-bold text-xs">L</span>
                     <div>
                       <p className="font-bold text-slate-900 dark:text-white text-xs">Lucas · Grade 1</p>
-                      <p className="text-[10px] text-slate-500">Reading Booster: Phonics Blends</p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">Reading Booster: Phonics Blends</p>
                     </div>
                   </div>
                   <span className="text-blue-600 font-bold flex items-center gap-1 text-xs">
