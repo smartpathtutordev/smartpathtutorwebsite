@@ -245,8 +245,8 @@ export function TestersGuide() {
         },
         {
           icon: Wifi,
-          title: "Offline & Speed",
-          desc: "Opens fast on budget phones and works smoothly even on weak mobile internet.",
+          title: "Speed & Mobile Data",
+          desc: "Loads quickly in mobile browsers and runs smoothly on regular data connections.",
         },
         {
           icon: Smile,
@@ -421,8 +421,8 @@ export function TestersGuide() {
         },
         {
           icon: Wifi,
-          title: "Bilis at Offline",
-          desc: "Mabilis bumukas kahit sa budget phones o mahinang mobile data.",
+          title: "Bilis sa Mobile Data",
+          desc: "Mabilis mag-load sa mobile browser at maayos gamitin kahit sa karaniwang mobile internet.",
         },
         {
           icon: Smile,
