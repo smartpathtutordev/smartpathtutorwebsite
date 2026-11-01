@@ -183,9 +183,9 @@ export function LessonDemo({ className = "" }: LessonDemoProps) {
               </span>
             </div>
             <div className="flex items-center gap-3 text-xs text-slate-300">
-              <span className="inline-flex items-center gap-1 text-[11px] text-amber-300">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
                 <Volume2 className="h-3.5 w-3.5" />
-                <span>Audio Ready</span>
+                <span>Teacher Saje Voice Active • Tap Screen to Hear</span>
               </span>
             </div>
           </div>

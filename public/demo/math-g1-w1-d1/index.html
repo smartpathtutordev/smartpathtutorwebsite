@@ -4302,13 +4302,18 @@ function tapScripture(card) {
   function lessonOn(){ return typeof currentActiveStep !== 'undefined' && currentActiveStep === 'lesson'; }
   var unlocked = false;
   var VID = {'title-video':'videoTitle','intro-video':'videoIntro','outro-video':'videoOutro'};
-  // Sound: start with sound when allowed; otherwise play muted and turn sound on at the first click/key.
+  // Sound: start with sound when allowed; otherwise ensure unmuted on any touch/click.
   function unlock(){
-    if (unlocked) return; unlocked = true;
+    unlocked = true;
     ['videoTitle','videoIntro','videoOutro'].forEach(function(id){ var v=$(id); if(v) v.muted=false; });
     var a=$('playerAudio'); if(a) a.muted=false;
     var v = (typeof currentActiveStep!=='undefined') ? $(VID[currentActiveStep]) : null;
-    if (v) setTimeout(function(){ if (v.paused && !v.ended) v.play().catch(function(){}); }, 50);  // first tap only turns sound on
+    if (v && v.paused && !v.ended) {
+      v.play().catch(function(){});
+    }
+    if (lessonOn() && a && a.paused) {
+      a.play().catch(function(){});
+    }
   }
   ['pointerdown','touchstart','keydown','click'].forEach(function(ev){ window.addEventListener(ev, unlock, {capture:true}); });
   window.playVideoSafely = function(v){
@@ -4325,13 +4330,16 @@ function tapScripture(card) {
     var op = a.play.bind(a);
     a.play = function(){
       if (!lessonOn()) { try { a.pause(); } catch(e){} return Promise.resolve(); }
-      if (unlocked) a.muted = false;
-      return op().catch(function(e){ if (e && e.name === 'NotAllowedError') { a.muted = true; return op(); } throw e; });
+      a.muted = false;
+      return op().catch(function(e){
+        if (e && e.name === 'NotAllowedError') {
+          console.warn("Audio waiting for user gesture...");
+          return Promise.resolve();
+        }
+        throw e;
+      });
     };
   }
-  // No completion pop-up with an assessment button: the outro simply ends.
-  window.showCelebrationStage = function(){};
-  try { showCelebrationStage = window.showCelebrationStage; } catch(e){}
   document.addEventListener('DOMContentLoaded', function(){
     document.querySelectorAll('#view-outro-video .video-action-btn.primary').forEach(function(b){
       b.removeAttribute('onclick');
