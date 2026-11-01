@@ -376,14 +376,26 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
             })}
           </div>
 
-          {/* Primary Plan CTA */}
-          <Link
-            href={data.ctaHref}
-            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-gradient-sunset px-4 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105"
-          >
-            {data.ctaLabel}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          <div className="flex items-center gap-2">
+            {appKey === "tutor" && (
+              <a
+                href="#live-demo"
+                className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 text-xs font-extrabold text-amber-700 transition hover:bg-amber-500/20 dark:border-amber-400/30 dark:bg-amber-400/15 dark:text-amber-300"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>Try Sample Lesson</span>
+              </a>
+            )}
+
+            {/* Primary Plan CTA */}
+            <Link
+              href={data.ctaHref}
+              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-gradient-sunset px-4 text-xs font-extrabold text-white shadow-sm transition hover:brightness-105"
+            >
+              {data.ctaLabel}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </div>
 
         {/* 3 Devices Side-by-Side Row */}

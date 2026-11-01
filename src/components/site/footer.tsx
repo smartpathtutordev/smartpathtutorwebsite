@@ -21,7 +21,7 @@ export function SiteFooter() {
             </span>
           </Link>
           <p className="max-w-sm text-[15px] font-medium text-slate-600 dark:text-slate-400">
-            By SmartPath Educational Technologies. A strong start for every Filipino child.
+            By SmartPath-Tutor Tutorial Services. A strong start for every Filipino child.
           </p>
           <p className="max-w-sm text-sm font-semibold text-slate-500 dark:text-slate-400">
             Use it in your phone, tablet or computer browser at smartpathtutor.ph.
@@ -56,7 +56,7 @@ export function SiteFooter() {
 
       <div className="border-t border-slate-900/5 dark:border-white/5">
         <div className="mx-auto max-w-6xl px-5 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center text-xs text-slate-500 dark:text-slate-400 font-sans">
-          <span>© {new Date().getFullYear()} SmartPath Educational Technologies. DepEd MATATAG Grades 1–3. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} SmartPath-Tutor Tutorial Services. DepEd MATATAG Grades 1–3. All rights reserved.</span>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
             <span>GCash · Bank transfer · Cash</span>
             <span className="hidden sm:inline">·</span>
