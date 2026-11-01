@@ -30,8 +30,8 @@ export function LessonDemo({ className = "" }: LessonDemoProps) {
 
   const demoUrl =
     language === "tagalog"
-      ? "/demo/math-g1-w1-d1/tagalog.html"
-      : "/demo/math-g1-w1-d1/index.html";
+      ? "/demo/math-g1-w1-d1/tagalog"
+      : "/demo/math-g1-w1-d1/";
 
   const handleReset = () => {
     setIframeKey((prev) => prev + 1);
