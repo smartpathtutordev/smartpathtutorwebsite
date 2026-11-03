@@ -378,6 +378,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Sample lesson demo temporarily hidden
             {appKey === "tutor" && (
               <a
                 href="#live-demo"
@@ -387,6 +388,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
                 <span>Try Sample Lesson</span>
               </a>
             )}
+            */}
 
             {/* Primary Plan CTA */}
             <Link

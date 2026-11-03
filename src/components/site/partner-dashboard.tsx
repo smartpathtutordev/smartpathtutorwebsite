@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Copy, Check, RefreshCw, Users } from "lucide-react";
+import Link from "next/link";
+import { Copy, Check, RefreshCw, Users, ArrowRight } from "lucide-react";
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/supabase-public";
 
 type Family = { n: number; joined: string; status: "paid" | "reserved" | "lapsed"; paid_on: string | null };
@@ -88,11 +89,34 @@ export function PartnerDashboard() {
   }
   if (data === null) {
     return (
-      <div className="rounded-2xl border p-6">
-        <h1 className="text-2xl font-bold">Partner families</h1>
-        <p className="mt-2 text-muted-foreground">
-          This link is not valid or has been replaced. Ask SmartPath (sptutor.ph@gmail.com) for your current link.
-        </p>
+      <div className="rounded-2xl border p-6 space-y-4">
+        <div>
+          <h1 className="text-2xl font-bold">Partner Portal &amp; Families</h1>
+          <p className="mt-2 text-muted-foreground">
+            This live dashboard requires your organization&apos;s secret link. If you are an active partner and need your link, email SmartPath at{" "}
+            <a href="mailto:sptutor.ph@gmail.com" className="font-semibold text-primary underline">
+              sptutor.ph@gmail.com
+            </a>.
+          </p>
+        </div>
+
+        <div className="rounded-xl border border-orange-500/25 bg-orange-500/10 p-4 dark:bg-orange-500/15">
+          <p className="text-sm font-bold text-orange-800 dark:text-orange-300">
+            Looking to partner with SmartPath for your school or community?
+          </p>
+          <p className="mt-1 text-xs text-orange-700 dark:text-orange-200">
+            Learn about our 20% family discount codes, free teacher tools, and community learning hub sponsorships.
+          </p>
+          <div className="mt-3">
+            <Link
+              href="/partner-with-us"
+              className="inline-flex items-center gap-1.5 rounded-full bg-slate-900 px-4 py-2 text-xs font-bold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+            >
+              <span>Explore Partner Programs</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

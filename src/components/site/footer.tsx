@@ -37,6 +37,7 @@ export function SiteFooter() {
             <li><Link href="/parent-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent App Showcase</Link></li>
             <li><Link href="/teacher-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teacher App Showcase</Link></li>
             <li><Link href="/pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</Link></li>
+            <li><Link href="/partner-with-us" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Partner With Us</Link></li>
             <li><Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">About Us</Link></li>
           </ul>
         </div>
@@ -46,6 +47,8 @@ export function SiteFooter() {
             Community
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
+            <li><Link href="/partner-with-us" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Schools &amp; Community</Link></li>
+            <li><Link href="/partner" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Partner Portal</Link></li>
             <li><a href="/#contact" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Contact Us</a></li>
             <li><a href="mailto:sptutor.ph@gmail.com" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">sptutor.ph@gmail.com</a></li>
             <li><Link href="/privacy" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Privacy Policy</Link></li>

@@ -13,6 +13,7 @@ const links = [
   { href: "/parent-app", label: "Parent" },
   { href: "/teacher-app", label: "Teacher" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/partner-with-us", label: "Partners" },
   { href: "/about", label: "About Us" },
   // TEMPORARY (UAT pilot): remove with src/app/testers when testing ends.
   { href: "/testers", label: "Testers" },
