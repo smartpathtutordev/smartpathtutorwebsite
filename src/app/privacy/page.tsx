@@ -31,6 +31,17 @@ export default function Privacy() {
           "The sound is turned into text by the speech service built into the device or browser — Google for Chrome and Android, Apple for Safari, iPhone and iPad — under that company’s own privacy terms. SmartPath receives only the words that were recognised and the reading score. We do not record, keep or upload your child’s voice.",
           "You can say no to the microphone. The reading activities then work by tapping, and a grown-up can mark each word.",
         ] },
+        { id: "tutoring", h: "One-on-one tutoring and live video", p: [
+          "When you book a session we keep: the child it is for (first name and grade), the teacher, the time, what the session is for, any notes, and any homework photos or PDF you upload; the payment details listed above; that you agreed to the tutoring terms, with the version and time.",
+          "During a session: the video and sound travel between the child’s device, the teacher and anyone else in the call through our video service. We do not record them. The whiteboard is shared live and is not kept after the session. We keep a log of the session — who joined and left and when, which lessons the teacher showed, when it started and ended — and, if someone asks for help or the app hits a problem, technical details of the device (type, browser, app version, connection) so we can fix it.",
+          "After a session: the teacher’s report to you, any rating you give (seen only by SmartPath), and any report about conduct.",
+          "Who sees what: the teacher sees the child’s first name and grade, the purpose and notes, the homework you uploaded, and the lessons in the session — never your contact details or payment details. SmartPath staff see what they need to run sessions, keep them safe, check payments and answer help requests. Staff may join a session, always shown in the call; each time is logged.",
+          "Homework files are private to your family, your child’s teacher and SmartPath staff. You can remove them before the session, and ask us to delete them at any time.",
+        ] },
+        { id: "teachers", h: "Teachers who tutor", p: [
+          "If you apply to tutor we keep: your name, photo (checked by our team before families see it), short bio, subjects and grades, years teaching, optional licence number, the region, province and town you give (shown to families only if you choose), the GCash number and name for your payouts, your open hours, sessions, reports, payouts and their references, agreement to the Teacher Agreement, ratings (you see only the average once there are five), and any conduct reports and decisions.",
+          "Families see your public profile only. Your GCash number, licence and payout details are seen only by you and SmartPath staff.",
+        ] },
         { h: "How we use it, and our lawful basis", p: [
           "To run the service you or your school signed up for (contract): accounts, lessons, progress, reports to parents, class features, reminders, and support.",
           "With your consent: creating a child’s profile and processing the child’s learning data, the microphone, and optional emails such as weekly digests. You give consent when you create your account and add a child, and you can withdraw it at any time (see “Your rights”).",
@@ -42,12 +53,13 @@ export default function Privacy() {
           "Only a parent or legal guardian aged 18 or older can create a family account and add a child. By adding a child you confirm you have the authority to consent for that child.",
           "The child app has no ads, no social feed, no chat with strangers and no links out to the internet. Children cannot chat with an AI. When a child is stuck on a question, Tala may show a short hint; only the question itself is used to write it, never the child’s name or anything the child types.",
           "A teacher can see a child only after the parent approves joining that class. Teachers see what they need to teach: the child’s name and grade, attendance, class activities and their results, and which assigned lessons are started or done.",
+          "In one-on-one tutoring, the teacher sees only the child the parent booked, and only what that session needs (see “One-on-one tutoring and live video”). A parent agrees before each paid session, and can sit in on any session.",
           "A child who signs in on a family tablet does so through the parent’s account. Children cannot change parent settings, plans or privacy choices; those are protected by the parent PIN.",
         ] },
         { h: "Who we share it with", p: [
           "Inside your family: every parent or guardian linked to the household sees each child’s progress and reports.",
           "Your child’s teacher: only after you approve the class, and only the class information listed above.",
-          "Service providers that process data for us, under contracts or terms that require them to protect it: Supabase (accounts and database), Cloudflare (hosting and delivery of the apps and lessons), PayMongo (online payments), Resend (email), Semaphore (SMS sign-in codes), Google (sign-in, if you choose it), DeepSeek (writes Teacher Saje’s answers and Tala’s hints from the question text — no names or account details are sent), and Sentry (error reports, without names, emails or IP addresses, when enabled).",
+          "Service providers that process data for us, under contracts or terms that require them to protect it: Supabase (accounts and database), Cloudflare (hosting and delivery of the apps and lessons), PayMongo (online payments), Resend (email), Semaphore (SMS sign-in codes), Google (sign-in, if you choose it), DeepSeek (writes Teacher Saje’s answers, the teachers’ AI helper answers and Tala’s hints from the question text — no names or account details are sent), and Sentry (error reports, without names, emails or IP addresses, when enabled). Live tutoring video runs on Jitsi Meet through 8x8 (Jitsi as a Service), which carries the call between the child, the teacher and, if they sit in, the parent. 8x8 receives the name shown in the call, an account number (not an email or phone number) and the call itself while it happens; its servers may be outside the Philippines, under the safeguards the Data Privacy Act requires for such transfers. We do not record sessions, and recording and streaming are switched off for every call.",
           "Authorities, only when the law requires it or to protect someone’s safety.",
           "We never sell, rent or trade personal data, and we never share it for advertising.",
         ] },
@@ -60,6 +72,7 @@ export default function Privacy() {
           "Payment records (amount, date, method, reference and the payer’s email) are kept for the period required by Philippine tax law. They contain no children’s learning data.",
           "Support messages and questions asked to Teacher Saje: kept with your account so you can look back at them, and deleted when the account is deleted.",
           "Class records a school needs (attendance, class activity results): for the school year and up to 1 year after, unless the school asks us to delete them sooner.",
+          "Tutoring: session records, reports and payment and payout records are kept as payment records, for the period tax law requires. Session logs and technical details are kept for up to 1 year to handle disputes and safety reports. Safety reports and decisions are kept as long as needed to protect children and to answer the authorities.",
         ] },
         { h: "How we protect it", p: [
           "All data travels over HTTPS (TLS). Database rules (row-level security) let each account reach only its own family or class, and we test those rules automatically. Passwords and the parent PIN are stored only in one-way scrambled form. Lesson files are private and served only to signed-in subscribers. Staff access is limited to what each person’s job needs.",

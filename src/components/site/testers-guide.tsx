@@ -136,7 +136,7 @@ export function TestersGuide() {
       roles: [
         {
           key: "parent" as const,
-          badge: "Step 1 · ~5 mins",
+          badge: "Step 1 · ~10 mins",
           title: "Parent Track",
           tagline: "Account setup, plan unlock, and child dashboard",
           character: "/assets/characters/nanay_idle.png",
@@ -169,6 +169,16 @@ export function TestersGuide() {
               id: "p5",
               title: "Check live child progress",
               desc: "After your child tries a lesson in the Tutor App, verify their progress shows up on your Parent dashboard.",
+            },
+            {
+              id: "p6",
+              title: "Book several tutoring sessions with one teacher",
+              desc: "Tutoring → pick a teacher → See times. Tap one time, then 'Every … : add more weeks'. Book, agree to the terms and pay with the Free Test Pass. Check 'Payment received' and that every session shows Confirmed.",
+            },
+            {
+              id: "p7",
+              title: "Enter a partner code (if your school gave you one)",
+              desc: "Plan → Have a code? Type the partner code. At checkout the plan shows the partner discount and 'you save ₱…'. Skip this if you have no code.",
             },
           ],
         },
@@ -217,7 +227,7 @@ export function TestersGuide() {
         },
         {
           key: "teacher" as const,
-          badge: "Step 3 · ~4 mins",
+          badge: "Step 3 · ~6 mins",
           title: "Teacher Track (100% Free)",
           tagline: "Classroom sections, class codes, and student mastery",
           character: "/assets/characters/teacher_idle.png",
@@ -250,6 +260,11 @@ export function TestersGuide() {
               id: "t5",
               title: "Check class topic board",
               desc: "Verify you can see overall class completion and individual learner mastery.",
+            },
+            {
+              id: "t6",
+              title: "Tutors: plan your month",
+              desc: "If you are an approved SmartPath tutor: Tutoring → Planner → Month to see open and booked hours. Use 'Repeat weekly' to open the same hours every week, then tap a day and try 'Close this day'.",
             },
           ],
         },
@@ -337,7 +352,7 @@ export function TestersGuide() {
       roles: [
         {
           key: "parent" as const,
-          badge: "Hakbang 1 · ~5 min",
+          badge: "Hakbang 1 · ~10 min",
           title: "Para sa Magulang (Parent)",
           tagline: "Pag-setup ng account, pag-unlock ng aralin, at dashboard",
           character: "/assets/characters/nanay_idle.png",
@@ -370,6 +385,16 @@ export function TestersGuide() {
               id: "p5",
               title: "Tingnan ang progreso ng anak",
               desc: "Kapag nag-aral ang anak sa Tutor App, tingnan kung lumabas agad ang progreso sa iyong dashboard.",
+            },
+            {
+              id: "p6",
+              title: "Mag-book ng ilang tutoring session sa iisang guro",
+              desc: "Tutoring → pumili ng guro → See times. Pumili ng oras, saka 'Every … : add more weeks'. I-book, sumang-ayon sa terms at magbayad gamit ang Free Test Pass. Tingnan kung lumabas ang 'Payment received' at Confirmed ang bawat session.",
+            },
+            {
+              id: "p7",
+              title: "Ilagay ang partner code (kung binigyan ka ng paaralan)",
+              desc: "Plan → Have a code? I-type ang partner code. Sa checkout, makikita ang discount at 'you save ₱…'. Laktawan kung wala kang code.",
             },
           ],
         },
@@ -418,7 +443,7 @@ export function TestersGuide() {
         },
         {
           key: "teacher" as const,
-          badge: "Hakbang 3 · ~4 min",
+          badge: "Hakbang 3 · ~6 min",
           title: "Para sa Guro (Teacher · 100% Libre)",
           tagline: "Mga klase, class code, at progreso ng bawat mag-aaral",
           character: "/assets/characters/teacher_idle.png",
@@ -451,6 +476,11 @@ export function TestersGuide() {
               id: "t5",
               title: "Suriin ang mastery board ng klase",
               desc: "Tingnan ang pangkalahatang progreso ng klase at ng bawat bata.",
+            },
+            {
+              id: "t6",
+              title: "Para sa tutor: planuhin ang buwan",
+              desc: "Kung aprubadong SmartPath tutor ka: Tutoring → Planner → Month para makita ang bukas at naka-book na oras. Gamitin ang 'Repeat weekly' para buksan ang parehong oras bawat linggo, saka subukan ang 'Close this day'.",
             },
           ],
         },

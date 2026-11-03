@@ -258,15 +258,16 @@ function DeviceActions({
         Open on Web
         <ExternalLink className="h-3.5 w-3.5" />
       </a>
-      <button
-        type="button"
-        disabled
-        title="Installable app coming soon"
-        className="inline-flex h-9 cursor-not-allowed items-center gap-1.5 rounded-full border border-slate-900/10 bg-slate-100 px-3.5 text-xs font-extrabold text-slate-400 opacity-75 dark:border-white/10 dark:bg-slate-800/60 dark:text-slate-500"
+      {/* Installs the web app (PWA): the app's own page asks the device,
+          so this opens it with ?install=1 (the app strips it again). */}
+      <a
+        href={`${webUrl.replace(/#.*$/, "")}?install=1`}
+        title="Add the app to your phone, tablet or computer. No app store needed."
+        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-orange-500/40 bg-orange-50 px-3.5 text-xs font-extrabold text-orange-700 transition hover:bg-orange-100 dark:border-orange-400/40 dark:bg-orange-500/10 dark:text-orange-300 dark:hover:bg-orange-500/20"
       >
         <Download className="h-3.5 w-3.5" />
         {installLabel}
-      </button>
+      </a>
     </div>
   );
 }
@@ -415,7 +416,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
               <div className="my-4 flex flex-1 items-center justify-center w-full">
                 <MobileFrame src={data.screens.mobile} alt={`${data.name} ${data.accentWord} on Mobile`} />
               </div>
-              <DeviceActions webUrl={data.appUrl} installLabel="Install APK" />
+              <DeviceActions webUrl={data.appUrl} installLabel="Install App" />
             </motion.div>
 
             {/* Laptop Card */}
@@ -449,7 +450,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
               <div className="my-4 flex flex-1 items-center justify-center w-full">
                 <TabletFrame src={data.screens.tablet} alt={`${data.name} ${data.accentWord} on Tablet`} />
               </div>
-              <DeviceActions webUrl={data.appUrl} installLabel="Install APK" />
+              <DeviceActions webUrl={data.appUrl} installLabel="Install App" />
             </motion.div>
           </div>
         ) : (
@@ -463,7 +464,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
             {filter === "mobile" && (
               <>
                 <MobileFrame src={data.screens.mobile} alt={`${data.name} ${data.accentWord} on Mobile`} large />
-                <DeviceActions webUrl={data.appUrl} installLabel="Install APK" />
+                <DeviceActions webUrl={data.appUrl} installLabel="Install App" />
               </>
             )}
             {filter === "laptop" && (
@@ -475,7 +476,7 @@ export function DeviceShowcase({ appKey }: { appKey: AppKey }) {
             {filter === "tablet" && (
               <>
                 <TabletFrame src={data.screens.tablet} alt={`${data.name} ${data.accentWord} on Tablet`} large />
-                <DeviceActions webUrl={data.appUrl} installLabel="Install APK" />
+                <DeviceActions webUrl={data.appUrl} installLabel="Install App" />
               </>
             )}
           </motion.div>
