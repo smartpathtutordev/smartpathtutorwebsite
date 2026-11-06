@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SmartPath Coding — Coding for Kids Ages 5–12",
     description:
-      "147 concept videos, 771 guided missions, and 6 creative playgrounds across 7 adventure worlds for Filipino kids. Free 7-day trial at coding.smartpathtutor.ph.",
+      "147 concept videos, 771 guided missions, and 6 creative playgrounds across 7 adventure worlds for Filipino kids. Get started at coding.smartpathtutor.ph.",
     url: "https://smartpathtutor.ph/coding",
   },
 };

@@ -307,8 +307,8 @@ const CODING_FAQS = [
     a: "SmartPath Coding runs directly in modern web browsers on laptops, desktop computers, Chromebooks, iPads, and Android tablets or phones. You can open coding.smartpathtutor.ph immediately with nothing to install.",
   },
   {
-    q: "Can we try it before purchasing a pass?",
-    a: "Yes! Unit 0.1 (lessons 0.1.1 to 0.1.5) is 100% free to explore. Plus, when a parent creates an account, your family gets a full 7-day free trial to explore all lessons and creative playgrounds with no upfront credit card required.",
+    q: "Is there a free trial, and how does payment work?",
+    a: "There is no free trial — lessons and creative playgrounds unlock immediately once a prepaid pass is activated. Passes start at just ₱149/month, payable with GCash, Maya, bank transfer, or card. There are no recurring subscriptions or surprise charges — passes never renew automatically, so there is nothing to cancel.",
   },
   {
     q: "How does payment work in the Philippines?",
@@ -410,15 +410,15 @@ export function CodingShowcase() {
               >
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  7-Day Free Trial
+                  Prepaid Access &middot; From ₱149/mo
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  GCash &amp; Maya Ready (From ₱149/mo)
+                  GCash &amp; Maya Ready
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  No Ads &middot; Safe Parent PIN Gate
+                  No Auto-Renewals &middot; Safe Parent PIN Gate
                 </span>
               </motion.div>
             </div>
@@ -922,7 +922,7 @@ export function CodingShowcase() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-xs font-extrabold text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
                   >
-                    <span>Sign up your family for the 7-day trial &rarr;</span>
+                    <span>Get started on coding.smartpathtutor.ph &rarr;</span>
                   </a>
                 </div>
               </div>
@@ -943,7 +943,7 @@ export function CodingShowcase() {
               <span className="text-gradient-sunset">GCash &amp; Maya ready.</span>
             </h2>
             <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
-              Start with a <strong>7-day free trial</strong>! When you are ready, choose a prepaid pass with zero automatic renewal traps.
+              Simple prepaid passes with zero automatic renewal traps. Pay only for what you need via GCash, Maya, or Card.
             </p>
           </div>
 

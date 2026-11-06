@@ -78,7 +78,7 @@ const PARTNER_TRACKS: PartnerTrack[] = [
       "7 Adventure Worlds: Level 0 (Picture Park) to Level 3 (Python Plaza) and AI/Robotics",
       "Lab instructor dashboard to monitor student mission progress and project saves",
       "Curriculum training and lesson plan outlines for your computer teachers",
-      "7-day free trial on signup for all students and faculty",
+      "Teacher & administrator demo access to preview all worlds and engines",
       "Safe walled garden: zero ads, no open chat, child privacy strictly protected",
     ],
   },
@@ -367,7 +367,7 @@ export function PartnerWithUs() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                    <span>Live web app at coding.smartpathtutor.ph with 7-day trial</span>
+                    <span>Live web app at coding.smartpathtutor.ph with instant prepaid access</span>
                   </li>
                 </ul>
               </div>
