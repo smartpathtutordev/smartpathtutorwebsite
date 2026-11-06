@@ -10,13 +10,12 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/tutor-app", label: "Kids" },
+  { href: "/coding", label: "Coding" },
   { href: "/parent-app", label: "Parent" },
   { href: "/teacher-app", label: "Teacher" },
   { href: "/pricing", label: "Pricing" },
   { href: "/partner-with-us", label: "Partners" },
   { href: "/about", label: "About Us" },
-  // TEMPORARY (UAT pilot): remove with src/app/testers when testing ends.
-  { href: "/testers", label: "Testers" },
 ];
 
 export function SiteNav() {

@@ -4,6 +4,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const b = "https://smartpathtutor.ph";
   return [
     { url: `${b}/`, changeFrequency: "weekly", priority: 1 },
+    { url: `${b}/coding`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${b}/pricing`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${b}/partner-with-us`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${b}/tutor-app`, changeFrequency: "weekly", priority: 0.8 },

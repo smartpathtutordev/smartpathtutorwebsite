@@ -3,6 +3,10 @@ export const onRequest = async (context: { request: Request; next: () => Promise
   const path = url.pathname;
 
   // 1. Clean friendly redirects
+  if (path === "/testers" || path.startsWith("/testers/")) {
+    return Response.redirect(new URL("/coding", url.origin).toString(), 301);
+  }
+
   if (path === "/tutor") {
     return Response.redirect(new URL("/app/tutor/", url.origin).toString(), 302);
   }
