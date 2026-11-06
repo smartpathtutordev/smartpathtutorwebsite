@@ -34,9 +34,9 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-4 space-y-3 text-[15px] font-semibold text-slate-700 dark:text-slate-300 font-sans">
             <li><Link href="/tutor-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Tutor App Showcase</Link></li>
-            <li><Link href="/coding" className="hover:text-purple-600 dark:hover:text-purple-400 font-bold transition-colors">SmartPath Coding (Ages 5–12)</Link></li>
             <li><Link href="/parent-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Parent App Showcase</Link></li>
             <li><Link href="/teacher-app" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Teacher App Showcase</Link></li>
+            <li><Link href="/coding" className="hover:text-purple-600 dark:hover:text-purple-400 font-bold transition-colors">SmartPath Coding (Ages 5–12)</Link></li>
             <li><Link href="/pricing" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Pricing &amp; Plans</Link></li>
             <li><Link href="/partner-with-us" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">Partner With Us</Link></li>
             <li><Link href="/about" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors">About Us</Link></li>
