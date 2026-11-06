@@ -8,17 +8,16 @@ import {
   Sparkles,
   Play,
   CheckCircle2,
-  ArrowRight,
   ExternalLink,
-  ShieldCheck,
-  Gamepad2,
+  HelpCircle,
+  BookOpen,
+  ArrowRight,
+  Terminal,
+  Layers,
   Cpu,
   Globe,
   Bot,
-  HelpCircle,
-  Flame,
-  ChevronRight,
-  BookOpen,
+  Gamepad2,
 } from "lucide-react";
 
 import {
@@ -41,7 +40,6 @@ interface WorldTrack {
   badgeBg: string;
   badgeBorder: string;
   badgeText: string;
-  coverImage: string;
   units: string[];
   description: string;
   skills: string[];
@@ -58,7 +56,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-amber-500/10",
     badgeBorder: "border-amber-500/20",
     badgeText: "text-amber-700 dark:text-amber-300",
-    coverImage: "/images/coding/cover_l0.jpg",
     units: ["Algorithms", "Debugging", "Loops", "Computer Thinking"],
     description:
       "Guide Codi through colorful mazes with picture-arrow blocks and cheerful spoken audio.",
@@ -74,7 +71,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-orange-500/10",
     badgeBorder: "border-orange-500/20",
     badgeText: "text-orange-700 dark:text-orange-300",
-    coverImage: "/images/coding/cover_l1.jpg",
     units: ["Events", "Motion & Loops", "Looks & Sounds", "Storytelling"],
     description:
       "Bring characters to life on stage! Learn event triggers ('when tapped'), glide motions, dialogue, and costume changes.",
@@ -90,7 +86,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-emerald-500/10",
     badgeBorder: "border-emerald-500/20",
     badgeText: "text-emerald-700 dark:text-emerald-300",
-    coverImage: "/images/coding/cover_l2.jpg",
     units: ["Decisions", "Variables", "Game Mechanics", "Game Design"],
     description:
       "Turn gamers into game makers! Build playable arcade platformers with coin scoring, jump physics, and health bars.",
@@ -106,7 +101,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-sky-500/10",
     badgeBorder: "border-sky-500/20",
     badgeText: "text-sky-700 dark:text-sky-300",
-    coverImage: "/images/coding/cover_l3.jpg",
     units: ["Blocks to Python", "Numbers & Logic", "Loops & Lists", "Functions"],
     description:
       "Bridge from visual blocks to real written code in our gentle browser Python sandbox.",
@@ -122,7 +116,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-purple-500/10",
     badgeBorder: "border-purple-500/20",
     badgeText: "text-purple-700 dark:text-purple-300",
-    coverImage: "/images/coding/cover_a.jpg",
     units: ["How AI Sees", "Training Models", "Smart Games", "AI Ethics"],
     description:
       "Kid-friendly artificial intelligence: train computer vision models and program smart game characters.",
@@ -138,7 +131,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-teal-500/10",
     badgeBorder: "border-teal-500/20",
     badgeText: "text-teal-700 dark:text-teal-300",
-    coverImage: "/images/coding/cover_b.jpg",
     units: ["Virtual Breadboards", "LEDs & Buzzers", "Distance Sensors", "Robotic Rover"],
     description:
       "Learn physical computing on a virtual hardware simulator with zero wires to buy or lose.",
@@ -154,7 +146,6 @@ const WORLDS: WorldTrack[] = [
     badgeBg: "bg-rose-500/10",
     badgeBorder: "border-rose-500/20",
     badgeText: "text-rose-700 dark:text-rose-300",
-    coverImage: "/images/coding/cover_c.jpg",
     units: ["HTML Skeleton", "CSS Styling", "JavaScript Clicks", "Publish a Site"],
     description:
       "Build real web pages with split-screen preview and export ready-to-share mini-sites.",
@@ -165,7 +156,7 @@ const WORLDS: WorldTrack[] = [
 const CODING_PLANS = [
   {
     name: "1-Month Pass",
-    price: "₱149",
+    price: "₱249",
     period: "/month (30 days)",
     badge: "Flexible Starter",
     desc: "Full access to all 147 lessons, 7 worlds, and 6 creative playground engines.",
@@ -180,10 +171,10 @@ const CODING_PLANS = [
   },
   {
     name: "3-Month Pass",
-    price: "₱399",
+    price: "₱649",
     period: "/term (90 days)",
-    badge: "Most Popular · Save 11%",
-    desc: "Just ₱133/month. Perfect for a full school term or vacation project.",
+    badge: "Most Popular · Save 13%",
+    desc: "Just ~₱216/month. Perfect for a full school term or vacation project.",
     features: [
       "Everything in the 1-Month Pass",
       "Ideal duration to complete 2 full Adventure Worlds",
@@ -195,10 +186,10 @@ const CODING_PLANS = [
   },
   {
     name: "12-Month Pass",
-    price: "₱1,299",
+    price: "₱1,999",
     period: "/year (365 days)",
-    badge: "Best Value · Save 27%",
-    desc: "Just ₱108/month for an entire year of world-class computer science.",
+    badge: "Best Value · Save 33%",
+    desc: "Just ~₱166/month for an entire year of world-class computer science.",
     features: [
       "Everything in the 3-Month Pass",
       "Full 1-year mastery path from early blocks to typed Python",
@@ -217,7 +208,7 @@ const CODING_FAQS = [
   },
   {
     q: "Is there a free trial, and how does payment work?",
-    a: "There is no free trial — lessons and creative playgrounds unlock immediately once a prepaid pass is activated. Passes start at just ₱149/month, payable with GCash, Maya, bank transfer, or card. There are no recurring subscriptions or surprise charges — passes never renew automatically, so there is nothing to cancel.",
+    a: "There is no free trial — lessons and creative playgrounds unlock immediately once a prepaid pass is activated. Passes start at just ₱249/month, payable with GCash, Maya, bank transfer, or card. There are no recurring subscriptions or surprise charges — passes never renew automatically, so there is nothing to cancel.",
   },
   {
     q: "What devices are supported?",
@@ -228,6 +219,301 @@ const CODING_FAQS = [
     a: "SmartPath Tutor is our core DepEd MATATAG curriculum platform for Grades 1–3 Math, English, and Science. SmartPath Coding is our specialized STEM & Computer Science sister platform for ages 5–12, providing early computational thinking, game design, and real Python coding.",
   },
 ];
+
+// High-fidelity, representative UI Mockup Component for each world
+function WorldAppMockup({ worldId }: { worldId: string }) {
+  switch (worldId) {
+    case "L0":
+      // Level 0: Picture Park (Visual Arrow Block Maze)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/60 p-4 border border-amber-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-amber-500/20 pb-2">
+            <span className="text-[11px] font-black text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+              Picture Park · Level 0 Maze
+            </span>
+            <span className="rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-700 dark:text-amber-300">
+              Voice Guided 🔊
+            </span>
+          </div>
+
+          {/* Maze Grid Simulation */}
+          <div className="my-2 grid grid-cols-4 gap-2 rounded-xl bg-white/90 p-3 shadow-inner dark:bg-slate-900">
+            <div className="flex h-14 items-center justify-center rounded-lg border-2 border-purple-500 bg-purple-500/15">
+              <div className="relative h-9 w-9">
+                <Image src="/images/coding/app-icon.png" alt="Codi" fill className="object-contain" />
+              </div>
+            </div>
+            <div className="flex h-14 items-center justify-center rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+              <span className="text-amber-500 text-lg">⭐</span>
+            </div>
+            <div className="flex h-14 items-center justify-center rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+              <span className="text-amber-500 text-lg">⭐</span>
+            </div>
+            <div className="flex h-14 items-center justify-center rounded-lg border-2 border-emerald-500/40 bg-emerald-500/10">
+              <div className="relative h-9 w-9">
+                <Image src="/images/coding/props/sari_sari.png" alt="Store" fill className="object-contain" />
+              </div>
+            </div>
+          </div>
+
+          {/* Block Palette */}
+          <div className="flex items-center gap-2 pt-1 border-t border-amber-500/20">
+            <span className="text-[10px] font-black text-slate-500">Program:</span>
+            <span className="rounded-lg bg-indigo-600 px-2 py-0.5 text-[10px] font-black text-white">⬆ Forward</span>
+            <span className="rounded-lg bg-indigo-600 px-2 py-0.5 text-[10px] font-black text-white">⬆ Forward</span>
+            <span className="rounded-lg bg-indigo-600 px-2 py-0.5 text-[10px] font-black text-white">⬆ Forward</span>
+          </div>
+        </div>
+      );
+
+    case "L1":
+      // Level 1: Story Studio (Animation Stage & Event Blocks)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-orange-50 to-amber-50/60 p-4 border border-orange-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-orange-500/20 pb-2">
+            <span className="text-[11px] font-black text-orange-700 dark:text-orange-300 flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-orange-500" />
+              Story Studio · Stage &amp; Events
+            </span>
+            <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+              ⚑ Green Flag Active
+            </span>
+          </div>
+
+          {/* Stage View with Character and Speech */}
+          <div className="relative my-2 h-28 rounded-xl bg-gradient-to-b from-sky-100 to-indigo-50 p-3 shadow-inner dark:from-slate-950 dark:to-slate-900 flex items-end justify-between">
+            <div className="space-y-1">
+              <div className="rounded-xl border border-purple-500/30 bg-white px-2.5 py-1 text-[11px] font-extrabold text-purple-900 shadow-sm dark:bg-slate-900 dark:text-purple-200">
+                &quot;Kumusta, kaibigan!&quot;
+              </div>
+              <div className="relative h-12 w-12 ml-2">
+                <Image src="/images/coding/codi_wave.png" alt="Codi" fill className="object-contain" />
+              </div>
+            </div>
+            <div className="text-right space-y-1">
+              <span className="rounded-lg bg-amber-500 px-2 py-0.5 text-[9px] font-black text-white">
+                Sound: 🎵 Meow!
+              </span>
+            </div>
+          </div>
+
+          {/* Event Blocks Tray */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-orange-500/20 text-[10px] font-black text-white">
+            <span className="rounded-md bg-emerald-600 px-2 py-0.5">When ⚑ Clicked</span>
+            <span className="rounded-md bg-purple-600 px-2 py-0.5">Say &quot;Kumusta!&quot;</span>
+            <span className="rounded-md bg-sky-600 px-2 py-0.5">Glide 1s to center</span>
+          </div>
+        </div>
+      );
+
+    case "L2":
+      // Level 2: Game Arcade (Platformer & Physics)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50/60 p-4 border border-emerald-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
+            <span className="text-[11px] font-black text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+              <Gamepad2 className="h-3.5 w-3.5" />
+              Game Arcade · 2D Physics Canvas
+            </span>
+            <span className="font-mono text-[11px] font-black text-emerald-800 dark:text-emerald-300">
+              SCORE: 340 · ♥♥♥
+            </span>
+          </div>
+
+          {/* Arcade Game Canvas */}
+          <div className="relative my-2 h-28 rounded-xl bg-slate-900 p-3 shadow-inner flex flex-col justify-between overflow-hidden">
+            <div className="flex justify-between items-center text-[10px] font-mono text-amber-400">
+              <span>🪙 × 14 COINS</span>
+              <span>TIME: 42s</span>
+            </div>
+            <div className="relative flex items-center justify-between px-4">
+              <div className="h-7 w-7 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-xs shadow-lg">
+                👾
+              </div>
+              <div className="h-4 w-12 rounded bg-emerald-600/60" />
+              <div className="text-amber-400 text-lg">🪙</div>
+            </div>
+            <div className="h-2 w-full rounded bg-emerald-800" />
+          </div>
+
+          {/* Game Logic Blocks */}
+          <div className="flex items-center gap-1.5 pt-1 border-t border-emerald-500/20 text-[10px] font-black text-white">
+            <span className="rounded-md bg-amber-600 px-2 py-0.5">If Touches 🪙</span>
+            <span className="rounded-md bg-emerald-600 px-2 py-0.5">Score +10</span>
+            <span className="rounded-md bg-purple-600 px-2 py-0.5">Play Jump SFX</span>
+          </div>
+        </div>
+      );
+
+    case "L3":
+      // Level 3: Python Plaza (Real Typed Python IDE)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-sky-50 to-indigo-50/60 p-4 border border-sky-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-sky-500/20 pb-2">
+            <span className="text-[11px] font-black text-sky-700 dark:text-sky-300 flex items-center gap-1.5">
+              <Terminal className="h-3.5 w-3.5" />
+              Python Plaza · main.py
+            </span>
+            <span className="rounded-full bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-700 dark:text-sky-300">
+              Python 3.12 Web Sandbox
+            </span>
+          </div>
+
+          {/* Real Python Code Editor Mockup */}
+          <div className="my-2 grid grid-cols-12 gap-2 h-28 rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] text-slate-300 shadow-inner overflow-hidden">
+            <div className="col-span-7 space-y-1 border-r border-slate-800 pr-2">
+              <div className="text-slate-500"># Draw glowing star pattern</div>
+              <div><span className="text-purple-400">import</span> turtle</div>
+              <div>codi = turtle.<span className="text-sky-400">Turtle</span>()</div>
+              <div><span className="text-purple-400">for</span> i <span className="text-purple-400">in</span> <span className="text-amber-400">range</span>(8):</div>
+              <div className="pl-3">codi.<span className="text-sky-400">forward</span>(60)</div>
+              <div className="pl-3">codi.<span className="text-sky-400">right</span>(135)</div>
+            </div>
+            <div className="col-span-5 flex flex-col items-center justify-center bg-slate-900/60 rounded-lg p-1 text-center">
+              <span className="text-sky-400 text-xl font-bold animate-spin" style={{ animationDuration: "12s" }}>
+                ✳️
+              </span>
+              <span className="text-[9px] text-slate-400 mt-1 font-sans font-bold">Canvas Output</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-1 border-t border-sky-500/20 text-[10px] font-mono text-slate-500">
+            <span>&gt; Python execution: 0 errors</span>
+            <span className="text-emerald-500 font-bold">Output: 100% OK</span>
+          </div>
+        </div>
+      );
+
+    case "A":
+      // Elective A: AI Explorers (Machine Learning Vision Scanner)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50/60 p-4 border border-purple-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-purple-500/20 pb-2">
+            <span className="text-[11px] font-black text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+              <Bot className="h-3.5 w-3.5" />
+              AI Explorers · Vision Model Trainer
+            </span>
+            <span className="rounded-full bg-purple-500/10 px-2 py-0.5 text-[10px] font-bold text-purple-700 dark:text-purple-300">
+              Neural Net Live
+            </span>
+          </div>
+
+          {/* AI Vision Scanner View */}
+          <div className="relative my-2 h-28 rounded-xl bg-slate-950 p-3 shadow-inner flex items-center justify-between">
+            <div className="relative h-20 w-24 rounded-lg border-2 border-dashed border-purple-400 bg-purple-950/40 flex items-center justify-center">
+              <span className="text-3xl">🥭</span>
+              <div className="absolute top-1 left-1 text-[8px] font-mono bg-purple-600 text-white px-1 rounded">
+                OBJECT_TRACK
+              </div>
+            </div>
+
+            <div className="space-y-1.5 pl-3 flex-1 font-mono text-[10px]">
+              <div className="text-slate-300 font-sans font-bold">Class Predictions:</div>
+              <div className="flex items-center justify-between text-emerald-400">
+                <span>1. Fresh Mango</span>
+                <span className="font-black">98.4%</span>
+              </div>
+              <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                <div className="h-full bg-emerald-500 w-[98%]" />
+              </div>
+              <div className="flex items-center justify-between text-slate-500">
+                <span>2. Banana</span>
+                <span>1.6%</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 pt-1 border-t border-purple-500/20 text-[10px] font-bold text-purple-700 dark:text-purple-300">
+            <span>Status: Model trained with 100 photo samples</span>
+          </div>
+        </div>
+      );
+
+    case "B":
+      // Elective B: Virtual Robotics (Circuit Breadboard & Rover)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50/60 p-4 border border-teal-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-teal-500/20 pb-2">
+            <span className="text-[11px] font-black text-teal-700 dark:text-teal-300 flex items-center gap-1.5">
+              <Cpu className="h-3.5 w-3.5" />
+              Virtual Robotics · Hardware Simulator
+            </span>
+            <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+              Circuit Live ⚡
+            </span>
+          </div>
+
+          {/* Virtual Breadboard Simulation */}
+          <div className="my-2 h-28 rounded-xl bg-slate-900 p-2.5 shadow-inner flex items-center justify-around font-mono text-[10px]">
+            <div className="flex flex-col items-center gap-1 bg-slate-800 p-2 rounded-lg border border-slate-700">
+              <span className="text-xs text-teal-300 font-bold">MicroController</span>
+              <span className="text-[9px] text-emerald-400">Pin 2: HIGH (5V)</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="h-4 w-4 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/80 animate-ping" />
+              <span className="text-[9px] text-slate-400 mt-1">LED Glowing</span>
+            </div>
+            <div className="flex flex-col items-center gap-1 bg-slate-800 p-2 rounded-lg border border-slate-700">
+              <span className="text-xs text-sky-300 font-bold">Distance Sensor</span>
+              <span className="text-[9px] text-amber-400">18 cm (Clear)</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-1 border-t border-teal-500/20 text-[10px] font-black text-teal-800 dark:text-teal-300">
+            <span>Obstacle Avoidance Logic: Active</span>
+            <span className="text-emerald-500">Rover Motors: ON</span>
+          </div>
+        </div>
+      );
+
+    case "C":
+    default:
+      // Elective C: Web Creators (Real Split-Screen HTML/CSS Web Workstation)
+      return (
+        <div className="relative h-full w-full rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50/60 p-4 border border-rose-500/20 flex flex-col justify-between dark:from-slate-900 dark:to-slate-950">
+          <div className="flex items-center justify-between border-b border-rose-500/20 pb-2">
+            <span className="text-[11px] font-black text-rose-700 dark:text-rose-300 flex items-center gap-1.5">
+              <Globe className="h-3.5 w-3.5" />
+              Web Creators · index.html + Live Preview
+            </span>
+            <span className="rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-bold text-rose-700 dark:text-rose-300">
+              Split Screen Editor
+            </span>
+          </div>
+
+          {/* Split Screen Web Workstation */}
+          <div className="my-2 grid grid-cols-12 gap-2 h-28 rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] shadow-inner overflow-hidden">
+            {/* Left: Real HTML/CSS Code */}
+            <div className="col-span-6 space-y-0.5 text-slate-300 border-r border-slate-800 pr-2">
+              <div className="text-slate-500">&lt;!-- Kid Web Project --&gt;</div>
+              <div>&lt;<span className="text-rose-400">div</span> <span className="text-sky-300">class</span>=<span className="text-amber-300">&quot;shop&quot;</span>&gt;</div>
+              <div className="pl-2">&lt;<span className="text-rose-400">h1</span>&gt;🍧 Lola&apos;s Treats&lt;/<span className="text-rose-400">h1</span>&gt;</div>
+              <div className="pl-2">&lt;<span className="text-rose-400">button</span>&gt;Order&lt;/<span className="text-rose-400">button</span>&gt;</div>
+              <div>&lt;/<span className="text-rose-400">div</span>&gt;</div>
+            </div>
+
+            {/* Right: Real Rendered Webpage Preview */}
+            <div className="col-span-6 rounded-lg bg-white p-2.5 flex flex-col justify-between text-slate-900 shadow font-sans">
+              <div className="border-b border-slate-100 pb-1 flex items-center justify-between">
+                <span className="font-heading font-black text-xs text-purple-900">🍧 Lola&apos;s Treats</span>
+                <span className="text-[8px] bg-emerald-100 text-emerald-800 px-1 rounded font-bold">LIVE</span>
+              </div>
+              <p className="text-[9px] text-slate-600 leading-tight">Fresh halo-halo &amp; warm pandesal!</p>
+              <button type="button" className="rounded-md bg-purple-600 py-1 text-center text-[9px] font-extrabold text-white shadow-sm">
+                Order Online ➔
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-1 border-t border-rose-500/20 text-[10px] font-bold text-rose-700 dark:text-rose-300">
+            <span>Real HTML5 tags &middot; CSS styling &middot; JavaScript buttons</span>
+            <span className="text-emerald-500 font-extrabold">Instant Export</span>
+          </div>
+        </div>
+      );
+  }
+}
 
 export function CodingShowcase() {
   const [activeWorldId, setActiveWorldId] = useState<string>("L0");
@@ -300,7 +586,7 @@ export function CodingShowcase() {
                   className="inline-flex h-12 items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-6 text-sm font-extrabold text-purple-700 hover:bg-purple-500/20 dark:border-purple-400/30 dark:bg-purple-400/15 dark:text-purple-300"
                 >
                   <Sparkles className="h-4 w-4" />
-                  <span>Play Interactive Demo ↓</span>
+                  <span>Play Full Lesson Demo ↓</span>
                 </a>
               </motion.div>
 
@@ -313,7 +599,7 @@ export function CodingShowcase() {
               >
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  Prepaid Access &middot; From ₱149/mo
+                  Prepaid Access &middot; From ₱249/mo
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -369,18 +655,18 @@ export function CodingShowcase() {
         </div>
       </section>
 
-      {/* FEATURED: Interactive Sample Lesson Demo */}
+      {/* FEATURED: Complete Lesson Demo (Video -> Mission -> Playground) */}
       <section id="sample-lesson" className="py-12 sm:py-16 bg-purple-500/[0.03] border-y border-purple-500/10">
         <div className="mx-auto max-w-5xl px-5 sm:px-6">
           <div className="mx-auto max-w-3xl text-center mb-8">
             <span className="eyebrow">
-              <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" /> Interactive Demo
+              <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" /> Real Lesson Showcase
             </span>
             <h2 className="mt-2 font-heading text-3xl font-black tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-              No free trial? <span className="text-gradient-sunset">Try a real lesson right now!</span>
+              No free trial? <span className="text-gradient-sunset">Experience a full lesson right here!</span>
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
-              See firsthand how Codi teaches algorithmic thinking without reading friction. Tap arrow blocks, hit <strong>Run Code</strong>, and guide Codi to the goal!
+              See the complete 3-step learning loop: <strong>1. Watch Concept Video</strong> ➔ <strong>2. Guided Mission</strong> ➔ <strong>3. Creative Playground</strong>!
             </p>
           </div>
 
@@ -388,12 +674,12 @@ export function CodingShowcase() {
         </div>
       </section>
 
-      {/* 7 Adventure Worlds (Interactive Curriculum) */}
+      {/* 7 Adventure Worlds (Interactive Curriculum with Representative Mockups) */}
       <section id="worlds" className="py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-5 sm:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <span className="eyebrow">
-              <BookOpen className="h-3.5 w-3.5 text-orange-500" /> Complete Roadmap
+              <BookOpen className="h-3.5 w-3.5 text-orange-500" /> Complete Curriculum
             </span>
             <h2 className="mt-2 font-heading text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
               7 Adventure Worlds. <span className="text-gradient-sunset">Ages 5 to 12.</span>
@@ -421,30 +707,27 @@ export function CodingShowcase() {
             ))}
           </div>
 
-          {/* Active World Card */}
+          {/* Active World Card with Representative Code Mockup */}
           <div className="mt-8">
             <div className="card-premium grid items-center gap-8 p-6 sm:p-8 lg:grid-cols-12 border-purple-500/20 shadow-xl">
-              <div className="lg:col-span-5 relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100 dark:bg-slate-800">
-                <Image
-                  src={activeWorld.coverImage}
-                  alt={activeWorld.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 450px"
-                  className="object-cover"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className={`inline-block rounded-full px-3 py-1 text-xs font-extrabold ${activeWorld.badgeBg} ${activeWorld.badgeText} border ${activeWorld.badgeBorder} backdrop-blur-md`}>
-                    {activeWorld.ages}
-                  </span>
-                </div>
+              
+              {/* Left: Authentic Representative Workstation Mockup */}
+              <div className="lg:col-span-6 relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-900 shadow-md">
+                <WorldAppMockup worldId={activeWorld.id} />
               </div>
 
-              <div className="lg:col-span-7 space-y-4">
+              {/* Right: World Details */}
+              <div className="lg:col-span-6 space-y-4">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
-                    {activeWorld.level} · {activeWorld.tag}
-                  </span>
-                  <h3 className="mt-1 font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-block rounded-full px-3 py-0.5 text-xs font-extrabold ${activeWorld.badgeBg} ${activeWorld.badgeText} border ${activeWorld.badgeBorder}`}>
+                      {activeWorld.ages}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+                      {activeWorld.level} · {activeWorld.tag}
+                    </span>
+                  </div>
+                  <h3 className="mt-2 font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
                     {activeWorld.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
@@ -452,7 +735,7 @@ export function CodingShowcase() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-2">
+                <div className="grid grid-cols-2 gap-2 pt-1">
                   {activeWorld.skills.map((s, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
                       <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
@@ -463,7 +746,7 @@ export function CodingShowcase() {
 
                 <div className="pt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
                   <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    Includes: <span className="font-bold text-slate-800 dark:text-slate-200">{activeWorld.units.join(" · ")}</span>
+                    Units: <span className="font-bold text-slate-800 dark:text-slate-200">{activeWorld.units.join(" · ")}</span>
                   </div>
                   <a
                     href="https://coding.smartpathtutor.ph"
@@ -613,7 +896,7 @@ export function CodingShowcase() {
                 Ready to inspire your little programmer?
               </h2>
               <p className="text-sm sm:text-base text-purple-100">
-                147 lessons and 771 missions waiting on <strong>coding.smartpathtutor.ph</strong>. Works in any web browser with instant prepaid GCash &amp; Maya activation.
+                147 lessons and 771 missions waiting on <strong>coding.smartpathtutor.ph</strong>. Works in any web browser with instant prepaid GCash &amp; Maya activation starting at just ₱249/month.
               </p>
               <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                 <a

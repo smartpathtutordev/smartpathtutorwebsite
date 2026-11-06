@@ -51,7 +51,7 @@ const PARTNER_TRACKS: PartnerTrack[] = [
     title: "School Cohort & 20% Family Discount Code",
     subtitle: "For Elementary Schools · Grades 1–3 Departments · Private Academies",
     discount: "20% OFF for Every Family",
-    effectivePrice: "₱319/mo per child for Tutor (reg. ₱399) · ₱119/mo for Coding (reg. ₱149)",
+    effectivePrice: "₱319/mo per child for Tutor (reg. ₱399) · ₱199/mo for Coding (reg. ₱249)",
     description:
       "A 100% free partnership for schools. We give your school a dedicated partner code (e.g., MABINI20). Parents enter it at checkout to get 20% off all Tutor and Coding renewals, while your teachers get free lifetime classroom tools.",
     benefits: [
@@ -359,7 +359,7 @@ export function PartnerWithUs() {
                 <ul className="mt-4 space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-sans">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                    <span>20% off coding passes (starts at ~₱119/mo)</span>
+                    <span>20% off coding passes (starts at ~₱199/mo)</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
