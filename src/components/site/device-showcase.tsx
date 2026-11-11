@@ -130,9 +130,9 @@ const APP_DATA: Record<
     ctaLabel: "See Plans",
     ctaHref: "/pricing",
     screens: {
-      mobile: "/images/parent-mobile.png?v=2",
-      tablet: "/images/parent-tablet.png?v=2",
-      laptop: "/images/parent-laptop.png?v=2",
+      mobile: "/images/parent-mobile.png?v=3",
+      tablet: "/images/parent-tablet.png?v=3",
+      laptop: "/images/parent-laptop.png?v=3",
     },
     showcaseTitle: "Inside",
     showcaseAccent: "SmartPath Parent.",
