@@ -27,7 +27,7 @@ const MAX_KIDS = 5;
 
 const peso = (n: number) => "\u20b1" + n.toLocaleString("en-PH");
 
-const PRO_FEATURES = ["Tutor app per child", "Parent app", "40 Parent AI questions/mo", "No ads"];
+const PRO_FEATURES = ["Tutor app per child", "Parent app", "10 Parent AI questions/mo", "No ads"];
 const TEACHER_FEATURES = ["Set up a class", "Recommend lessons", "Write multiple-choice questions", "See topics done"];
 
 const ease = [0.22, 1, 0.36, 1] as const;
