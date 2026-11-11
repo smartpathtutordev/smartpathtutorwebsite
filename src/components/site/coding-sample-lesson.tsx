@@ -1,861 +1,476 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import {
+  ArrowRight,
+  CheckCircle2,
+  ExternalLink,
+  Gamepad2,
+  Maximize2,
+  Minimize2,
   Play,
   RotateCcw,
-  ArrowUp,
-  Delete,
   Sparkles,
-  CheckCircle2,
+  Target,
   Trophy,
   Video,
-  Gamepad2,
-  Palette,
-  ChevronRight,
 } from "lucide-react";
 
-type Direction = "E" | "S" | "W" | "N";
-type BlockType = "F" | "L" | "R";
-type LessonStep = "watch" | "mission" | "playground";
+type StepId = "video" | "mission" | "playground";
 
-// Official signed Supabase video URL for Lesson 0.1.4 (Step Forward!)
-const VIDEO_014_URL =
-  "https://wfojmcuwgxwiawhmitjs.supabase.co/storage/v1/object/sign/coding-videos/en/0.1.4.mp4?token=eyJraWQiOiI0YzFmMDgyOC00YmUxLTQ4ODMtYTk4Yy1iNGIzYmU2ZTI1YzMiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJjb2RpbmctdmlkZW9zL2VuLzAuMS40Lm1wNCIsInNjb3BlIjoiZG93bmxvYWQiLCJpYXQiOjE3OTM5NzYzODIsImV4cCI6MjEwOTMzNjM4Mn0.eKFmZj9AhKMQckSHb5VxfJ9HnS18AScgUO1hNhPOvI_66Ev3WIfdHQ06qtmPpBY606Q9dapfMKjs5cEqEyZaQQ";
-
-// Audio sound helper using Web Audio API
-function playTone(freq: number, type: OscillatorType = "sine", duration = 0.15) {
-  try {
-    const AudioCtx =
-      window.AudioContext ||
-      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    gain.gain.setValueAtTime(0.12, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-  } catch {
-    // Graceful silence if audio blocked
-  }
+interface AppBridgeEvent {
+  type?: string;
+  mission?: string;
+  playground?: string;
+  stars?: number;
+  mistakes?: number;
+  seconds?: number;
+  badge?: string;
+  goals?: string[];
 }
 
-function playSuccessChime() {
-  playTone(523.25, "sine", 0.12);
-  setTimeout(() => playTone(659.25, "sine", 0.12), 120);
-  setTimeout(() => playTone(783.99, "sine", 0.15), 240);
-  setTimeout(() => playTone(1046.5, "sine", 0.35), 360);
-}
+const LESSON_META = {
+  id: "2.2.2",
+  title: "Keeping Score",
+  subtitle: "Change score by one",
+  track: "Level 2 · Game Creators",
+  unit: "Unit 2.2 · Variables",
+  badgeName: "Score Keeper",
+  missionSummary: "Add 1 to score every time the basket catches a mango.",
+  videoUrl: "/demo/coding-2-2-2/video.mp4",
+  videoPoster: "/demo/coding-2-2-2/art/bg/l2_game_canvas.jpg",
+  missionUrl: "/demo/coding-2-2-2/player/mission.html?id=2.2.2&base=../",
+  playgroundUrl: "/demo/coding-2-2-2/playground/stage.html?id=2.2.2&base=../",
+} as const;
 
-function playStepSound() {
-  playTone(440, "triangle", 0.08);
-}
+const STORAGE_KEYS = [
+  "spc_pg_2.2.2",
+  "spc_pg_2.2.2_goals",
+  "spc_pg_2.2.2_badge",
+];
 
-function playErrorSound() {
-  playTone(220, "sawtooth", 0.2);
-}
-
+/**
+ * Interactive preview embedding the authentic Lesson 2.2.2 ("Keeping Score")
+ * assets directly from the SmartPath Coding app: concept video, guided Mission
+ * player (`mission.html`), and block-coding Stage Playground (`stage.html`).
+ */
 export function CodingSampleLesson() {
-  const [currentStep, setCurrentStep] = useState<LessonStep>("watch");
+  const [step, setStep] = useState<StepId>("video");
+  const [watchedVideo, setWatchedVideo] = useState(false);
+  const [missionStars, setMissionStars] = useState<number | null>(null);
+  const [badgeEarned, setBadgeEarned] = useState(false);
+  const [completedLoop, setCompletedLoop] = useState(false);
+  const [missionRunKey, setMissionRunKey] = useState(1);
+  const [playgroundRunKey, setPlaygroundRunKey] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Step 2 Mission State (Lesson 0.1.4: Step Forward!)
-  const [missionProgram, setMissionProgram] = useState<BlockType[]>([]);
-  const [missionActiveIdx, setMissionActiveIdx] = useState<number | null>(null);
-  const [missionRobotCol, setMissionRobotCol] = useState<number>(0);
-  const [missionRunning, setMissionRunning] = useState(false);
-  const [missionDone, setMissionDone] = useState(false);
-  const [missionMsg, setMissionMsg] = useState(
-    "Count the squares to the sari-sari store! Add 3 Forward blocks, then press Run Code."
-  );
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const frameWrapRef = useRef<HTMLDivElement>(null);
 
-  const missionAbortRef = useRef(false);
-
-  // Step 3 Playground State (Custom street sandbox)
-  const [pgDestination, setPgDestination] = useState<"sari_sari" | "lola_house" | "school">("sari_sari");
-  const [pgDistance, setPgDistance] = useState<number>(4);
-  const [pgProgram, setPgProgram] = useState<BlockType[]>([]);
-  const [pgActiveIdx, setPgActiveIdx] = useState<number | null>(null);
-  const [pgRobotCol, setPgRobotCol] = useState<number>(0);
-  const [pgRunning, setPgRunning] = useState(false);
-  const [pgDone, setPgDone] = useState(false);
-  const [pgMsg, setPgMsg] = useState(
-    "Custom Street Sandbox: Choose your destination and write your own algorithm!"
-  );
-
-  const pgAbortRef = useRef(false);
-
-  // --- Mission Functions ---
-  const addMissionBlock = (b: BlockType) => {
-    if (missionRunning || missionProgram.length >= 6) return;
-    setMissionProgram((prev) => [...prev, b]);
-    playStepSound();
+  const selectStep = (nextStep: StepId) => {
+    if (nextStep !== "video" && videoRef.current && !videoRef.current.paused) {
+      videoRef.current.pause();
+    }
+    setCompletedLoop(false);
+    setStep(nextStep);
   };
 
-  const removeMissionLast = () => {
-    if (missionRunning || missionProgram.length === 0) return;
-    setMissionProgram((prev) => prev.slice(0, -1));
-  };
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+    };
+  }, []);
 
-  const resetMission = () => {
-    missionAbortRef.current = true;
-    setMissionRunning(false);
-    setMissionActiveIdx(null);
-    setMissionRobotCol(0);
-    setMissionDone(false);
-    setMissionMsg("Count the squares to the sari-sari store! Add 3 Forward blocks, then press Run Code.");
-  };
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent<unknown>) => {
+      if (event.origin !== window.location.origin) return;
+      const payload = event.data as AppBridgeEvent | null;
+      if (!payload || typeof payload !== "object") return;
 
-  const runMission = async () => {
-    if (missionRunning || missionProgram.length === 0) return;
-
-    setMissionRunning(true);
-    setMissionDone(false);
-    setMissionMsg("Codi is running your algorithm step by step...");
-    missionAbortRef.current = false;
-
-    let col = 0;
-    setMissionRobotCol(0);
-
-    for (let i = 0; i < missionProgram.length; i++) {
-      if (missionAbortRef.current) break;
-      setMissionActiveIdx(i);
-
-      const cmd = missionProgram[i];
-      if (cmd === "F") {
-        col += 1;
-        if (col > 3) {
-          playErrorSound();
-          setMissionMsg("Oops! Codi walked past the store. Try exactly 3 Forward steps!");
-          setMissionRunning(false);
-          setMissionActiveIdx(null);
-          return;
+      if (payload.mission === LESSON_META.id) {
+        if (payload.type === "missionComplete") {
+          setMissionStars(typeof payload.stars === "number" ? payload.stars : 3);
+        } else if (payload.type === "next") {
+          setStep("playground");
+        } else if (payload.type === "close") {
+          setStep("video");
         }
-        setMissionRobotCol(col);
-        playStepSound();
       }
 
-      if (col === 3) {
-        await new Promise((r) => setTimeout(r, 350));
-        playSuccessChime();
-        setMissionDone(true);
-        setMissionMsg("🎉 You made it! Yummy hot pandesal from the sari-sari store!");
-        setMissionRunning(false);
-        setMissionActiveIdx(null);
-        return;
-      }
-
-      await new Promise((r) => setTimeout(r, 450));
-    }
-
-    if (!missionAbortRef.current) {
-      if (col < 3) {
-        playTone(330, "sine", 0.2);
-        setMissionMsg(`Almost there! Codi is at square ${col + 1} of 4. Add more Forward blocks!`);
-      }
-      setMissionRunning(false);
-      setMissionActiveIdx(null);
-    }
-  };
-
-  // --- Playground Functions ---
-  const addPgBlock = (b: BlockType) => {
-    if (pgRunning || pgProgram.length >= 8) return;
-    setPgProgram((prev) => [...prev, b]);
-    playStepSound();
-  };
-
-  const removePgLast = () => {
-    if (pgRunning || pgProgram.length === 0) return;
-    setPgProgram((prev) => prev.slice(0, -1));
-  };
-
-  const resetPg = () => {
-    pgAbortRef.current = true;
-    setPgRunning(false);
-    setPgActiveIdx(null);
-    setPgRobotCol(0);
-    setPgDone(false);
-    setPgMsg(`Move Codi ${pgDistance} steps forward to reach your custom destination!`);
-  };
-
-  const runPg = async () => {
-    if (pgRunning || pgProgram.length === 0) return;
-
-    setPgRunning(true);
-    setPgDone(false);
-    setPgMsg("Testing your custom sandbox program...");
-    pgAbortRef.current = false;
-
-    let col = 0;
-    setPgRobotCol(0);
-
-    for (let i = 0; i < pgProgram.length; i++) {
-      if (pgAbortRef.current) break;
-      setPgActiveIdx(i);
-
-      const cmd = pgProgram[i];
-      if (cmd === "F") {
-        col += 1;
-        if (col > pgDistance) {
-          playErrorSound();
-          setPgMsg(`Oops! You walked ${col} steps, but the goal was at step ${pgDistance}!`);
-          setPgRunning(false);
-          setPgActiveIdx(null);
-          return;
+      if (payload.playground === LESSON_META.id) {
+        if (payload.type === "badgeEarned") {
+          setBadgeEarned(true);
+        } else if (payload.type === "next") {
+          setBadgeEarned(true);
+          setCompletedLoop(true);
+        } else if (payload.type === "close") {
+          setStep("mission");
         }
-        setPgRobotCol(col);
-        playStepSound();
       }
+    };
 
-      if (col === pgDistance) {
-        await new Promise((r) => setTimeout(r, 350));
-        playSuccessChime();
-        setPgDone(true);
-        setPgMsg("🌟 Outstanding! Your custom sandbox algorithm worked perfectly!");
-        setPgRunning(false);
-        setPgActiveIdx(null);
-        return;
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    const el = frameWrapRef.current;
+    if (!el) return;
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await el.requestFullscreen();
       }
-
-      await new Promise((r) => setTimeout(r, 450));
-    }
-
-    if (!pgAbortRef.current) {
-      if (col < pgDistance) {
-        setPgMsg(`You took ${col} step(s). You need ${pgDistance} steps to reach the destination!`);
-      }
-      setPgRunning(false);
-      setPgActiveIdx(null);
+    } catch {
+      // Fallback safely when fullscreen API is blocked by browser policy.
     }
   };
 
-  const destImages = {
-    sari_sari: "/images/coding/props/sari_sari.png",
-    lola_house: "/images/coding/props/lola_house.png",
-    school: "/images/coding/props/school_building.png",
+  const restartActiveIframe = () => {
+    if (step === "mission") {
+      setMissionRunKey((k) => k + 1);
+      return;
+    }
+    if (step === "playground") {
+      try {
+        for (const key of STORAGE_KEYS) {
+          window.localStorage.removeItem(key);
+        }
+      } catch {
+        // Ignore storage access errors in private browsing.
+      }
+      setBadgeEarned(false);
+      setCompletedLoop(false);
+      setPlaygroundRunKey((k) => k + 1);
+    }
   };
 
-  const destNames = {
-    sari_sari: "Sari-Sari Store",
-    lola_house: "Lola's House",
-    school: "Elementary School",
-  };
+  const steps: {
+    id: StepId;
+    num: string;
+    label: string;
+    sublabel: string;
+    icon: typeof Video;
+    done: boolean;
+  }[] = [
+    {
+      id: "video",
+      num: "1",
+      label: "Watch Video",
+      sublabel: "Concept (1:21)",
+      icon: Video,
+      done: watchedVideo,
+    },
+    {
+      id: "mission",
+      num: "2",
+      label: "Guided Mission",
+      sublabel: "6 interactive tasks",
+      icon: Target,
+      done: missionStars !== null,
+    },
+    {
+      id: "playground",
+      num: "3",
+      label: "Creative Playground",
+      sublabel: "Mango Catch game",
+      icon: Gamepad2,
+      done: badgeEarned,
+    },
+  ];
+
+  const activeIframeUrl =
+    step === "mission" ? LESSON_META.missionUrl : LESSON_META.playgroundUrl;
 
   return (
-    <div className="card-premium relative overflow-hidden rounded-3xl border-2 border-purple-500/30 bg-gradient-to-b from-purple-500/[0.04] via-white to-purple-500/[0.02] p-5 sm:p-8 shadow-2xl dark:border-purple-400/20 dark:from-purple-950/20 dark:via-slate-900/90 dark:to-slate-950">
-      
-      {/* Decorative Glow */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-purple-500/15 blur-3xl dark:bg-purple-500/10"
-      />
-
-      {/* Top Pedagogical Loop Stepper */}
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 pb-5 dark:border-slate-800">
+    <div className="rounded-3xl border border-slate-200 bg-white shadow-xl shadow-purple-900/5 overflow-hidden dark:border-white/10 dark:bg-slate-900">
+      {/* Header bar */}
+      <div className="flex flex-col gap-4 border-b border-slate-100 bg-gradient-to-r from-amber-50/80 via-purple-50/70 to-sky-50/80 px-5 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between dark:border-white/10 dark:from-amber-950/30 dark:via-purple-950/30 dark:to-sky-950/30">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-600 px-3 py-1 text-xs font-black uppercase tracking-wider text-white shadow-sm">
-              <Sparkles className="h-3.5 w-3.5" /> Full Lesson Demo
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-600 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+              <Sparkles className="h-3 w-3" /> Real App Lesson · {LESSON_META.track}
             </span>
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
-              Lesson 0.1.4 · Step Forward!
+            <span className="text-xs font-bold text-slate-600 dark:text-slate-300">
+              {LESSON_META.unit}
             </span>
           </div>
           <h3 className="mt-1.5 font-heading text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-            The SmartPath 3-Step Learning Loop
+            Lesson {LESSON_META.id} · {LESSON_META.title}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-            Every lesson follows this proven mastery structure: <strong>Video ➔ Mission ➔ Playground</strong>.
+          <p className="mt-0.5 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">
+            {LESSON_META.subtitle} — {LESSON_META.missionSummary}
           </p>
         </div>
 
-        {/* 3 Step Flow Tabs */}
-        <div className="flex items-center gap-1.5 rounded-2xl bg-slate-100 p-1.5 dark:bg-slate-800/80 self-start sm:self-center">
-          <button
-            type="button"
-            onClick={() => setCurrentStep("watch")}
-            className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-black transition-all ${
-              currentStep === "watch"
-                ? "bg-orange-500 text-white shadow-md shadow-orange-500/30 scale-105"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
-            }`}
-          >
-            <Video className="h-3.5 w-3.5" />
-            <span>1. Watch Video</span>
-          </button>
+        {/* Progress badges + 3-Step Switcher */}
+        <div className="flex flex-col items-start gap-2 lg:items-end">
+          {(missionStars !== null || badgeEarned) && (
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-extrabold">
+              {missionStars !== null && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-amber-800 dark:bg-amber-950/60 dark:text-amber-200">
+                  <Sparkles className="h-3 w-3" /> Mission Cleared ({"★".repeat(Math.max(1, missionStars))})
+                </span>
+              )}
+              {badgeEarned && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200">
+                  <Trophy className="h-3 w-3" /> {LESSON_META.badgeName} Badge Earned
+                </span>
+              )}
+            </div>
+          )}
 
-          <button
-            type="button"
-            onClick={() => setCurrentStep("mission")}
-            className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-black transition-all ${
-              currentStep === "mission"
-                ? "bg-purple-600 text-white shadow-md shadow-purple-600/30 scale-105"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
-            }`}
+          <div
+            role="tablist"
+            aria-label="Lesson learning steps"
+            className="flex flex-wrap gap-1.5 rounded-2xl bg-white/85 p-1.5 shadow-sm ring-1 ring-slate-200/80 dark:bg-slate-950/70 dark:ring-white/10"
           >
-            <Gamepad2 className="h-3.5 w-3.5" />
-            <span>2. Guided Mission</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setCurrentStep("playground")}
-            className={`flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-black transition-all ${
-              currentStep === "playground"
-                ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30 scale-105"
-                : "text-slate-600 hover:text-slate-900 dark:text-slate-300"
-            }`}
-          >
-            <Palette className="h-3.5 w-3.5" />
-            <span>3. Playground</span>
-          </button>
+            {steps.map((s) => {
+              const Icon = s.icon;
+              const active = step === s.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => selectStep(s.id)}
+                  className={`inline-flex items-center gap-2 rounded-xl px-3 py-2 text-left transition-all cursor-pointer ${
+                    active
+                      ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20"
+                      : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-white/10"
+                  }`}
+                >
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span className="leading-tight">
+                    <span className="block text-xs font-extrabold">
+                      {s.num}. {s.label}
+                    </span>
+                    <span
+                      className={`hidden sm:block text-[10px] font-semibold ${
+                        active ? "text-purple-100" : "text-slate-500 dark:text-slate-400"
+                      }`}
+                    >
+                      {s.sublabel}
+                    </span>
+                  </span>
+                  {s.done && (
+                    <CheckCircle2
+                      className={`h-4 w-4 shrink-0 ${
+                        active ? "text-emerald-300" : "text-emerald-500"
+                      }`}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* STEP 1: WATCH (CONCEPT VIDEO) */}
-      {currentStep === "watch" && (
-        <div className="relative z-10 mt-6 grid items-center gap-8 lg:grid-cols-12">
-          
-          {/* Video Player */}
-          <div className="lg:col-span-7">
-            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-4 border-orange-500/30 bg-black shadow-xl">
-              <video
-                src={VIDEO_014_URL}
-                controls
-                playsInline
-                preload="metadata"
-                poster="/images/coding/cover_l0.jpg"
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute top-3 left-3 pointer-events-none rounded-full bg-black/60 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md">
-                ▶ Official Concept Video · Lesson 0.1.4
-              </div>
-            </div>
-            <p className="mt-2 text-center text-xs font-medium text-slate-500 dark:text-slate-400">
-              Press play to watch Codi introduce step-by-step algorithms! (1 min)
-            </p>
-          </div>
-
-          {/* Video Explanation & Next Action */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="rounded-2xl border border-orange-500/20 bg-orange-500/10 p-4 text-orange-950 dark:text-orange-200">
-              <div className="flex items-center gap-2">
-                <Video className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                <span className="font-heading font-black text-sm uppercase tracking-wide">
-                  Step 1: Concept Video
-                </span>
-              </div>
-              <h4 className="mt-1 font-heading text-lg font-black">
-                How Computers Follow Steps
-              </h4>
-              <p className="mt-1 text-xs leading-relaxed text-orange-900 dark:text-orange-300">
-                In this animated lesson, Codi explains that computers are super fast, but they don&apos;t know what to do without instructions from a programmer.
-              </p>
-            </div>
-
-            <div className="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                <span>Clear spoken narration with friendly robot visuals</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                <span>Zero reading required for early learners</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                <span>Connects daily Filipino life (sari-sari store) to computer science</span>
-              </div>
-            </div>
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setCurrentStep("mission")}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-purple-600 px-6 text-sm font-black text-white shadow-lg shadow-purple-600/30 transition hover:bg-purple-700 active:scale-95"
-              >
-                <span>Continue to Step 2: Guided Mission</span>
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 2: GUIDED MISSION (INTERACTIVE PUZZLE) */}
-      {currentStep === "mission" && (
-        <div className="relative z-10 mt-6 grid items-center gap-8 lg:grid-cols-12">
-          
-          {/* Left: The Mission Grid */}
-          <div className="lg:col-span-7 flex flex-col items-center">
-            
-            {/* Codi Speech Bubble */}
-            <div className="w-full max-w-md mb-4 flex items-center gap-3 rounded-2xl border border-purple-500/20 bg-white/90 p-3.5 shadow-sm dark:bg-slate-900/90">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border-2 border-purple-500/30 bg-purple-100 dark:bg-purple-950/50">
-                <Image
-                  src={
-                    missionDone
-                      ? "/images/coding/codi_celebrate.png"
-                      : "/images/coding/codi_point.png"
-                  }
-                  alt="Codi"
-                  fill
-                  sizes="44px"
-                  className="object-contain p-1"
+      {/* Step Content */}
+      <div className="p-4 sm:p-6">
+        {step === "video" && (
+          <div className="grid gap-6 lg:grid-cols-12 items-center">
+            <div className="lg:col-span-7">
+              <div className="relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-slate-950 shadow-lg dark:border-white/10">
+                <video
+                  ref={videoRef}
+                  src={LESSON_META.videoUrl}
+                  poster={LESSON_META.videoPoster}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  onEnded={() => setWatchedVideo(true)}
+                  className="aspect-video w-full object-contain bg-black"
                 />
               </div>
-              <div className="flex-1 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">
-                <span className="text-purple-600 dark:text-purple-400 font-extrabold">Codi: </span>
-                {missionMsg}
-              </div>
-            </div>
-
-            {/* 1x4 Grid Street */}
-            <div className="relative rounded-3xl border-4 border-purple-500/20 bg-gradient-to-r from-sky-50 to-indigo-50/50 p-4 sm:p-6 shadow-inner dark:from-slate-900 dark:to-slate-950">
-              <div className="grid grid-cols-4 gap-2.5 sm:gap-4">
-                {[0, 1, 2, 3].map((c) => {
-                  const isRobot = missionRobotCol === c;
-                  const isGoal = c === 3;
-
-                  return (
-                    <div
-                      key={c}
-                      className={`relative flex h-20 w-16 sm:h-24 sm:w-20 items-center justify-center rounded-2xl border-2 transition-colors ${
-                        isRobot
-                          ? "border-purple-500 bg-purple-500/15 shadow-md dark:bg-purple-500/20"
-                          : isGoal
-                          ? "border-emerald-500/40 bg-emerald-500/10 dark:bg-emerald-500/15"
-                          : "border-slate-300/60 bg-white/80 dark:border-slate-700/60 dark:bg-slate-800/60"
-                      }`}
-                    >
-                      <span className="absolute bottom-1 right-1.5 text-[10px] font-mono text-slate-400">
-                        {c + 1}
-                      </span>
-
-                      {/* Goal: Sari-Sari Store */}
-                      {isGoal && (
-                        <div className="relative h-12 w-12 sm:h-16 sm:w-16">
-                          <Image
-                            src="/images/coding/props/sari_sari.png"
-                            alt="Sari-Sari Store"
-                            fill
-                            sizes="64px"
-                            className="object-contain drop-shadow"
-                          />
-                        </div>
-                      )}
-
-                      {/* Codi Avatar */}
-                      {isRobot && (
-                        <motion.div
-                          layout
-                          className="relative h-14 w-14 sm:h-16 sm:w-16 z-20"
-                        >
-                          <Image
-                            src={
-                              missionDone
-                                ? "/images/coding/codi_celebrate.png"
-                                : "/images/coding/app-icon.png"
-                            }
-                            alt="Codi"
-                            fill
-                            sizes="64px"
-                            className="object-contain drop-shadow-md"
-                          />
-                        </motion.div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mt-3 text-xs font-semibold text-slate-500">
-              Goal: Walk from Square 1 to Square 4 (3 steps forward)
-            </div>
-          </div>
-
-          {/* Right: Mission Controls */}
-          <div className="lg:col-span-5 space-y-4">
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                  Tap Block to Add
+              <div className="mt-2.5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <Play className="h-3.5 w-3.5 text-amber-500" /> Concept Video · Lesson {LESSON_META.id}: {LESSON_META.title}
                 </span>
-                <span className="text-[11px] font-bold text-purple-600">
-                  {missionProgram.length}/6 steps
-                </span>
-              </div>
-
-              <div className="mt-2">
-                <button
-                  type="button"
-                  onClick={() => addMissionBlock("F")}
-                  disabled={missionRunning || missionProgram.length >= 6}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-indigo-500/30 bg-indigo-500/10 p-3 text-indigo-700 transition hover:bg-indigo-500/20 active:scale-95 disabled:opacity-40"
-                >
-                  <ArrowUp className="h-5 w-5" />
-                  <span className="text-sm font-black">⬆ Forward Block</span>
-                </button>
+                <span>1 min 21 sec · Codi Animated Lesson</span>
               </div>
             </div>
 
-            {/* Sequence Tray */}
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                  Your Code Sequence
-                </span>
-                <button
-                  type="button"
-                  onClick={removeMissionLast}
-                  disabled={missionRunning || missionProgram.length === 0}
-                  className="text-[11px] font-bold text-slate-500 hover:text-rose-600 disabled:opacity-40"
-                >
-                  <Delete className="h-3 w-3 inline mr-1" />
-                  Undo
-                </button>
-              </div>
+            <div className="lg:col-span-5 flex flex-col justify-between gap-4">
+              <div className="rounded-2xl bg-amber-50/90 border border-amber-200/90 p-5 dark:bg-amber-950/30 dark:border-amber-800/40">
+                <div className="text-xs font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-300">
+                  Inside the Real Lesson
+                </div>
+                <h4 className="mt-1 font-heading text-lg font-extrabold text-slate-900 dark:text-white">
+                  How games keep track of score
+                </h4>
+                <p className="mt-2 text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
+                  Kids learn how a <strong>variable</strong> works by catching mangoes from Lolo&apos;s tree. Start <code className="rounded bg-white/80 px-1.5 py-0.5 font-mono text-xs font-bold text-orange-700 dark:bg-slate-900 dark:text-orange-300">score = 0</code> on the green flag, then change <code className="rounded bg-white/80 px-1.5 py-0.5 font-mono text-xs font-bold text-orange-700 dark:bg-slate-900 dark:text-orange-300">score</code> by <code className="rounded bg-white/80 px-1.5 py-0.5 font-mono text-xs font-bold text-orange-700 dark:bg-slate-900 dark:text-orange-300">1</code> each time the basket catches a mango.
+                </p>
 
-              <div className="mt-2 min-h-[58px] rounded-2xl border-2 border-dashed border-slate-300 bg-white/70 p-2.5 dark:border-slate-700 dark:bg-slate-900/60 flex flex-wrap items-center gap-1.5">
-                {missionProgram.length === 0 ? (
-                  <div className="text-xs font-medium text-slate-400">
-                    Tap &quot;Forward Block&quot; 3 times to build code!
+                <div className="mt-4 space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 px-3 py-2 dark:bg-slate-900/70">
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-black text-white">1</span>
+                    <span>Watch Codi introduce variables &amp; counting</span>
                   </div>
-                ) : (
-                  missionProgram.map((_, idx) => (
-                    <motion.div
-                      key={idx}
-                      className={`rounded-xl px-2.5 py-1 text-xs font-black text-white bg-indigo-600 shadow-sm ${
-                        missionActiveIdx === idx ? "ring-4 ring-emerald-400" : ""
-                      }`}
-                    >
-                      {idx + 1}. Forward
-                    </motion.div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {/* Run / Reset */}
-            <div className="flex items-center gap-3 pt-1">
-              <button
-                type="button"
-                onClick={runMission}
-                disabled={missionRunning || missionProgram.length === 0}
-                className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 text-sm font-black text-white shadow-lg shadow-emerald-500/25 transition hover:brightness-105 active:scale-95 disabled:opacity-50"
-              >
-                <Play className="h-4 w-4 fill-white" />
-                <span>{missionRunning ? "Walking..." : "▶ Run Code"}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={resetMission}
-                className="inline-flex h-12 items-center justify-center gap-1.5 rounded-2xl border border-slate-300 bg-white px-4 text-xs font-extrabold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>Reset</span>
-              </button>
-            </div>
-
-            {/* Mission Done Badge & Next Action */}
-            <AnimatePresence>
-              {missionDone && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-2xl border-2 border-emerald-500/40 bg-emerald-500/10 p-4 text-emerald-950 dark:text-emerald-200 space-y-2"
-                >
-                  <div className="flex items-center gap-2">
-                    <Trophy className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-                    <span className="font-heading font-black text-sm">
-                      Badge Earned: Forward Walker!
-                    </span>
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 px-3 py-2 dark:bg-slate-900/70">
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-black text-white">2</span>
+                    <span>Solve 6 hands-on block &amp; bug-fix puzzles</span>
                   </div>
-                  <p className="text-xs text-emerald-800 dark:text-emerald-300">
-                    You coded your first linear algorithm! Now let&apos;s experiment freely in the Playground.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setCurrentStep("playground")}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-black text-white shadow hover:bg-emerald-700"
-                  >
-                    <span>Proceed to Step 3: Playground ➔</span>
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      )}
-
-      {/* STEP 3: CREATIVE PLAYGROUND (SANDBOX MODE) */}
-      {currentStep === "playground" && (
-        <div className="relative z-10 mt-6 grid items-center gap-8 lg:grid-cols-12">
-          
-          {/* Playground Sandbox Display */}
-          <div className="lg:col-span-7 flex flex-col items-center">
-            
-            {/* Codi Speech Bubble */}
-            <div className="w-full max-w-md mb-4 flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-white/90 p-3.5 shadow-sm dark:bg-slate-900/90">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border-2 border-emerald-500/30 bg-emerald-100 dark:bg-emerald-950/50">
-                <Image
-                  src={
-                    pgDone
-                      ? "/images/coding/codi_celebrate.png"
-                      : "/images/coding/codi_wave.png"
-                  }
-                  alt="Codi"
-                  fill
-                  sizes="44px"
-                  className="object-contain p-1"
-                />
-              </div>
-              <div className="flex-1 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">
-                <span className="text-emerald-600 dark:text-emerald-400 font-extrabold">Codi: </span>
-                {pgMsg}
-              </div>
-            </div>
-
-            {/* Dynamic Grid: 1 row, 5 cols */}
-            <div className="relative rounded-3xl border-4 border-emerald-500/20 bg-gradient-to-r from-emerald-50/60 to-teal-50/60 p-4 sm:p-6 shadow-inner dark:from-slate-900 dark:to-slate-950">
-              <div className="grid grid-cols-5 gap-2 sm:gap-3">
-                {[0, 1, 2, 3, 4].map((c) => {
-                  const isRobot = pgRobotCol === c;
-                  const isGoal = c === pgDistance;
-
-                  return (
-                    <div
-                      key={c}
-                      className={`relative flex h-20 w-14 sm:h-24 sm:w-16 items-center justify-center rounded-2xl border-2 transition-colors ${
-                        isRobot
-                          ? "border-purple-500 bg-purple-500/15 shadow-md"
-                          : isGoal
-                          ? "border-emerald-500 bg-emerald-500/20 ring-2 ring-emerald-500/30"
-                          : "border-slate-300/60 bg-white/80 dark:border-slate-700/60 dark:bg-slate-800/60"
-                      }`}
-                    >
-                      <span className="absolute bottom-1 right-1.5 text-[9px] font-mono text-slate-400">
-                        {c}
-                      </span>
-
-                      {/* Selected Destination Goal */}
-                      {isGoal && (
-                        <div className="relative h-11 w-11 sm:h-14 sm:w-14">
-                          <Image
-                            src={destImages[pgDestination]}
-                            alt={destNames[pgDestination]}
-                            fill
-                            sizes="56px"
-                            className="object-contain drop-shadow"
-                          />
-                        </div>
-                      )}
-
-                      {/* Codi Avatar */}
-                      {isRobot && (
-                        <motion.div
-                          layout
-                          className="relative h-12 w-12 sm:h-14 sm:w-14 z-20"
-                        >
-                          <Image
-                            src={
-                              pgDone
-                                ? "/images/coding/codi_celebrate.png"
-                                : "/images/coding/app-icon.png"
-                            }
-                            alt="Codi"
-                            fill
-                            sizes="56px"
-                            className="object-contain drop-shadow"
-                          />
-                        </motion.div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mt-3 text-xs font-semibold text-slate-500">
-              Destination: <strong className="text-slate-800 dark:text-slate-200">{destNames[pgDestination]}</strong> at Square {pgDistance}
-            </div>
-          </div>
-
-          {/* Right: Sandbox Controls */}
-          <div className="lg:col-span-5 space-y-4">
-            
-            {/* Destination Chooser */}
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                1. Choose Goal Building
-              </span>
-              <div className="mt-2 grid grid-cols-3 gap-2">
-                {(["sari_sari", "lola_house", "school"] as const).map((dest) => (
-                  <button
-                    key={dest}
-                    type="button"
-                    onClick={() => {
-                      setPgDestination(dest);
-                      resetPg();
-                    }}
-                    className={`flex flex-col items-center gap-1 rounded-2xl border-2 p-2 text-center text-xs font-bold transition ${
-                      pgDestination === dest
-                        ? "border-emerald-500 bg-emerald-500/15 text-emerald-800 dark:text-emerald-200"
-                        : "border-slate-200 bg-white hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900"
-                    }`}
-                  >
-                    <div className="relative h-7 w-7">
-                      <Image
-                        src={destImages[dest]}
-                        alt={destNames[dest]}
-                        fill
-                        sizes="28px"
-                        className="object-contain"
-                      />
-                    </div>
-                    <span className="text-[10px] leading-tight font-extrabold">{destNames[dest]}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Distance Slider */}
-            <div>
-              <div className="flex items-center justify-between text-xs font-black text-slate-600 dark:text-slate-400">
-                <span>2. Distance: {pgDistance} steps away</span>
-                <div className="flex gap-1.5">
-                  {[2, 3, 4].map((d) => (
-                    <button
-                      key={d}
-                      type="button"
-                      onClick={() => {
-                        setPgDistance(d);
-                        resetPg();
-                      }}
-                      className={`h-7 w-7 rounded-lg text-xs font-black ${
-                        pgDistance === d
-                          ? "bg-emerald-600 text-white"
-                          : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
-                      }`}
-                    >
-                      {d}
-                    </button>
-                  ))}
+                  <div className="flex items-center gap-2 rounded-xl bg-white/80 px-3 py-2 dark:bg-slate-900/70">
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-purple-600 text-[10px] font-black text-white">3</span>
+                    <span>Play &amp; remix the live Mango Catch game</span>
+                  </div>
                 </div>
               </div>
+
+              <button
+                type="button"
+                onClick={() => selectStep("mission")}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 px-5 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-sky-500/20 transition-all hover:brightness-105 cursor-pointer"
+              >
+                {watchedVideo
+                  ? "Video Complete! Continue to Step 2: Guided Mission"
+                  : "Continue to Step 2: Guided Mission"}
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </div>
+          </div>
+        )}
 
-            {/* Code Sequence */}
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                  3. Program Sequence ({pgProgram.length} steps)
-                </span>
-                <button
-                  type="button"
-                  onClick={removePgLast}
-                  disabled={pgRunning || pgProgram.length === 0}
-                  className="text-[11px] font-bold text-slate-500 hover:text-rose-600"
-                >
-                  Undo
-                </button>
-              </div>
-
-              <div className="mt-2 flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => addPgBlock("F")}
-                  disabled={pgRunning || pgProgram.length >= 8}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl border border-indigo-500/30 bg-indigo-500/10 py-2.5 text-xs font-black text-indigo-700 hover:bg-indigo-500/20"
-                >
-                  <ArrowUp className="h-4 w-4" />
-                  <span>Add Forward Step</span>
-                </button>
-              </div>
-
-              <div className="mt-2 min-h-[48px] rounded-xl border border-dashed border-slate-300 bg-white/70 p-2 flex flex-wrap gap-1 dark:border-slate-700 dark:bg-slate-900/60">
-                {pgProgram.length === 0 ? (
-                  <span className="text-[11px] text-slate-400">Add steps matching your distance ({pgDistance})!</span>
-                ) : (
-                  pgProgram.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`rounded-lg px-2 py-0.5 text-[11px] font-black text-white bg-indigo-600 ${
-                        pgActiveIdx === i ? "ring-2 ring-emerald-400" : ""
-                      }`}
-                    >
-                      F
+        {(step === "mission" || step === "playground") && (
+          <div className="space-y-3">
+            {/* Control strip */}
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 dark:border-white/10 dark:bg-slate-950/60">
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                {step === "mission" ? (
+                  <>
+                    <Target className="h-4 w-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                    <span>
+                      Tap <strong>Let&apos;s Go! ▶</strong> inside the Mission to hear Codi&apos;s voice &amp; solve all 6 coding puzzles.
                     </span>
-                  ))
+                  </>
+                ) : (
+                  <>
+                    <Gamepad2 className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                    <span>
+                      Press the <strong>Green Flag ▶</strong> in the Stage, move the Basket with arrow keys or touch arrows, then customize blocks to earn <strong>{LESSON_META.badgeName}</strong>!
+                    </span>
+                  </>
                 )}
               </div>
-            </div>
 
-            {/* Run / Reset */}
-            <div className="flex items-center gap-3 pt-1">
-              <button
-                type="button"
-                onClick={runPg}
-                disabled={pgRunning || pgProgram.length === 0}
-                className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 text-sm font-black text-white shadow-lg shadow-emerald-500/25 transition hover:brightness-105 active:scale-95 disabled:opacity-50"
-              >
-                <Play className="h-4 w-4 fill-white" />
-                <span>{pgRunning ? "Running..." : "▶ Test Playground"}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={resetPg}
-                className="inline-flex h-12 items-center justify-center gap-1 rounded-2xl border border-slate-300 bg-white px-4 text-xs font-extrabold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
-              >
-                <RotateCcw className="h-4 w-4" />
-                <span>Reset</span>
-              </button>
-            </div>
-
-            {/* Sandbox Complete Banner */}
-            <AnimatePresence>
-              {pgDone && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-2xl border-2 border-purple-500/40 bg-purple-500/10 p-4 text-purple-950 dark:text-purple-200 space-y-2"
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={restartActiveIframe}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/15 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
                 >
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    <span className="font-heading font-black text-sm">
-                      Complete Lesson Finished!
-                    </span>
-                  </div>
-                  <p className="text-xs text-purple-900 dark:text-purple-300 leading-relaxed">
-                    You experienced the full loop: <strong>1. Watch Video</strong> ➔ <strong>2. Guided Mission</strong> ➔ <strong>3. Creative Playground</strong>! In the full app, projects are saved to each child&apos;s digital portfolio.
-                  </p>
-                  <div className="pt-1">
-                    <a
-                      href="https://coding.smartpathtutor.ph"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-purple-600 px-4 py-2 text-xs font-black text-white shadow hover:bg-purple-700"
-                    >
-                      <span>Explore All 147 Lessons at coding.smartpathtutor.ph ↗</span>
-                    </a>
-                  </div>
-                </motion.div>
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Restart
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleFullscreen}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-100 cursor-pointer dark:border-white/15 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                >
+                  {isFullscreen ? (
+                    <>
+                      <Minimize2 className="h-3.5 w-3.5" /> Exit Fullscreen
+                    </>
+                  ) : (
+                    <>
+                      <Maximize2 className="h-3.5 w-3.5" /> Fullscreen
+                    </>
+                  )}
+                </button>
+                <a
+                  href={activeIframeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3 py-1.5 text-xs font-bold text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" /> Open Full Tab
+                </a>
+              </div>
+            </div>
+
+            {/* Real App Iframe Container */}
+            <div
+              ref={frameWrapRef}
+              className="relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-white shadow-inner dark:border-white/15"
+            >
+              {step === "mission" ? (
+                <iframe
+                  key={`mission-${missionRunKey}`}
+                  src={LESSON_META.missionUrl}
+                  title={`SmartPath Coding Real Lesson ${LESSON_META.id} — Guided Mission`}
+                  allow="autoplay; fullscreen"
+                  className={`w-full border-0 bg-white ${
+                    isFullscreen ? "h-screen" : "h-[560px] sm:h-[640px] lg:h-[680px]"
+                  }`}
+                />
+              ) : (
+                <iframe
+                  key={`playground-${playgroundRunKey}`}
+                  src={LESSON_META.playgroundUrl}
+                  title={`SmartPath Coding Real Lesson ${LESSON_META.id} — Creative Playground`}
+                  allow="autoplay; fullscreen"
+                  className={`w-full border-0 bg-white ${
+                    isFullscreen ? "h-screen" : "h-[620px] sm:h-[680px] lg:h-[740px]"
+                  }`}
+                />
               )}
-            </AnimatePresence>
+            </div>
+
+            {completedLoop && (
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 dark:border-emerald-800/50 dark:bg-emerald-950/35">
+                <div className="flex items-center gap-2.5 text-sm font-bold text-emerald-900 dark:text-emerald-100">
+                  <Trophy className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <span>
+                    Awesome work! You completed the full Lesson {LESSON_META.id} loop (Video → Mission → Playground).
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => selectStep("video")}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-extrabold text-white hover:bg-emerald-700 cursor-pointer shrink-0"
+                >
+                  Replay From Step 1 <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            )}
+
+            {/* Quick step navigation footer */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs font-bold text-slate-500 dark:text-slate-400">
+              <span>
+                {step === "mission"
+                  ? "Finished early or want to jump ahead?"
+                  : "Want to revisit the guided exercises?"}
+              </span>
+              {step === "mission" ? (
+                <button
+                  type="button"
+                  onClick={() => selectStep("playground")}
+                  className="inline-flex items-center gap-1 text-purple-600 hover:text-purple-700 dark:text-purple-400 cursor-pointer"
+                >
+                  Jump to Step 3: Creative Playground <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => selectStep("mission")}
+                  className="inline-flex items-center gap-1 text-sky-600 hover:text-sky-700 dark:text-sky-400 cursor-pointer"
+                >
+                  Back to Step 2: Guided Mission
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

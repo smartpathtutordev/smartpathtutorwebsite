@@ -1,0 +1,127 @@
+{
+ "intro": "Let's catch mangoes from Lolo's tree and keep score!",
+ "tasks": [
+  {
+   "type": "order",
+   "bg": "garden",
+   "say": "Put the score steps in order, from the start.",
+   "hint": "The score starts at zero, then grows by one each catch.",
+   "items": [
+    [
+     "basket",
+     "Set score to 0"
+    ],
+    [
+     "mango",
+     "Catch, score 1"
+    ],
+    [
+     "mango",
+     "Catch, score 2"
+    ],
+    [
+     "mango",
+     "Catch, score 3"
+    ]
+   ]
+  },
+  {
+   "type": "fillcode",
+   "style": "blocks",
+   "bg": "l2_game_canvas",
+   "say": "What number should the score start at?",
+   "hint": "A new game has no points yet.",
+   "code": [
+    "when green flag clicked",
+    "set score to ___"
+   ],
+   "options": [
+    "0",
+    "10",
+    "mango"
+   ],
+   "answer": 0
+  },
+  {
+   "type": "predict",
+   "style": "blocks",
+   "bg": "garden",
+   "say": "Codi catches two mangoes. What will the score be?",
+   "hint": "Count up one for each change block.",
+   "code": [
+    "set score to 0",
+    "change score by 1",
+    "change score by 1"
+   ],
+   "question": "What is the score now?",
+   "options": [
+    "1",
+    "2",
+    "0"
+   ],
+   "answer": 1
+  },
+  {
+   "type": "predict",
+   "style": "blocks",
+   "bg": "garden",
+   "say": "This time a loop adds the points. What is the score?",
+   "hint": "Repeat three means the change block runs three times.",
+   "code": [
+    "set score to 0",
+    "repeat 3",
+    "  change score by 1"
+   ],
+   "question": "What will the score be?",
+   "options": [
+    "1",
+    "3",
+    "0"
+   ],
+   "answer": 1
+  },
+  {
+   "type": "bugfix",
+   "style": "blocks",
+   "bg": "l2_game_canvas",
+   "say": "The score goes down when we catch a mango. Find the bug!",
+   "hint": "Catching a mango should add a point, not take one away.",
+   "lines": [
+    "when green flag clicked",
+    "set score to 0",
+    "forever",
+    "  if touching mango then",
+    "    change score by -1"
+   ],
+   "bug": 4,
+   "fixes": [
+    "    change score by 1",
+    "    set score to 0",
+    "    hide basket"
+   ],
+   "fix": 0
+  },
+  {
+   "type": "parsons",
+   "style": "blocks",
+   "bg": "l2_game_canvas",
+   "say": "Add one to the score every time the basket catches a mango.",
+   "hint": "Set the score to zero first, then check inside forever.",
+   "lines": [
+    "when green flag clicked",
+    "set score to 0",
+    "forever",
+    "  if touching mango then",
+    "    change score by 1"
+   ],
+   "output": {
+    "kind": "text",
+    "lines": [
+     "Score 1"
+    ]
+   }
+  }
+ ],
+ "outro": "Hooray! Your game keeps score for every mango.",
+ "id": "2.2.2"
+}

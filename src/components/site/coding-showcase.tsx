@@ -239,16 +239,16 @@ export function CodingShowcase() {
 
       {/* FEATURED: Real Lesson Showcase (Video -> Mission -> Playground) */}
       <section id="sample-lesson" className="py-12 sm:py-16 bg-purple-500/[0.03] border-y border-purple-500/10">
-        <div className="mx-auto max-w-5xl px-5 sm:px-6">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mx-auto max-w-3xl text-center mb-8">
             <span className="eyebrow">
               <Sparkles className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" /> Real Lesson Showcase
             </span>
             <h2 className="mt-2 font-heading text-3xl font-black tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-              No free trial? <span className="text-gradient-sunset">Experience a full lesson right here!</span>
+              Try a complete lesson <span className="text-gradient-sunset">straight from the app!</span>
             </h2>
             <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-300">
-              See the complete 3-step learning loop: <strong>1. Watch Concept Video</strong> ➔ <strong>2. Guided Mission</strong> ➔ <strong>3. Creative Playground</strong>!
+              Experience Lesson 2.2.2 (Keeping Score) live: <strong>1. Watch Concept Video</strong> ➔ <strong>2. Guided Mission</strong> ➔ <strong>3. Creative Playground</strong>!
             </p>
           </div>
 

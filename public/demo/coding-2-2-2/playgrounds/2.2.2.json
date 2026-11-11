@@ -1,0 +1,311 @@
+{
+ "engine": "stage",
+ "bg": "garden",
+ "challenge": "Mangoes fall from Lolo's tree. Catch them in the basket and the score goes up by one. Make your own scoring rules!",
+ "ideas": [
+  "Add a banana worth two points",
+  "Play a ding when you catch a mango",
+  "Make the mango fall faster"
+ ],
+ "phrases": [
+  "Catch!",
+  "One more!",
+  "Yum!"
+ ],
+ "blocks": [
+  "flag",
+  "tap",
+  "key",
+  "touch",
+  "move",
+  "turnr",
+  "turnl",
+  "goto",
+  "gotoxy",
+  "glide",
+  "glidexy",
+  "point",
+  "changex",
+  "changey",
+  "setx",
+  "sety",
+  "bounce",
+  "sayfor",
+  "say",
+  "thinkfor",
+  "costume",
+  "nextcos",
+  "sizeby",
+  "effect",
+  "show",
+  "hide",
+  "play",
+  "start",
+  "wait",
+  "repeat",
+  "forever",
+  "if",
+  "ifelse",
+  "until",
+  "waituntil",
+  "touching",
+  "keyp",
+  "variables",
+  "operators",
+  "xpos",
+  "ypos"
+ ],
+ "keys": true,
+ "badge": {
+  "name": "Score Keeper",
+  "img": "basket",
+  "color": "#FFB400",
+  "say": "Catch and count! Your score goes up by one for every mango.",
+  "checks": [
+   {
+    "id": "if",
+    "text": "Change the score inside an if",
+    "type": "run",
+    "op": "changevar",
+    "inside": "if",
+    "min": 3
+   },
+   {
+    "id": "ten",
+    "text": "Get a score of ten",
+    "type": "var",
+    "name": "score",
+    "op": ">=",
+    "value": 10
+   },
+   {
+    "id": "more",
+    "text": "Add a second fruit to catch",
+    "type": "sprites",
+    "min": 3
+   }
+  ]
+ },
+ "project": {
+  "backdrops": [
+   "l2_game_canvas"
+  ],
+  "backdrop": "l2_game_canvas",
+  "vars": {
+   "score": 0
+  },
+  "monitors": [
+   "score"
+  ],
+  "sprites": [
+   {
+    "name": "Mango",
+    "props": [
+     "mango"
+    ],
+    "costume": 0,
+    "x": 0,
+    "y": 170,
+    "size": 55,
+    "dir": 90,
+    "shown": true,
+    "rotate": "all",
+    "scripts": [
+     [
+      {
+       "op": "flag"
+      },
+      {
+       "op": "forever",
+       "body": [
+        {
+         "op": "gotoxy",
+         "args": {
+          "x": {
+           "r": "rand",
+           "a": -200,
+           "b": 200
+          },
+          "y": 170
+         }
+        },
+        {
+         "op": "until",
+         "args": {
+          "c": {
+           "r": "or",
+           "a": {
+            "r": "touching",
+            "who": "Basket"
+           },
+           "b": {
+            "r": "lt",
+            "a": {
+             "r": "ypos"
+            },
+            "b": -150
+           }
+          }
+         },
+         "body": [
+          {
+           "op": "changey",
+           "args": {
+            "n": -6
+           }
+          }
+         ]
+        },
+        {
+         "op": "if",
+         "args": {
+          "c": {
+           "r": "touching",
+           "who": "Basket"
+          }
+         },
+         "body": [
+          {
+           "op": "changevar",
+           "args": {
+            "v": "score",
+            "n": 1
+           }
+          },
+          {
+           "op": "start",
+           "args": {
+            "snd": "coin"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    ]
+   },
+   {
+    "name": "Basket",
+    "props": [
+     "basket"
+    ],
+    "costume": 0,
+    "x": 0,
+    "y": -120,
+    "size": 95,
+    "dir": 90,
+    "shown": true,
+    "rotate": "all",
+    "scripts": [
+     [
+      {
+       "op": "flag"
+      },
+      {
+       "op": "setvar",
+       "args": {
+        "v": "score",
+        "n": 0
+       }
+      },
+      {
+       "op": "sayfor",
+       "args": {
+        "t": "Catch!",
+        "s": 1
+       }
+      }
+     ],
+     [
+      {
+       "op": "key",
+       "args": {
+        "k": "right"
+       }
+      },
+      {
+       "op": "changex",
+       "args": {
+        "n": 25
+       }
+      }
+     ],
+     [
+      {
+       "op": "key",
+       "args": {
+        "k": "left"
+       }
+      },
+      {
+       "op": "changex",
+       "args": {
+        "n": -25
+       }
+      }
+     ]
+    ]
+   }
+  ]
+ },
+ "library": {
+  "props": [
+   "puppy",
+   "bone",
+   "mango",
+   "banana",
+   "watermelon",
+   "calamansi",
+   "rock",
+   "wall_bricks",
+   "heart",
+   "treasure",
+   "sun",
+   "rain_cloud",
+   "umbrella",
+   "cap",
+   "basket",
+   "candy_jar",
+   "toys_box",
+   "dancer_kid",
+   "grown_up",
+   "jeepney",
+   "drum",
+   "alarm_clock",
+   "cheetah",
+   "l2_gold_coin",
+   "l2_gem",
+   "l2_rocket",
+   "l2_asteroid",
+   "l2_ball",
+   "l2_tsinelas",
+   "l2_trophy",
+   "l2_finish_flag",
+   "l2_sparkle",
+   "l2_music_note",
+   "l2_hourglass",
+   "l2_carabao",
+   "l2_turtle",
+   "l2_pabitin",
+   "l2_broken_heart",
+   "l2_labeled_box",
+   "l2_rice_pot"
+  ],
+  "backdrops": [
+   "l2_game_canvas",
+   "l2_space",
+   "l2_barangay_court",
+   "park",
+   "garden",
+   "plaza",
+   "market",
+   "street",
+   "kitchen",
+   "schoolroom",
+   "living",
+   "rainy"
+  ]
+ },
+ "id": "2.2.2"
+}

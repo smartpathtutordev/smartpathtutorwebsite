@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>SmartPath Coding · Stage playground</title>
+<link rel="stylesheet" href="shell.css">
+<!--
+================================================================================================
+ STAGE ENGINE  (engine id "stage")  ·  block-coding Creative Playground for Levels 1 and 2
+================================================================================================
+ A touch-first mini Scratch. Kids tap blocks from the palette into the selected sprite's code,
+ tap chips to change values (pickers, no typing needed) and press the green flag.
+
+ CONFIG  (playgrounds_src/L1.json / L2.json -> { "<lesson id>": config })
+ {
+   "engine": "stage",
+   "bg": "page background name (optional, shell)",
+   "challenge": "...", "ideas": [...], "badge": { "name","img","color","say","checks":[ CHECK, ... ] },
+   "blocks":  [ ...palette filter... ],     optional; op ids and/or category names (see BLOCK OPS). Omitted = every block.
+                                            Blocks used by the starter project always run and stay editable even if filtered.
+   "phrases": [ "Kumusta!", ... ],           optional; extra say/think choices shown first (kids may also type their own)
+   "keys":    true,                          optional; always show the on-screen arrow pad (auto-shown when key blocks are used)
+   "library": { "props": [prop, ...], "backdrops": [bg, ...] },   optional; what kids can add with + Sprite / Backdrop
+   "project": PROJECT                        the starter project (must run right away when the green flag is pressed)
+ }
+
+ PROJECT  (also the saved format, PG.save/PG.load)
+ {
+   "backdrops": ["l1_beach", "park"],        backdrop names (art/bg_<name>.png; drawn with a soft fallback if missing)
+   "backdrop":  "l1_beach",                  the backdrop shown at start
+   "vars":      { "score": 0, "lives": 3 },  (L2) variables and their start values; every green flag resets them to these
+   "monitors":  ["score", "lives"],          (L2) variables shown on the stage
+   "sprites": [ {
+       "name": "Cat",                        unique, shown on chips (other sprites refer to it by this name)
+       "props": ["l1_cat", "l1_cat_jump"],   costumes (prop pictures); first is costume 0
+       "costume": 0, "x": 0, "y": 0,         stage is x -240..240, y -180..180 (0,0 = centre, y up)
+       "size": 100, "dir": 90,               size in %, a sprite at 100 is about 100 px of a 480 px stage; dir 90 = right, 0 = up
+       "shown": true, "rotate": "all",       rotate: "all" (all around) | "lr" (left-right flip) | "none"
+       "scripts": [ [ BLOCK, BLOCK, ... ], ... ]   each script is a list; a script runs only if its first block is a hat
+   } ]
+ }
+ Every green flag first puts sprites back to their saved spot/size/costume/visibility (the "home" state above),
+ resets variables and the backdrop, then starts all flag scripts. Dragging a sprite while nothing runs moves its home.
+
+ BLOCK  = { "op": "<op>", "args": { ... }, "body": [BLOCK...], "else": [BLOCK...] }   (body for C-blocks, else for ifelse)
+ VALUES = number | string | REPORTER     REPORTER = { "r": "<reporter op>", ...its args }
+ BOOL   = BOOLEAN REPORTER or null
+
+ BLOCK OPS   (category: op  "template"  args)
+  events:    flag "when green flag clicked" (hat) · tap "when this sprite tapped" (hat) · key "when {k} key pressed" (hat)
+             touch "when I touch {who}" (hat, fires when touching starts) · receive "when I receive {m}" (hat) · broadcast "broadcast {m}"
+  motion:    move {n} · turnr {n} · turnl {n} · goto {to} · gotoxy {x}{y} · glide {s}{to} · glidexy {s}{x}{y} · point {d}
+             pointto {to} · changex {n} · changey {n} · setx {n} · sety {n} · bounce · rotstyle {r}
+  looks:     sayfor {t}{s} · say {t} · thinkfor {t}{s} · think {t} · costume {prop} · nextcos · bd {backdrop} · nextbd
+             sizeby {n} · size {n} · effect {e}{n} · cleareff · show · hide · front
+  sound:     play {snd} (until done) · start {snd} · note {nt}{s} · stopsnd
+  control:   wait {s} · repeat {n} [body] · forever [body] · if {c} [body] · ifelse {c} [body][else] · waituntil {c}
+             until {c} [body] · stop {w}
+  sensing:   resettimer · reporters: touching {who} (bool) · keyp {k} (bool) · timer · xpos · ypos
+  operators: reporters: add {a}{b} · sub {a}{b} · rand {a}{b} · gt {a}{b} · lt {a}{b} · eq {a}{b} · and {a}{b} · or {a}{b} · not {a}
+  variables: setvar {v}{n} · changevar {v}{n} · showvar {v} · hidevar {v} · reporter: var {v}
+  pen:       pendown · penup · pencolor {col} · pensize {n} · clear      (trails are wiped at every green flag)
+  arg values: k = "space" | "up" | "down" | "left" | "right" | "any";  who = sprite name | "edge";
+             to = sprite name | "random" | "center" | "top" | "bottom" | "left" | "right" | "start" (the sprite's home spot);
+             snd = pop ding boom crow meow bark tweet ring twinkle fiesta coin boing whoosh clap buzz tada;
+             nt = do re mi fa sol la ti hido;  e = color | ghost;  col = red orange yellow green blue purple pink white black;  r = all | lr | none;  w = all | this;
+             m = any short message name (e.g. "Go!");  v = a name from project.vars;  prop = one of the sprite's props;
+             backdrop = one of project.backdrops;  t = text or REPORTER;  numbers may be REPORTERs.
+  Category names usable in "blocks": events motion looks sound control sensing operators variables pen.
+
+ CHECK  (badge goals: { "id", "text" (kid-facing goal), "type", ...rule fields }; evaluated live; "by" = optional sprite name filter; "min" defaults to 1)
+  { "type": "run",      "op": op | [ops], "by"?, "inside"?: op | [ops], "min"?, "sprites"? }  block(s) executed while running
+                        (inside = within that repeat/forever/if/ifelse/until; sprites = how many different sprites ran them)
+  { "type": "has",      "op": op | [ops], "by"?, "min"? }      the program contains these blocks (in scripts that start with a hat)
+  { "type": "blocks",   "min": 5 }                                 the program has at least min blocks under hats
+  { "type": "hats",     "min": 3 }                                 at least min different kinds of event hats are used
+  { "type": "event",    "hat": "flag"|"tap"|"key"|"touch"|"receive", "min"? }   such an event really started a script
+  { "type": "said",     "by"?, "says"?, "min"? }               a sprite said or thought something (min different texts; says = must contain)
+  { "type": "talk",     "min"?: 2, "turns"?: min, "gap"?: 1, "clean"?: false }   in one run, min different sprites spoke taking turns: a turn
+                        counts when a different sprite starts speaking after the last speaker's bubble ended and at least gap secs later;
+                        turns = how many turns are needed; clean = nobody may talk over another sprite in that run
+  { "type": "order",    "first": "hello", "then": "goodbye", "by"? }   in one run, a message containing first and later one containing then
+  { "type": "bounced",  "min"? }                                   sprites really bounced off the edge min times
+  { "type": "stopped",  "min"? }                                   the kid pressed stop while code was running
+  { "type": "costumes", "min"?: 2, "sprites"?: 1 }                 at least "sprites" sprites have min costumes (add costumes in the sprite menu)
+  { "type": "var",      "name": "score", "op": ">="|"<="|"=", "value": 10 } a variable reached a value while running
+  { "type": "touch",    "a"?: name, "b"?: name }                   two sprites touched (any two if not given)
+  { "type": "backdrop", "min": 3 }                                 code switched to min different backdrops
+  { "type": "costume",  "min": 4 }                                 code changed costumes min times
+  { "type": "sprites",  "min": 3 }                                 the project has min sprites
+  { "type": "edit",     "min"? }                                   the kid changed the project min times (any edit)
+  { "type": "drag",     "min"? }                                   the kid dragged sprites on the stage
+  { "type": "flag",     "min"? }                                   the green flag was pressed min times
+ Test hook: window.STG exposes { project, RT, flag(), stop(), add(op), sel(i), state() }.
+================================================================================================
+-->
+<style>
+:root{--ink:#1F2A44}
+#pg-root{gap:10px;padding:8px 10px 8px;user-select:none;-webkit-user-select:none}
+#ed{flex:1;min-width:0;min-height:0;display:flex;gap:8px}
+#cats{width:68px;flex:none;display:flex;flex-direction:column;gap:6px;overflow-y:auto;padding:2px 2px 130px}
+.cat{border:none;background:#fff;border-radius:16px;padding:6px 2px 4px;font:800 12px/1 'Baloo 2';color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;box-shadow:0 2px 6px rgba(31,42,68,.12);flex:none}
+.cat i{width:28px;height:28px;border-radius:50%;display:block;border:3px solid rgba(255,255,255,.8);box-shadow:0 0 0 2px rgba(31,42,68,.08)}
+.cat.on{box-shadow:0 0 0 3px var(--purple)}
+#pal>*,.stack>*,.bd>*,#scripts>*{flex-shrink:0}
+#pal{width:clamp(220px,22vw,290px);flex:none;overflow-y:auto;background:rgba(255,255,255,.88);border-radius:22px;padding:8px 10px 150px;box-shadow:0 6px 18px rgba(31,42,68,.1);display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+.ph2{font-size:17px;margin:8px 2px 0;color:#5B6888;display:flex;align-items:center;gap:6px;width:100%}.ph2 i{width:14px;height:14px;border-radius:50%}
+.ph2 button{margin-left:auto}
+#code{flex:1;min-width:0;display:flex;flex-direction:column;background:rgba(255,255,255,.93);border-radius:22px;box-shadow:0 6px 18px rgba(31,42,68,.1);overflow:hidden}
+#codehd{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:3px solid #EEF1F8;flex-wrap:wrap}
+#codehd .who{display:flex;align-items:center;gap:6px;font-size:19px;flex:1;min-width:0;white-space:nowrap;overflow:hidden}
+#codehd .who span:last-child{overflow:hidden;text-overflow:ellipsis}
+#tools{display:flex;gap:5px;flex:none}
+#codehd .who .thumb{width:36px;height:36px;flex:none}
+.tb{width:42px;height:42px;border-radius:14px;border:3px solid #DDE3F0;background:#fff;display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
+.tb:disabled{opacity:.3;cursor:default}.tb svg{width:24px;height:24px}
+.tb.del{border-color:#FFC9C9}
+#scripts{flex:1;overflow:auto;padding:12px 10px 90px 12px;background-color:#FBFCFF;background-image:radial-gradient(#DDE3F0 1.4px,transparent 1.6px);background-size:22px 22px}
+.stack{display:flex;flex-direction:column;align-items:flex-start;gap:3px;margin-bottom:26px;position:relative}
+.stack.loose{opacity:.72}
+.loosetag{font-size:13px;color:#8A96AE;background:#fff;border:2px dashed #C9D3E6;border-radius:10px;padding:0 8px;margin-bottom:2px}
+.empty{color:#8A96AE;font-size:18px;text-align:center;padding:30px 10px;line-height:1.3}
+/* blocks */
+.blk{color:#fff;font:800 16px/1.15 'Baloo 2';padding:7px 12px 9px;border-radius:12px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);display:flex;align-items:center;flex-wrap:wrap;gap:5px;cursor:pointer;position:relative;max-width:100%;min-height:40px;transition:transform .12s}
+.blk.hat{border-radius:26px 26px 12px 12px;padding-top:13px;min-width:150px}
+.blk:active{transform:scale(.97)}
+.cb{border-radius:12px;display:flex;flex-direction:column;max-width:100%;min-width:160px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);cursor:pointer}
+.cb>.blk{box-shadow:none;background:transparent!important}
+.cb>.bd{margin-left:18px;background:#FBFCFF;border-radius:10px 0 0 10px;padding:4px 4px 4px 6px;min-height:36px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;cursor:default}
+.cb>.ft{height:16px}
+.cb>.mid{padding:2px 12px;font:800 16px 'Baloo 2';color:#fff}
+.cap>.ft{border-radius:0 0 12px 12px}
+.chip{background:#fff;color:var(--ink);border-radius:999px;padding:1px 10px;min-width:30px;text-align:center;font-size:15px;line-height:1.5;box-shadow:inset 0 -2px 0 rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:4px;max-width:220px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.chip.ch{background:rgba(0,0,0,.2);color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.chip.ch::after{content:'';border:5px solid transparent;border-top:6px solid #fff;margin-top:5px}
+.chip img{width:22px;height:22px;object-fit:contain}
+.chip.hole{background:rgba(0,0,0,.18);min-width:44px;height:24px;clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,10px 100%,0 50%);border-radius:0}
+.rp{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:999px;color:#fff;font-size:15px;box-shadow:0 0 0 2px rgba(255,255,255,.55);flex-wrap:wrap}
+.rp.b{border-radius:0;padding:3px 16px;clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 50%,calc(100% - 12px) 100%,12px 100%,0 50%);box-shadow:none}
+.flagi{width:22px;height:22px;vertical-align:middle}
+#scripts .chip,#scripts .rp{cursor:pointer}
+#scripts .chip:active{transform:scale(.93)}
+.sel{outline:4px solid var(--ink);outline-offset:2px;z-index:1}
+.cb.sel>.blk{outline:none}
+.now{box-shadow:0 0 0 4px #FFE36E,0 0 14px 4px rgba(255,201,60,.9)!important}
+.stack.run>:first-child{filter:drop-shadow(0 0 7px rgba(255,201,60,.95))}
+.ins{height:12px;width:150px;border-radius:7px;background:var(--yellow);position:relative;animation:blink 1s infinite;flex:none;margin:1px 0}
+.ins::before{content:'';position:absolute;left:-11px;top:-3px;border:9px solid transparent;border-left:11px solid var(--yellow)}
+@keyframes blink{50%{opacity:.35}}
+.slot{height:34px;min-width:120px;border:3px dashed rgba(31,42,68,.22);border-radius:10px;cursor:pointer;color:#A3AEC6;font-size:13px;display:flex;align-items:center;padding:0 8px}
+.pop{animation:popin .35s}
+@keyframes popin{0%{transform:scale(.6)}70%{transform:scale(1.07)}100%{transform:scale(1)}}
+#pal .blk,#pal .cb{cursor:pointer}
+#pal .cb{min-width:140px}#pal .cb>.bd{min-height:22px;padding:2px}#pal .cb>.ft{height:12px}
+#pal .rp{font-size:16px;padding:6px 12px;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+#pal .rp.b{padding:7px 20px}
+/* side (stage) */
+#side{flex:none;width:var(--sw,480px);display:flex;flex-direction:column;gap:8px;min-height:0}
+#bar{display:flex;gap:8px;align-items:center}
+.big{height:52px;min-width:56px;border:none;border-radius:18px;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18);padding:0 10px}
+.big svg{width:30px;height:30px}
+#go{background:var(--green)}#go.pulse{animation:pulse 1.4s infinite}#go.on{box-shadow:0 0 0 4px #FFE36E,inset 0 -5px 0 rgba(0,0,0,.18)}
+@keyframes pulse{50%{transform:scale(1.1)}}
+#stopb{background:var(--coral)}
+#bar .tb{height:52px;width:52px;border-radius:18px}
+#bar .sp{flex:1}
+#stagewrap{position:relative;width:100%;aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(31,42,68,.18);background:#BFE6FF;flex:none;touch-action:none;border:4px solid #fff}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#mons{position:absolute;left:6px;top:6px;display:flex;flex-direction:column;gap:4px;pointer-events:none}
+.mon{background:rgba(255,255,255,.92);border-radius:12px;padding:1px 4px 1px 10px;font-size:clamp(13px,1.6vw,17px);display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(31,42,68,.15)}
+.mon b{background:#FF6B6B;color:#fff;border-radius:9px;padding:0 8px;min-width:32px;text-align:center}
+#pad{display:none;gap:6px;justify-content:center;align-items:center}
+#pad.show{display:flex}
+#pad button{width:56px;height:48px;border:none;border-radius:14px;background:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),0 2px 8px rgba(31,42,68,.12);display:grid;place-items:center;cursor:pointer;font:800 16px 'Baloo 2';color:var(--ink);touch-action:none}
+#pad button.on{background:var(--yellow)}
+#pad button.space{width:96px}
+#pad svg{width:26px;height:26px}
+#sprites{display:flex;gap:8px;overflow-x:auto;padding:4px 4px 6px;flex:none;align-items:stretch}
+.tile{flex:none;width:84px;border:4px solid #DDE3F0;background:#fff;border-radius:18px;padding:4px 2px 2px;display:flex;flex-direction:column;align-items:center;gap:0;cursor:pointer;position:relative;font-size:13px;line-height:1.1;text-align:center}
+.tile .tp{width:52px;height:52px;display:grid;place-items:center;overflow:hidden;border-radius:10px}
+.tile .tp img{width:52px;height:52px;object-fit:contain}
+.tile .tp canvas{width:52px;height:52px}
+.tile.on{border-color:var(--purple);box-shadow:0 0 0 3px rgba(123,92,255,.25)}
+.tile .gear{position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--purple);display:none;place-items:center}
+.tile.on .gear{display:grid}.tile .gear svg{width:16px;height:16px}
+.tile.hid .tp{opacity:.35}
+.tile.add{border-style:dashed;justify-content:center;color:var(--purple);font-size:15px}
+.tile.add b{font-size:30px;line-height:1}
+.tile.bdt .tp{width:70px;border-radius:8px}.tile.bdt .tp canvas{width:70px;height:52px}
+/* big stage mode */
+body.bigstage #ed{display:none}body.bigstage #side{width:var(--bw)!important;margin:0 auto}
+/* picker */
+#pk{position:fixed;inset:0;z-index:15;background:rgba(31,42,68,.35);display:none;align-items:flex-end;justify-content:center;padding:10px}
+#pk.show{display:flex}
+#pk .card{background:#fff;border-radius:28px;max-width:600px;width:100%;max-height:86vh;overflow:auto;padding:14px 16px 16px;box-shadow:0 12px 40px rgba(31,42,68,.3);display:flex;flex-direction:column;gap:10px;animation:up .2s}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+#pk .hd{display:flex;align-items:center;gap:10px;font-size:22px}
+#pk .hd .x{margin-left:auto;width:44px;height:44px;border-radius:50%;border:none;background:#F1F4FA;font:800 20px 'Baloo 2';cursor:pointer;color:var(--ink)}
+#pk .hd i{width:18px;height:18px;border-radius:50%;flex:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.grid.sm{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
+.opt{border:3px solid #DDE3F0;background:#fff;border-radius:16px;padding:8px 6px;font:800 17px/1.15 'Baloo 2';color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center;text-align:center}
+.opt.on{border-color:var(--purple);background:#F4F1FF}
+.opt img,.opt .phc{width:64px;height:64px;object-fit:contain}
+.opt .bdp{width:96px;height:72px;border-radius:10px}
+.opt:active{transform:scale(.96)}
+.lbl{font-size:15px;color:#5B6888;margin-top:2px}
+.numrow{display:flex;gap:8px;align-items:center;justify-content:center}
+.numrow .val{min-width:120px;text-align:center;font-size:40px;background:#F4F1FF;border-radius:18px;padding:0 16px;border:3px solid var(--purple)}
+.nb{min-width:58px;height:54px;border:none;border-radius:16px;background:#EEF1F8;font:800 22px 'Baloo 2';color:var(--ink);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+.nb:active{transform:scale(.94)}
+.pad3{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.okb{background:var(--green);color:#fff;border:none;border-radius:18px;padding:10px 22px;font:800 22px 'Baloo 2';cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.rowc{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+.txtin{font:800 22px 'Baloo 2';border:3px solid var(--purple);border-radius:14px;padding:6px 12px;flex:1;min-width:0;color:var(--ink)}
+.rch{border:none;border-radius:999px;padding:6px 14px;color:#fff;font:800 17px 'Baloo 2';cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+/* segmented switch for mobile & tablet */
+#stg-seg{display:none;gap:6px;padding:4px 8px 0;justify-content:center;flex:none}
+#stg-seg button{flex:1;max-width:180px;border:3px solid #C9D3E6;background:#fff;color:var(--ink);border-radius:14px;padding:6px 10px;font:800 15px 'Baloo 2';cursor:pointer;min-height:38px;box-shadow:0 3px 0 var(--lavE,#CDBEFF)}
+#stg-seg button.on{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 3px 0 var(--purpleD,#5B3FD9)}
+
+/* narrow / phone */
+@media (max-width:840px){
+  #stg-seg{display:flex}
+  #pg-root{flex-direction:column;padding:6px 6px 6px;gap:6px}
+  #side{width:100%!important;align-items:center}
+  #stagewrap{width:min(100%,480px);max-height:calc(100vh - 240px);margin:0 auto}
+  #ed{flex-direction:column;gap:6px;flex:1;min-height:0}
+  #cats{flex-direction:row;width:auto;overflow-x:auto;overflow-y:hidden;padding:2px 2px 4px;gap:5px;-webkit-overflow-scrolling:touch}
+  .cat{flex-direction:row;padding:4px 10px 4px 5px;font-size:14px;gap:5px}.cat i{width:22px;height:22px}
+  #work{display:flex;gap:6px;flex:1;min-height:0}
+  #pal{width:clamp(140px,44vw,260px);padding:6px 6px 140px;border-radius:18px}
+  #code{border-radius:18px;flex:1;min-width:0}
+  .blk{font-size:14px;padding:5px 8px 7px;min-height:34px;gap:4px}.chip,.rp{font-size:13px}.blk.hat{min-width:0}
+  .cb{min-width:110px}.cb>.bd{margin-left:12px;min-height:30px}.cb>.mid{font-size:14px}
+  #pal .rp{font-size:14px}
+  .tb{width:36px;height:36px;border-radius:11px;border-width:2px}.tb svg{width:19px;height:19px}#tools{gap:3px}
+  #codehd .who{font-size:15px;min-width:0;flex-basis:100%}
+  #codehd .who .thumb{width:26px;height:26px}
+  #scripts{padding:8px 6px 80px 10px}
+  #row2{display:flex;gap:6px;width:100%;align-items:center}
+  #bar{gap:5px}.big{height:46px;min-width:46px;padding:0 6px;border-radius:14px}.big svg{width:24px;height:24px}#bar .tb{height:46px;width:46px;border-radius:14px}
+  #bar .sp,#bigb{display:none}
+  #sprites{flex:1;min-width:0;padding:2px}
+  .tile{width:62px;border-width:3px;border-radius:14px;font-size:11px}.tile .tp,.tile .tp img,.tile .tp canvas{width:38px;height:38px}
+  .tile.bdt .tp,.tile.bdt .tp canvas{width:50px;height:38px}
+  #pad button{width:50px;height:40px}#pad button.space{width:80px}
+
+  /* View modes on mobile */
+  body.v-code #stagewrap,body.v-code #pad{display:none!important}
+  body.v-code #side{order:2;flex:none}
+  body.v-code #ed{order:1}
+  body.v-stage #ed{display:none!important}
+  body.v-stage #side{flex:1;min-height:0;order:1}
+  body.v-split #side{order:-1;flex:none}
+  body.v-split #stagewrap{max-height:28vh;width:auto;aspect-ratio:4/3;margin:0 auto}
+  body.v-split #ed{flex:1;min-height:0}
+}
+@media (min-width:841px){#work{display:contents}#row2{display:contents}}
+</style>
+</head>
+<body>
+<script src="shell.js"></script>
+<script>
+'use strict';
+/* ============================== helpers ============================== */
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const clone = o => JSON.parse(JSON.stringify(o));
+const now = () => performance.now();
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const fmt = v => typeof v === 'number' ? String(Math.round(v * 100) / 100) : String(v);
+function blockCol(l){ l=l.trim().toLowerCase();   /* same palette as player/mission.html */
+  if(/^when|^on /.test(l)) return '#FFB400'; if(/^(repeat|forever|if|else|wait|end)/.test(l)) return '#FF8C1A';
+  if(/^(move|turn|go|point|glide|step|jump|drive|stop motors|motor)/.test(l)) return '#2EA8F5'; if(/^(say|think|show|hide|switch|change color|light|led)/.test(l)) return '#9966FF';
+  if(/^(play|sound|beep)/.test(l)) return '#CF63CF'; if(/^(set|change|ask|answer)/.test(l)) return '#FF6B6B'; return '#4CC76A'; }
+const CATS = {
+  events: { n: 'Events', c: blockCol('when') }, motion: { n: 'Motion', c: blockCol('move') }, looks: { n: 'Looks', c: blockCol('say') },
+  sound: { n: 'Sound', c: blockCol('play') }, control: { n: 'Control', c: blockCol('repeat') }, sensing: { n: 'Sensing', c: '#26B5C9' },
+  operators: { n: 'Math', c: blockCol('x') }, variables: { n: 'Variables', c: blockCol('set') }, pen: { n: 'Pen', c: '#0FBD8C' } };
+const ICON = {
+  flag: '<svg viewBox="0 0 24 24"><path d="M5 3v19" stroke="#2E7D32" stroke-width="2.6" stroke-linecap="round"/><path d="M6 4c4-2 7 2 13 0v9c-6 2-9-2-13 0z" fill="#4CC76A" stroke="#2E7D32" stroke-width="1.6"/></svg>',
+  flagw: '<svg viewBox="0 0 24 24"><path d="M5 3v19" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/><path d="M6 4c4-2 7 2 13 0v9c-6 2-9-2-13 0z" fill="#fff"/></svg>',
+  stop: '<svg viewBox="0 0 24 24"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8z" fill="#fff"/></svg>',
+  reset: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 3v5h5"/></svg>',
+  undo: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="2.4" stroke-linejoin="round"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 5.5v-3l-2.6-.6a7 7 0 0 0-.8-1.9l1.4-2.3-2.1-2.1-2.3 1.4a7 7 0 0 0-1.9-.8L12.5 3h-3l-.6 2.6a7 7 0 0 0-1.9.8L4.7 5 2.6 7.1 4 9.4a7 7 0 0 0-.8 1.9L.6 12v0l2.6.6"/><circle cx="12" cy="12" r="7" fill="none" stroke="#fff" stroke-width="3"/></svg>',
+  big: '<svg viewBox="0 0 24 24" fill="none" stroke="#1F2A44" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+  arrow: d => `<svg viewBox="0 0 24 24" style="transform:rotate(${d}deg)"><path d="M12 4l8 9h-5v7H9v-7H4z" fill="#1F2A44"/></svg>`,
+};
+const FLAG_INLINE = `<span class="flagi">${ICON.flag}</span>`;
+
+/* ============================== block definitions ============================== */
+// k: hat | cmd | c (one body) | c2 (if/else) | cap | bool | rep
+const D = {
+  flag: { c: 'events', k: 'hat', t: 'when {FLAG} clicked' },
+  tap: { c: 'events', k: 'hat', t: 'when this sprite tapped' },
+  key: { c: 'events', k: 'hat', t: 'when {k} key pressed', a: { k: 'key' }, d: { k: 'space' } },
+  touch: { c: 'events', k: 'hat', t: 'when I touch {who}', a: { who: 'who' }, d: { who: '@other' } },
+  receive: { c: 'events', k: 'hat', t: 'when I receive {m}', a: { m: 'msg' }, d: { m: 'Go!' } },
+  broadcast: { c: 'events', k: 'cmd', t: 'broadcast {m}', a: { m: 'msg' }, d: { m: 'Go!' } },
+  move: { c: 'motion', k: 'cmd', t: 'move {n} steps', a: { n: 'num' }, d: { n: 10 }, p: { n: [10, 20, 50, -10] } },
+  turnr: { c: 'motion', k: 'cmd', t: 'turn right {n} degrees', a: { n: 'num' }, d: { n: 15 }, p: { n: [15, 45, 90, 180] } },
+  turnl: { c: 'motion', k: 'cmd', t: 'turn left {n} degrees', a: { n: 'num' }, d: { n: 15 }, p: { n: [15, 45, 90, 180] } },
+  goto: { c: 'motion', k: 'cmd', t: 'go to {to}', a: { to: 'to' }, d: { to: 'random' } },
+  gotoxy: { c: 'motion', k: 'cmd', t: 'go to x {x} y {y}', a: { x: 'num', y: 'num' }, d: { x: 0, y: 0 }, p: { x: [-200, -100, 0, 100, 200], y: [-140, -70, 0, 70, 140] } },
+  glide: { c: 'motion', k: 'cmd', t: 'glide {s} secs to {to}', a: { s: 'num', to: 'to' }, d: { s: 1, to: 'random' }, p: { s: [0.5, 1, 2, 3] } },
+  glidexy: { c: 'motion', k: 'cmd', t: 'glide {s} secs to x {x} y {y}', a: { s: 'num', x: 'num', y: 'num' }, d: { s: 1, x: 0, y: 0 }, p: { s: [0.5, 1, 2, 3], x: [-200, -100, 0, 100, 200], y: [-140, -70, 0, 70, 140] } },
+  point: { c: 'motion', k: 'cmd', t: 'point in direction {d}', a: { d: 'dir' }, d: { d: 90 } },
+  pointto: { c: 'motion', k: 'cmd', t: 'point towards {to}', a: { to: 'to' }, d: { to: '@sprite' } },
+  changex: { c: 'motion', k: 'cmd', t: 'change x by {n}', a: { n: 'num' }, d: { n: 10 }, p: { n: [10, -10, 50, -50] } },
+  changey: { c: 'motion', k: 'cmd', t: 'change y by {n}', a: { n: 'num' }, d: { n: 10 }, p: { n: [10, -10, 50, -50] } },
+  setx: { c: 'motion', k: 'cmd', t: 'set x to {n}', a: { n: 'num' }, d: { n: 0 }, p: { n: [-200, -100, 0, 100, 200] } },
+  sety: { c: 'motion', k: 'cmd', t: 'set y to {n}', a: { n: 'num' }, d: { n: 0 }, p: { n: [-140, -70, 0, 70, 140] } },
+  bounce: { c: 'motion', k: 'cmd', t: 'if on edge, bounce' },
+  rotstyle: { c: 'motion', k: 'cmd', t: 'set rotation style {r}', a: { r: 'rot' }, d: { r: 'lr' } },
+  sayfor: { c: 'looks', k: 'cmd', t: 'say {t} for {s} secs', a: { t: 'text', s: 'num' }, d: { t: 'Hello!', s: 2 }, p: { s: [1, 2, 3, 4] } },
+  say: { c: 'looks', k: 'cmd', t: 'say {t}', a: { t: 'text' }, d: { t: 'Hello!' } },
+  thinkfor: { c: 'looks', k: 'cmd', t: 'think {t} for {s} secs', a: { t: 'text', s: 'num' }, d: { t: 'Hmm...', s: 2 }, p: { s: [1, 2, 3, 4] } },
+  think: { c: 'looks', k: 'cmd', t: 'think {t}', a: { t: 'text' }, d: { t: 'Hmm...' } },
+  costume: { c: 'looks', k: 'cmd', t: 'switch costume to {prop}', a: { prop: 'costume' }, d: { prop: '@costume' } },
+  nextcos: { c: 'looks', k: 'cmd', t: 'next costume' },
+  bd: { c: 'looks', k: 'cmd', t: 'switch backdrop to {backdrop}', a: { backdrop: 'backdrop' }, d: { backdrop: '@bd' } },
+  nextbd: { c: 'looks', k: 'cmd', t: 'next backdrop' },
+  sizeby: { c: 'looks', k: 'cmd', t: 'change size by {n}', a: { n: 'num' }, d: { n: 10 }, p: { n: [10, 20, -10, -20] } },
+  size: { c: 'looks', k: 'cmd', t: 'set size to {n} %', a: { n: 'num' }, d: { n: 100 }, p: { n: [50, 100, 150, 200] } },
+  effect: { c: 'looks', k: 'cmd', t: 'change {e} effect by {n}', a: { e: 'effect', n: 'num' }, d: { e: 'color', n: 25 }, p: { n: [10, 25, 50, -25] } },
+  cleareff: { c: 'looks', k: 'cmd', t: 'clear effects' },
+  show: { c: 'looks', k: 'cmd', t: 'show' },
+  hide: { c: 'looks', k: 'cmd', t: 'hide' },
+  front: { c: 'looks', k: 'cmd', t: 'go to front' },
+  play: { c: 'sound', k: 'cmd', t: 'play sound {snd} until done', a: { snd: 'snd' }, d: { snd: 'pop' } },
+  start: { c: 'sound', k: 'cmd', t: 'start sound {snd}', a: { snd: 'snd' }, d: { snd: 'ding' } },
+  note: { c: 'sound', k: 'cmd', t: 'play note {nt} for {s} secs', a: { nt: 'note', s: 'num' }, d: { nt: 'do', s: 0.5 }, p: { s: [0.25, 0.5, 1] } },
+  stopsnd: { c: 'sound', k: 'cmd', t: 'stop all sounds' },
+  wait: { c: 'control', k: 'cmd', t: 'wait {s} seconds', a: { s: 'num' }, d: { s: 1 }, p: { s: [0.5, 1, 2, 3] } },
+  repeat: { c: 'control', k: 'c', t: 'repeat {n}', a: { n: 'num' }, d: { n: 10 }, p: { n: [2, 3, 4, 10] } },
+  forever: { c: 'control', k: 'c', t: 'forever', cap: 1 },
+  if: { c: 'control', k: 'c', t: 'if {c} then', a: { c: 'bool' }, d: { c: '@cond' } },
+  ifelse: { c: 'control', k: 'c2', t: 'if {c} then', a: { c: 'bool' }, d: { c: '@cond' } },
+  waituntil: { c: 'control', k: 'cmd', t: 'wait until {c}', a: { c: 'bool' }, d: { c: '@cond' } },
+  until: { c: 'control', k: 'c', t: 'repeat until {c}', a: { c: 'bool' }, d: { c: '@cond' } },
+  stop: { c: 'control', k: 'cmd', t: 'stop {w}', a: { w: 'stopw' }, d: { w: 'all' } },
+  resettimer: { c: 'sensing', k: 'cmd', t: 'reset timer' },
+  touching: { c: 'sensing', k: 'bool', t: 'touching {who}?', a: { who: 'who' }, d: { who: '@other' } },
+  keyp: { c: 'sensing', k: 'bool', t: 'key {k} pressed?', a: { k: 'key' }, d: { k: 'space' } },
+  timer: { c: 'sensing', k: 'rep', t: 'timer' },
+  xpos: { c: 'sensing', k: 'rep', t: 'x position' },
+  ypos: { c: 'sensing', k: 'rep', t: 'y position' },
+  add: { c: 'operators', k: 'rep', t: '{a} + {b}', a: { a: 'num', b: 'num' }, d: { a: 1, b: 1 } },
+  sub: { c: 'operators', k: 'rep', t: '{a} − {b}', a: { a: 'num', b: 'num' }, d: { a: 5, b: 1 } },
+  rand: { c: 'operators', k: 'rep', t: 'pick random {a} to {b}', a: { a: 'num', b: 'num' }, d: { a: 1, b: 10 } },
+  gt: { c: 'operators', k: 'bool', t: '{a} > {b}', a: { a: 'num', b: 'num' }, d: { a: '@var', b: 5 } },
+  lt: { c: 'operators', k: 'bool', t: '{a} < {b}', a: { a: 'num', b: 'num' }, d: { a: '@var', b: 5 } },
+  eq: { c: 'operators', k: 'bool', t: '{a} = {b}', a: { a: 'num', b: 'num' }, d: { a: '@var', b: 10 } },
+  and: { c: 'operators', k: 'bool', t: '{a} and {b}', a: { a: 'bool', b: 'bool' }, d: { a: null, b: null } },
+  or: { c: 'operators', k: 'bool', t: '{a} or {b}', a: { a: 'bool', b: 'bool' }, d: { a: null, b: null } },
+  not: { c: 'operators', k: 'bool', t: 'not {a}', a: { a: 'bool' }, d: { a: null } },
+  setvar: { c: 'variables', k: 'cmd', t: 'set {v} to {n}', a: { v: 'var', n: 'num' }, d: { v: '@var', n: 0 }, p: { n: [0, 1, 3, 10] } },
+  changevar: { c: 'variables', k: 'cmd', t: 'change {v} by {n}', a: { v: 'var', n: 'num' }, d: { v: '@var', n: 1 }, p: { n: [1, -1, 5, 10] } },
+  showvar: { c: 'variables', k: 'cmd', t: 'show variable {v}', a: { v: 'var' }, d: { v: '@var' } },
+  hidevar: { c: 'variables', k: 'cmd', t: 'hide variable {v}', a: { v: 'var' }, d: { v: '@var' } },
+  var: { c: 'variables', k: 'rep', t: '{v}', a: { v: 'var' }, d: { v: '@var' } },
+  pendown: { c: 'pen', k: 'cmd', t: 'pen down' },
+  penup: { c: 'pen', k: 'cmd', t: 'pen up' },
+  pencolor: { c: 'pen', k: 'cmd', t: 'set pen color to {col}', a: { col: 'color' }, d: { col: 'red' } },
+  pensize: { c: 'pen', k: 'cmd', t: 'set pen size to {n}', a: { n: 'num' }, d: { n: 4 }, p: { n: [2, 4, 8, 16] } },
+  clear: { c: 'pen', k: 'cmd', t: 'erase all' },
+};
+const PENCOL = { red: '#FF4D4D', orange: '#FF9F43', yellow: '#FFD23C', green: '#3CC85A', blue: '#2E8FF5', purple: '#8A5CFF', pink: '#FF77C8', white: '#FFFFFF', black: '#1F2A44' };
+const REPS = new Set(Object.keys(D).filter(k => D[k].k === 'rep' || D[k].k === 'bool'));
+const KEYS = [['space', 'space'], ['up', 'up arrow'], ['down', 'down arrow'], ['left', 'left arrow'], ['right', 'right arrow'], ['any', 'any']];
+const PLACES = [['random', 'random spot'], ['center', 'center'], ['top', 'top'], ['bottom', 'bottom'], ['left', 'left side'], ['right', 'right side'], ['start', 'start spot']];
+const SOUNDS = ['pop', 'ding', 'boom', 'crow', 'meow', 'bark', 'tweet', 'ring', 'twinkle', 'fiesta', 'coin', 'boing', 'whoosh', 'clap', 'buzz', 'tada'];
+const NOTES = [['do', 'do', 261.6], ['re', 're', 293.7], ['mi', 'mi', 329.6], ['fa', 'fa', 349.2], ['sol', 'sol', 392], ['la', 'la', 440], ['ti', 'ti', 493.9], ['hido', 'high do', 523.3]];
+const DIRS = [[90, 'right'], [-90, 'left'], [0, 'up'], [180, 'down']];
+const ROTS = [['all', 'all around'], ['lr', 'left-right'], ['none', "don't rotate"]];
+const STOPW = [['all', 'all'], ['this', 'this script']];
+const EFFECTS = [['color', 'color'], ['ghost', 'ghost']];
+const MSGS = ['Go!', 'Next scene', 'Your turn', 'The end', 'You win', 'Game over'];
+const PHRASES = ['Hello!', 'Kumusta!', 'Hi, friend!', 'Salamat!', 'Yum!', 'Wow!', "Let's go!", 'Goodbye!', 'Yay!', 'Oops!', 'Hmm...', 'Meow!', 'You win!', 'Game over!'];
+const VARNAMES = ['score', 'lives', 'time', 'level', 'speed', 'coins', 'stars', 'high score'];
+const PAIRS = { l1_cat: ['l1_cat', 'l1_cat_jump'], l1_cat_jump: ['l1_cat_jump', 'l1_cat'] };
+
+/* ============================== state ============================== */
+let CFG, STARTER, P;                 // config, starter project, current project
+let cur = 0;                         // selected sprite index
+let selB = null;                     // selected block object
+let cursor = null;                   // {list, idx}
+let undoStack = [];
+let allowed = null;                  // Set of allowed ops (palette)
+const ST = { ran: {}, inside: {}, speech: [], events: {}, touches: {}, bds: new Set(), cos: 0, edits: 0, drags: 0, flags: 0, stops: 0, bounces: 0, varSeen: {} };
+const RT = { sprites: [], threads: [], vars: {}, mons: new Set(), bd: '', t0: 0, keys: new Set(), touchNow: {}, bid: 0, run: 0 };
+const blockEls = new Map();          // block object -> element (current code view)
+const stackEls = new Map();          // script array -> element
+
+/* ============================== art ============================== */
+const IMG = {};
+const MW = 40;
+function hue(name) { let h = 0; for (const c of String(name)) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+const labelOf = n => String(n).replace(/^[a-z0-9]+_/, '').replace(/_/g, ' ');
+const titleOf = n => labelOf(n).replace(/\b\w/g, c => c.toUpperCase());
+function getImg(name) {
+  if (IMG[name]) return IMG[name];
+  const o = IMG[name] = { img: new Image(), ok: false, failed: false, mask: null, bb: { x0: .1, y0: .1, x1: .9, y1: .9 } };
+  o.img.onload = () => { o.ok = true; try { computeMask(o); } catch (e) { o.bb = { x0: .05, y0: .05, x1: .95, y1: .95 }; } dirty = true; refreshThumbs(); };
+  o.img.onerror = () => { o.failed = true; o.bb = { x0: .08, y0: .08, x1: .92, y1: .92 }; dirty = true; };
+  o.img.src = PG.art(name);
+  return o;
+}
+function fitBox(img) { const w = img.naturalWidth || 1, h = img.naturalHeight || 1, s = Math.min(1 / w, 1 / h); return { w: w * s, h: h * s }; }
+function computeMask(o) {
+  const c = document.createElement('canvas'); c.width = c.height = MW; const x = c.getContext('2d');
+  const f = fitBox(o.img); x.drawImage(o.img, (1 - f.w) / 2 * MW, (1 - f.h) / 2 * MW, f.w * MW, f.h * MW);
+  const d = x.getImageData(0, 0, MW, MW).data, m = new Uint8Array(MW * MW); let x0 = MW, y0 = MW, x1 = 0, y1 = 0;
+  for (let i = 0; i < MW * MW; i++) if (d[i * 4 + 3] > 60) { m[i] = 1; const px = i % MW, py = (i / MW) | 0; x0 = Math.min(x0, px); y0 = Math.min(y0, py); x1 = Math.max(x1, px + 1); y1 = Math.max(y1, py + 1); }
+  if (x1 > x0) { o.mask = m; o.bb = { x0: x0 / MW, y0: y0 / MW, x1: x1 / MW, y1: y1 / MW }; }
+}
+function drawProp(ctx, name, s) {  // draw centred in an s×s box at origin
+  const o = getImg(name);
+  if (o.ok) { const f = fitBox(o.img); ctx.drawImage(o.img, -f.w * s / 2, -f.h * s / 2, f.w * s, f.h * s); return; }
+  const h = hue(name), r = s * .14, w = s * .84;
+  ctx.fillStyle = `hsl(${h},80%,92%)`; ctx.strokeStyle = `hsl(${h},60%,60%)`; ctx.lineWidth = s * .04;
+  rrect(ctx, -w / 2, -w / 2, w, w, r); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = `hsl(${h},55%,70%)`; ctx.beginPath(); ctx.arc(0, -w * .12, w * .2, 0, 7); ctx.fill();
+  ctx.fillStyle = `hsl(${h},50%,32%)`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const words = labelOf(name).split(' '); let fs = s * .17; ctx.font = `800 ${fs}px 'Baloo 2', sans-serif`;
+  const lines = []; let ln = ''; for (const wd of words) { const t = ln ? ln + ' ' + wd : wd; if (ctx.measureText(t).width > w * .9 && ln) { lines.push(ln); ln = wd; } else ln = t; } lines.push(ln);
+  lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 0, w * .2 + i * fs * .95));
+}
+function rrect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+const BGI = {};
+function getBg(name) { if (!BGI[name]) { const o = BGI[name] = { img: new Image(), ok: false }; o.img.onload = () => { o.ok = true; dirty = true; refreshThumbs(); }; o.img.onerror = () => { o.failed = true; }; o.img.src = PG.bg(name); } return BGI[name]; }
+function drawBackdrop(ctx, name, W, H) {
+  const o = name ? getBg(name) : null;
+  if (o && o.ok) { const iw = o.img.naturalWidth, ih = o.img.naturalHeight, s = Math.max(W / iw, H / ih); ctx.drawImage(o.img, (W - iw * s) / 2, (H - ih * s) / 2, iw * s, ih * s); return; }
+  const n = String(name || ''), g = (y0, y1, a, b) => { const gr = ctx.createLinearGradient(0, y0, 0, y1); gr.addColorStop(0, a); gr.addColorStop(1, b); return gr; };
+  const stars = () => { ctx.fillStyle = '#fff'; for (let i = 0; i < 40; i++) { const x = (i * 97.3 % 1) * W || (i * 53 % W), y = ((i * 61) % 100) / 100 * H * .6; ctx.globalAlpha = .4 + (i % 3) * .2; ctx.beginPath(); ctx.arc((i * 137) % W, y, 1 + (i % 3) * .6, 0, 7); ctx.fill(); } ctx.globalAlpha = 1; };
+  const ground = (y, a, b) => { ctx.fillStyle = g(y, H, a, b); ctx.fillRect(0, y, W, H - y); };
+  if (/night|space|star/.test(n)) { ctx.fillStyle = g(0, H, '#14204A', '#3B4C8C'); ctx.fillRect(0, 0, W, H); stars(); if (/night/.test(n)) ground(H * .8, '#1F3B2C', '#14261C'); return; }
+  ctx.fillStyle = g(0, H * .7, '#7CC8F2', '#D6F0FF'); ctx.fillRect(0, 0, W, H);
+  if (/beach/.test(n)) { ctx.fillStyle = '#3FA7D6'; ctx.fillRect(0, H * .55, W, H * .2); ground(H * .72, '#F7DFA5', '#EBC77C'); return; }
+  if (/rice|field|farm/.test(n)) { ctx.fillStyle = '#9CC9A8'; ctx.beginPath(); ctx.ellipse(W * .3, H * .62, W * .45, H * .2, 0, 0, 7); ctx.ellipse(W * .85, H * .64, W * .4, H * .18, 0, 0, 7); ctx.fill(); ground(H * .62, '#8FD16A', '#4E9E3A'); ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 2; for (let i = 1; i < 6; i++) { ctx.beginPath(); ctx.moveTo(0, H * .62 + i * H * .07); ctx.lineTo(W, H * .62 + i * H * .07); ctx.stroke(); } return; }
+  if (/fiesta/.test(n)) { ground(H * .7, '#E6D3B8', '#CDB592'); const cols = ['#FF6B6B', '#FFC93C', '#2EA8F5', '#4CC76A', '#9966FF']; for (let r = 0; r < 2; r++) for (let i = 0; i < 16; i++) { ctx.fillStyle = cols[(i + r) % 5]; const x = i * W / 15, y = H * (.06 + r * .12); ctx.beginPath(); ctx.moveTo(x - W / 34, y); ctx.lineTo(x + W / 34, y); ctx.lineTo(x, y + H * .07); ctx.fill(); } return; }
+  if (/street|road|plaza|market/.test(n)) { ground(H * .66, '#B8C2CC', '#8E99A6'); ctx.fillStyle = '#fff'; for (let i = 0; i < 8; i++) ctx.fillRect(i * W / 7, H * .82, W / 14, H * .02); return; }
+  if (/court/.test(n)) { ctx.fillStyle = '#F2E2C4'; ctx.fillRect(0, 0, W, H); ground(H * .76, '#C9A77A', '#A9875A'); return; }
+  if (/room|living|kitchen|class|stage|bed|school|home/.test(n)) { ctx.fillStyle = g(0, H, '#FFF1D9', '#FFE2B8'); ctx.fillRect(0, 0, W, H); ground(H * .74, '#D9A877', '#B9875A'); return; }
+  ground(H * .7, '#8FD16A', '#5DB04A');
+}
+
+/* ============================== sound (WebAudio synth, no files) ============================== */
+let AC = null, master = null; const live = new Set();
+function audio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); master = AC.createGain(); master.gain.value = .35; master.connect(AC.destination); } catch (e) { return null; } } if (AC.state === 'suspended') AC.resume(); return AC; }
+document.addEventListener('pointerdown', () => audio(), { once: false, passive: true });
+function osc(type, f0, f1, t, d, v = .5, glide = 'exp') { const a = AC, o = a.createOscillator(), g = a.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t); if (f1 && f1 !== f0) (glide === 'lin' ? o.frequency.linearRampToValueAtTime(f1, t + d) : o.frequency.exponentialRampToValueAtTime(f1, t + d));
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .01); g.gain.exponentialRampToValueAtTime(.001, t + d); o.connect(g).connect(master); o.start(t); o.stop(t + d + .05); live.add(o); o.onended = () => live.delete(o); return o; }
+function noise(t, d, v = .5, fq = 1000, q = 1, type = 'bandpass', f1) { const a = AC, n = a.sampleRate * d | 0, b = a.createBuffer(1, n, a.sampleRate), ch = b.getChannelData(0); for (let i = 0; i < n; i++) ch[i] = Math.random() * 2 - 1;
+  const s = a.createBufferSource(), fl = a.createBiquadFilter(), g = a.createGain(); s.buffer = b; fl.type = type; fl.frequency.setValueAtTime(fq, t); if (f1) fl.frequency.exponentialRampToValueAtTime(f1, t + d); fl.Q.value = q;
+  g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d); s.connect(fl).connect(g).connect(master); s.start(t); live.add(s); s.onended = () => live.delete(s); }
+function sfx(name) {   // returns duration in seconds
+  const a = audio(); const DUR = { pop: .15, ding: .6, boom: .5, crow: 1.1, meow: .7, bark: .5, tweet: .6, ring: 1.1, twinkle: 1, fiesta: 1.7, coin: .4, boing: .45, whoosh: .6, clap: .4, buzz: .5, tada: 1.1 };
+  const d = DUR[name] || .3; if (!a) return d; const t = a.currentTime + .01;
+  try { switch (name) {
+    case 'pop': osc('sine', 700, 180, t, .12, .6); break;
+    case 'ding': osc('sine', 880, 0, t, .5, .5); osc('sine', 1760, 0, t, .3, .15); break;
+    case 'boom': osc('sine', 160, 45, t, .45, .9); noise(t, .2, .4, 300, .7, 'lowpass'); break;
+    case 'crow': [[600, 900, 0, .12], [700, 1000, .16, .12], [800, 1100, .32, .12], [1000, 700, .5, .5]].forEach(([f0, f1, s, dd]) => { osc('sawtooth', f0, f1, t + s, dd, .18); osc('square', f0 * 1.01, f1, t + s, dd, .06); }); break;
+    case 'meow': { const o = osc('triangle', 500, 0, t, .65, .45); o.frequency.setValueAtTime(500, t); o.frequency.linearRampToValueAtTime(820, t + .2); o.frequency.linearRampToValueAtTime(420, t + .6); break; }
+    case 'bark': osc('square', 320, 180, t, .15, .25); noise(t, .12, .3, 800, 1.5); osc('square', 340, 190, t + .22, .15, .25); noise(t + .22, .12, .3, 800, 1.5); break;
+    case 'tweet': [0, .17, .34].forEach(s => osc('sine', 2200, 3400, t + s, .12, .3)); break;
+    case 'ring': osc('sine', 659, 0, t, .5, .5); osc('sine', 1318, 0, t, .3, .12); osc('sine', 523, 0, t + .45, .6, .5); osc('sine', 1046, 0, t + .45, .3, .12); break;
+    case 'twinkle': [1047, 1319, 1568, 2093, 1568, 2093].forEach((f, i) => osc('sine', f, 0, t + i * .12, .35, .25)); break;
+    case 'fiesta': [[523, 0], [659, .15], [784, .3], [659, .45], [784, .6], [880, .75], [784, .95], [1047, 1.15]].forEach(([f, s]) => { osc('square', f, 0, t + s, .18, .12); osc('triangle', f / 2, 0, t + s, .18, .25); }); [0, .3, .6, .9, 1.2].forEach(s => noise(t + s, .08, .3, 5000, 1, 'highpass')); break;
+    case 'coin': osc('square', 988, 0, t, .09, .2); osc('square', 1319, 0, t + .08, .3, .2); break;
+    case 'boing': osc('sine', 180, 620, t, .4, .6); break;
+    case 'whoosh': noise(t, .55, .6, 400, 2, 'bandpass', 3000); break;
+    case 'clap': noise(t, .08, .8, 1500, .8); noise(t + .14, .1, .8, 1500, .8); break;
+    case 'buzz': osc('square', 220, 150, t, .45, .2); break;
+    case 'tada': [523, 659, 784, 1047].forEach((f, i) => osc('triangle', f, 0, t + i * .11, i === 3 ? .7 : .25, .4)); break;
+    default: osc('sine', 600, 0, t, .2, .4);
+  } } catch (e) {}
+  return d;
+}
+function playNote(nt, secs) { const a = audio(); if (!a) return; const f = (NOTES.find(n => n[0] === nt) || NOTES[0])[2]; const t = a.currentTime + .01, d = Math.max(.08, secs); osc('triangle', f, 0, t, d, .45); osc('sine', f * 2, 0, t, d * .6, .1); }
+function stopSounds() { live.forEach(n => { try { n.stop(); } catch (e) {} }); live.clear(); }
+
+/* ============================== project helpers ============================== */
+function spriteByName(n) { return P.sprites.find(s => s.name === n); }
+function uniqueName(base) { let n = base, i = 2; while (spriteByName(n)) n = `${base} ${i++}`; return n; }
+function varNames() { return Object.keys(P.vars || {}); }
+function others(sp) { return P.sprites.filter(s => s !== sp).map(s => s.name); }
+function defArgs(op, sp) {
+  const d = D[op], a = {};
+  for (const k in (d.d || {})) {
+    let v = d.d[k];
+    if (v === '@other') v = others(sp)[0] || 'edge';
+    else if (v === '@sprite') v = others(sp)[0] || 'center';
+    else if (v === '@costume') v = sp ? (sp.props[1] || sp.props[0]) : '';
+    else if (v === '@bd') v = P.backdrops.find(b => b !== P.backdrop) || P.backdrops[0] || '';
+    else if (v === '@var') v = d.k === 'bool' ? { r: 'var', v: varNames()[0] || 'score' } : (varNames()[0] || 'score');
+    else if (v === '@cond') v = allowedOp('touching') || !allowedOp('keyp') ? { r: 'touching', who: others(sp)[0] || 'edge' } : { r: 'keyp', k: 'space' };
+    a[k] = clone(v);
+  }
+  if (op === 'gt' || op === 'lt' || op === 'eq') { if (!varNames().length) a.a = 5; }
+  return a;
+}
+function newBlock(op, sp) { const b = { op }; if (D[op].a) b.args = defArgs(op, sp); if (D[op].k === 'c' || D[op].k === 'c2') b.body = []; if (D[op].k === 'c2') b.else = []; return b; }
+function newRep(op, sp) { const n = { r: op }; Object.assign(n, defArgs(op, sp)); return n; }
+function walk(list, fn, ctx = []) { for (const b of list || []) { fn(b, ctx); if (b.body) walk(b.body, fn, ctx.concat(b.op)); if (b.else) walk(b.else, fn, ctx.concat(b.op)); } }
+function isHat(b) { return b && D[b.op] && D[b.op].k === 'hat'; }
+function hatScripts(sp) { return (sp.scripts || []).filter(s => isHat(s[0])); }
+function allowedOp(op) { return !allowed || allowed.has(op); }
+
+/* ============================== edits / undo ============================== */
+let saveT = 0;
+function edit(fn, opts = {}) {
+  undoStack.push(JSON.stringify(P)); if (undoStack.length > 50) undoStack.shift();
+  fn(); ST.edits++;
+  P.sprites.forEach(s => s.scripts = (s.scripts || []).filter(sc => sc.length));
+  if (!opts.noRender) renderCode();
+  if (opts.sprites) { syncRT(); renderSprites(); }
+  updatePad(); clearTimeout(saveT); saveT = setTimeout(() => PG.save(P, true), 700); checkAll(); dirty = true;
+}
+function undo() {
+  if (!undoStack.length) return; stopAll(); P = JSON.parse(undoStack.pop()); selB = null; cursor = null;
+  cur = Math.min(cur, P.sprites.length - 1); RT.sprites = []; syncRT(true); renderAll(); PG.save(P, true); PG.sfx.pop();
+}
+
+/* ============================== cursor & insertion ============================== */
+function curSprite() { return P.sprites[cur]; }
+function findParent(target, list = null, parent = null) {   // -> {list, idx, parent}
+  const sp = curSprite(); const lists = list ? [list] : sp.scripts;
+  for (const L of lists) { for (let i = 0; i < L.length; i++) { const b = L[i]; if (b === target) return { list: L, idx: i, parent };
+    for (const k of ['body', 'else']) if (b[k]) { const r = findParent(target, b[k], b); if (r) return r; } } }
+  return null;
+}
+function rootOf(list) { const sp = curSprite(); for (const s of sp.scripts) { if (s === list) return s; let f = false; walk(s, b => { if (b.body === list || b.else === list) f = true; }); if (f) return s; } return null; }
+function validCursor() {
+  const sp = curSprite(); if (!sp) return null;
+  if (cursor && rootOf(cursor.list)) { cursor.idx = clamp(cursor.idx, 0, cursor.list.length); if (cursor.list[0] && isHat(cursor.list[0]) && cursor.idx === 0 && sp.scripts.includes(cursor.list)) cursor.idx = 1; return cursor; }
+  const last = sp.scripts[sp.scripts.length - 1]; cursor = last ? { list: last, idx: last.length } : null; return cursor;
+}
+function addBlock(op) {
+  const sp = curSprite(); if (!sp) return; const def = D[op];
+  if (REPS.has(op)) return addReporter(op);
+  let nb = newBlock(op, sp);
+  edit(() => {
+    const c = validCursor();
+    if (def.k === 'hat') {
+      const root = c && rootOf(c.list);
+      if (root && !isHat(root[0])) { root.unshift(nb); cursor = { list: c.list, idx: c.list === root ? root.length : c.idx }; }
+      else { const s = [nb]; sp.scripts.push(s); cursor = { list: s, idx: 1 }; }
+    } else if (!c) { const s = [nb]; sp.scripts.push(s); cursor = { list: s, idx: 1 }; }
+    else { c.list.splice(c.idx, 0, nb); cursor = { list: c.list, idx: c.idx + 1 }; }
+    if (nb.body) cursor = { list: nb.body, idx: 0 };
+    selB = nb;
+  });
+  PG.sfx.pop(); flashNew(nb);
+}
+function addReporter(op) {   // reporters go into the selected block's matching slot, else wrap in a useful block
+  const sp = curSprite(); const node = newRep(op, sp); const isB = D[op].k === 'bool';
+  if (selB && selB.args) { const d = D[selB.op]; const key = Object.keys(d.a || {}).find(k => isB ? d.a[k] === 'bool' : (d.a[k] === 'num' || d.a[k] === 'text'));
+    if (key) { edit(() => { selB.args[key] = node; }); PG.sfx.pop(); flashNew(selB); return; } }
+  const wrap = isB ? 'if' : 'say';
+  if (!allowedOp(wrap) && !isB) { PG.toast('Tap a block in your code first'); return; }
+  addBlock(wrap); if (selB) { edit(() => { selB.args[isB ? 'c' : 't'] = node; }); }
+}
+function flashNew(b) { const e = blockEls.get(b); if (e) { e.classList.add('pop'); e.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } }
+function selectBlock(b) {
+  selB = b; const f = findParent(b);
+  if (f) cursor = { list: f.list, idx: f.idx + 1 };
+  PG.sfx.step(); renderCode();
+}
+function moveSel(dir) {
+  if (!selB) return; const f = findParent(selB); if (!f) return; const sp = curSprite();
+  edit(() => {
+    const { list, idx } = f; const isRoot = sp.scripts.includes(list);
+    if (isHat(selB)) { const si = sp.scripts.indexOf(list); const sj = si + dir; if (sj >= 0 && sj < sp.scripts.length) { sp.scripts.splice(si, 1); sp.scripts.splice(sj, 0, list); } return; }
+    list.splice(idx, 1);
+    if (dir < 0) {
+      const prev = list[idx - 1];
+      if (idx > 0 && !(isRoot && idx - 1 === 0 && isHat(prev))) { if (prev.body) { const tgt = prev.else && prev.else !== undefined ? prev.else : prev.body; tgt.push(selB); } else list.splice(idx - 1, 0, selB); }
+      else if (f.parent) { const g = findParent(f.parent); if (g) { if (list === f.parent.else) f.parent.body.push(selB); else g.list.splice(g.idx, 0, selB); } else list.splice(idx, 0, selB); }
+      else list.splice(idx, 0, selB);
+    } else {
+      const next = list[idx];
+      if (next) { if (next.body) next.body.unshift(selB); else list.splice(idx + 1, 0, selB); }
+      else if (f.parent) { const g = findParent(f.parent); if (g) { if (list === f.parent.body && f.parent.else) f.parent.else.unshift(selB); else g.list.splice(g.idx + 1, 0, selB); } else list.splice(idx, 0, selB); }
+      else list.splice(idx, 0, selB);
+    }
+    const nf = findParent(selB); if (nf) cursor = { list: nf.list, idx: nf.idx + 1 };
+  });
+  PG.sfx.step(); flashNew(selB);
+}
+function delSel() {
+  if (!selB) return; const f = findParent(selB); if (!f) return; const sp = curSprite();
+  edit(() => {
+    if (isHat(selB) && sp.scripts.includes(f.list)) { sp.scripts.splice(sp.scripts.indexOf(f.list), 1); cursor = null; }
+    else { f.list.splice(f.idx, 1); cursor = { list: f.list, idx: f.idx }; }
+    selB = null;
+  });
+  PG.sfx.oops();
+}
+function dupSel() {
+  if (!selB) return; const f = findParent(selB); if (!f) return; const sp = curSprite();
+  edit(() => {
+    if (isHat(selB) && sp.scripts.includes(f.list)) { const c = clone(f.list); sp.scripts.splice(sp.scripts.indexOf(f.list) + 1, 0, c); selB = c[0]; cursor = { list: c, idx: c.length }; }
+    else { const c = clone(selB); f.list.splice(f.idx + 1, 0, c); selB = c; cursor = { list: f.list, idx: f.idx + 2 }; }
+  });
+  PG.sfx.pop(); flashNew(selB);
+}
+
+/* ============================== rendering: blocks ============================== */
+function argLabel(type, v, sp) {
+  if (v && typeof v === 'object') return null;
+  switch (type) {
+    case 'key': return (KEYS.find(k => k[0] === v) || [, v])[1];
+    case 'to': return (PLACES.find(k => k[0] === v) || [, v])[1];
+    case 'who': return v === 'edge' ? 'edge' : v;
+    case 'dir': { const d = DIRS.find(k => k[0] === Number(v)); return d ? `${v} ${d[1]}` : fmt(v); }
+    case 'rot': return (ROTS.find(k => k[0] === v) || [, v])[1];
+    case 'stopw': return (STOPW.find(k => k[0] === v) || [, v])[1];
+    case 'effect': return v;
+    case 'note': return (NOTES.find(k => k[0] === v) || [, v])[1];
+    case 'costume': return labelOf(v);
+    case 'backdrop': return labelOf(v);
+    case 'num': return fmt(v);
+    default: return String(v ?? '');
+  }
+}
+function renderTemplate(host, op, owner, sp, live) {   // fills host with words + arg chips
+  const d = D[op]; const parts = d.t.split(/(\{\w+\})/);
+  for (const p of parts) {
+    if (!p) continue;
+    const m = p.match(/^\{(\w+)\}$/);
+    if (!m) { host.appendChild(document.createTextNode(p.trim() ? p.trim() : '')); continue; }
+    if (m[1] === 'FLAG') { host.insertAdjacentHTML('beforeend', FLAG_INLINE); continue; }
+    host.appendChild(argEl(m[1], d.a[m[1]], owner, sp, live, op));
+  }
+}
+function argEl(key, type, owner, sp, live, op) {
+  const v = owner[key];
+  let e;
+  if (v && typeof v === 'object' && v.r && D[v.r]) {
+    const rd = D[v.r]; e = el('span', 'rp' + (rd.k === 'bool' ? ' b' : '')); e.style.background = CATS[rd.c].c;
+    if (v.r === 'var') e.textContent = v.v; else renderTemplate(e, v.r, v, sp, live);
+  } else if (type === 'bool') { e = el('span', 'chip hole'); }
+  else {
+    const choice = !['num', 'text', 'dir'].includes(type);
+    e = el('span', 'chip' + (choice ? ' ch' : ''));
+    if (type === 'costume' && v) e.innerHTML = `${miniPic(v)}${esc(labelOf(v))}`;
+    else if (type === 'color') e.innerHTML = `<i style="width:14px;height:14px;border-radius:50%;background:${PENCOL[v] || '#999'};border:2px solid #fff;flex:none"></i>${esc(v)}`;
+    else e.textContent = argLabel(type, v, sp);
+  }
+  if (live) e.onclick = ev => { ev.stopPropagation(); openPicker(owner, key, type, sp, op); };
+  return e;
+}
+function miniPic(name) { return `<img src="${PG.art(name)}" alt="" onerror="this.remove()">`; }
+function blockEl(b, sp, live) {
+  const d = D[b.op] || { c: 'control', k: 'cmd', t: b.op }; const col = CATS[d.c].c;
+  const head = el('div', 'blk' + (d.k === 'hat' ? ' hat' : '')); head.style.background = col;
+  renderTemplate(head, b.op, b.args || {}, sp, live);
+  let root = head;
+  if (d.k === 'c' || d.k === 'c2') {
+    root = el('div', 'cb' + (d.cap ? ' cap' : '')); root.style.background = col; root.appendChild(head);
+    const bd = el('div', 'bd'); root.appendChild(bd); if (live) renderList(bd, b.body || (b.body = []), sp); else bd.style.minHeight = '18px';
+    if (d.k === 'c2') { root.appendChild(el('div', 'mid', 'else')); const b2 = el('div', 'bd'); root.appendChild(b2); if (live) renderList(b2, b.else || (b.else = []), sp); else b2.style.minHeight = '18px'; }
+    root.appendChild(el('div', 'ft'));
+  }
+  if (live) {
+    blockEls.set(b, root); if (b === selB) root.classList.add('sel');
+    head.onclick = ev => { ev.stopPropagation(); selectBlock(b); };
+    if (root !== head) root.onclick = ev => { if (ev.target === root || ev.target.classList.contains('ft') || ev.target.classList.contains('mid')) { ev.stopPropagation(); selectBlock(b); } };
+  }
+  return root;
+}
+function insEl() { const e = el('div', 'ins'); e.title = 'New blocks go here'; return e; }
+function renderList(host, list, sp) {
+  const c = cursor;
+  list.forEach((b, i) => { if (c && c.list === list && c.idx === i) host.appendChild(insEl()); host.appendChild(blockEl(b, sp, true)); });
+  if (c && c.list === list && c.idx >= list.length) host.appendChild(insEl());
+  else if (!list.length) { const s = el('div', 'slot', 'tap, then add blocks'); s.onclick = ev => { ev.stopPropagation(); cursor = { list, idx: 0 }; selB = null; PG.sfx.step(); renderCode(); }; host.appendChild(s); }
+}
+function renderCode() {
+  const sp = curSprite(); const box = $('#scripts'); const keepScroll = box.scrollTop;
+  blockEls.clear(); stackEls.clear(); box.innerHTML = '';
+  $('#codehd .who').innerHTML = sp ? `<span class="thumb">${thumbHTML(sp)}</span><span>${esc(sp.name)}</span>` : 'No sprite';
+  if (!sp) return;
+  validCursor();
+  if (!sp.scripts.length) { box.innerHTML = `<div class="empty">Tap a yellow <b style="color:#E0A000">when</b> block, then add more blocks under it.</div>`; }
+  sp.scripts.forEach(s => {
+    const st = el('div', 'stack' + (isHat(s[0]) ? '' : ' loose'));
+    if (!isHat(s[0])) st.appendChild(el('div', 'loosetag', 'add a yellow when block on top to start'));
+    renderList(st, s, sp); stackEls.set(s, st); box.appendChild(st);
+  });
+  box.scrollTop = keepScroll;
+  const has = !!(selB && findParent(selB));
+  ['#bUp', '#bDown', '#bCopy', '#bDel'].forEach(id => $(id).disabled = !has);
+  $('#bUndo').disabled = !undoStack.length;
+  lastGlow = new Set(); lastNow = new Set();
+}
+/* palette */
+function renderPalette() {
+  const pal = $('#pal'), cats = $('#cats'); pal.innerHTML = ''; cats.innerHTML = '';
+  const sp = curSprite();
+  for (const c in CATS) {
+    const ops = Object.keys(D).filter(op => D[op].c === c && allowedOp(op) && op !== 'var');
+    const vars = c === 'variables' && (allowedOp('var') || ops.length) ? varNames() : [];
+    if (!ops.length && !vars.length) continue;
+    const head = el('div', 'ph2', `<i style="background:${CATS[c].c}"></i>${CATS[c].n}`); head.id = 'pc-' + c; pal.appendChild(head);
+    if (c === 'variables') { const add = el('button', 'pg-ghost', '+ Variable'); add.style.fontSize = '14px'; add.onclick = newVariable; head.appendChild(add); }
+    const btn = el('button', 'cat', `<i style="background:${CATS[c].c}"></i>${CATS[c].n}`); btn.onclick = () => { head.scrollIntoView({ behavior: 'smooth', block: 'start' }); cats.querySelectorAll('.cat').forEach(x => x.classList.remove('on')); btn.classList.add('on'); }; cats.appendChild(btn);
+    if (c === 'variables') vars.forEach(v => { const r = el('span', 'rp', esc(v)); r.style.background = CATS.variables.c; r.onclick = () => { addRepNode({ r: 'var', v }); }; pal.appendChild(r); });
+    for (const op of ops) {
+      if (!sp) continue;
+      let e;
+      if (REPS.has(op)) { const node = newRep(op, sp); e = el('span', 'rp' + (D[op].k === 'bool' ? ' b' : '')); e.style.background = CATS[c].c; renderTemplate(e, op, node, sp, false); }
+      else e = blockEl(newBlock(op, sp), sp, false);
+      e.onclick = () => { e.classList.remove('pop'); void e.offsetWidth; e.classList.add('pop'); addBlock(op); };
+      e.dataset.op = op; pal.appendChild(e);
+    }
+  }
+}
+function addRepNode(node) {
+  if (selB && selB.args) { const d = D[selB.op]; const key = Object.keys(d.a || {}).find(k => d.a[k] === 'num' || d.a[k] === 'text');
+    if (key) { edit(() => { selB.args[key] = node; }); PG.sfx.pop(); flashNew(selB); return; } }
+  if (allowedOp('say') || !allowed) { addBlock('say'); if (selB) edit(() => { selB.args.t = node; }); }
+}
+function newVariable() {
+  const opts = VARNAMES.filter(v => !(v in P.vars)).map(v => ({ v, label: v }));
+  if (!opts.length) { PG.toast('All variables made!'); return; }
+  pickChoice('Make a variable', CATS.variables.c, opts, null, v => edit(() => { P.vars[v] = 0; P.monitors = P.monitors || []; if (!P.monitors.includes(v)) P.monitors.push(v); RT.vars[v] = 0; RT.mons.add(v); renderPalette(); renderMonitors(); }));
+}
+
+/* ============================== pickers ============================== */
+function closePk() { $('#pk').classList.remove('show'); $('#pk').innerHTML = ''; }
+function sheet(title, col) {
+  const pk = $('#pk'); pk.innerHTML = ''; const card = el('div', 'card');
+  const hd = el('div', 'hd', `${col ? `<i style="background:${col}"></i>` : ''}<span>${esc(title)}</span><button class="x" aria-label="Close">✕</button>`);
+  hd.querySelector('.x').onclick = closePk; card.appendChild(hd); pk.appendChild(card); pk.classList.add('show');
+  pk.onclick = e => { if (e.target === pk) closePk(); }; return card;
+}
+function pickChoice(title, col, opts, curV, done, small) {
+  const card = sheet(title, col); const g = el('div', 'grid' + (small ? ' sm' : ''));
+  opts.forEach(o => { const b = el('button', 'opt' + (o.v === curV ? ' on' : ''), (o.html || '') + `<span>${esc(o.label)}</span>`); b.onclick = () => { closePk(); done(o.v); }; g.appendChild(b); });
+  card.appendChild(g); return card;
+}
+function repChips(card, type, sp, setv) {   // reporters you can drop into a number/text slot
+  const items = [];
+  if (allowedOp('var') || allowedOp('setvar') || allowedOp('changevar')) varNames().forEach(v => items.push([{ r: 'var', v }, v, CATS.variables.c]));
+  if (allowedOp('rand')) items.push([newRep('rand', sp), 'pick random 1 to 10', CATS.operators.c]);
+  if (allowedOp('add')) items.push([newRep('add', sp), '1 + 1', CATS.operators.c]);
+  if (allowedOp('sub')) items.push([newRep('sub', sp), '5 − 1', CATS.operators.c]);
+  ['xpos', 'ypos', 'timer'].forEach(r => { if (allowedOp(r)) items.push([{ r }, D[r].t, CATS.sensing.c]); });
+  if (!items.length) return;
+  card.appendChild(el('div', 'lbl', 'Or use a value block'));
+  const row = el('div', 'rowc'); items.forEach(([node, label, c]) => { const b = el('button', 'rch', esc(label)); b.style.background = c; b.onclick = () => { closePk(); setv(clone(node)); }; row.appendChild(b); }); card.appendChild(row);
+}
+function openPicker(owner, key, type, sp, op) {
+  const v = owner[key]; const set = nv => { edit(() => { owner[key] = nv; }); PG.sfx.pop(); };
+  const opName = op || owner.r || '';
+  const col = (CATS[(D[opName] || {}).c] || CATS.control).c;
+  switch (type) {
+    case 'num': case 'dir': return pickNum(owner, key, type, sp, set, col, opName);
+    case 'text': return pickText(owner, key, sp, set, col);
+    case 'bool': return pickBool(v, sp, set, col);
+    case 'key': return pickChoice('Pick a key', col, KEYS.map(([k, l]) => ({ v: k, label: l })), v, set, true);
+    case 'who': return pickChoice('Touching what?', col, [...others(sp).map(n => ({ v: n, label: n, html: spriteThumb(n) })), { v: 'edge', label: 'edge' }], v, set);
+    case 'to': return pickChoice('Where to?', col, [...PLACES.map(([k, l]) => ({ v: k, label: l })), ...others(sp).map(n => ({ v: n, label: n, html: spriteThumb(n) }))], v, set);
+    case 'rot': return pickChoice('Rotation style', col, ROTS.map(([k, l]) => ({ v: k, label: l })), v, set);
+    case 'stopw': return pickChoice('Stop what?', col, STOPW.map(([k, l]) => ({ v: k, label: l })), v, set);
+    case 'effect': return pickChoice('Pick an effect', col, EFFECTS.map(([k, l]) => ({ v: k, label: l })), v, set);
+    case 'note': return pickChoice('Pick a note', col, NOTES.map(([k, l, f]) => ({ v: k, label: l })), v, nv => { set(nv); playNote(nv, .4); }, true);
+    case 'color': return pickChoice('Pick a color', col, Object.keys(PENCOL).map(c => ({ v: c, label: c, html: `<span style="width:34px;height:34px;border-radius:50%;background:${PENCOL[c]};border:3px solid #DDE3F0"></span>` })), v, set, true);
+    case 'msg': return pickChoice('Pick a message', col, MSGS.map(m => ({ v: m, label: m })), v, set, true);
+    case 'var': return pickChoice('Pick a variable', col, varNames().map(m => ({ v: m, label: m })), v, set, true);
+    case 'snd': { const card = pickChoice('Pick a sound', col, SOUNDS.map(m => ({ v: m, label: m })), v, set, true);
+      card.querySelectorAll('.opt').forEach((b, i) => { const s = el('span', '', '▶'); s.style.cssText = 'font-size:14px;color:#CF63CF'; b.prepend(s); b.onpointerdown = () => sfx(SOUNDS[i]); }); return; }
+    case 'costume': return pickChoice('Pick a costume', col, sp.props.map(p => ({ v: p, label: labelOf(p), html: `<img src="${PG.art(p)}" alt="" onerror="this.outerHTML=phc('${p}')">` })), v, set);
+    case 'backdrop': return pickChoice('Pick a backdrop', col, P.backdrops.map(b => ({ v: b, label: labelOf(b), html: bdThumb(b) })), v, set);
+  }
+}
+function phc(p) { return `<span class="phc pg-ph" style="width:64px;height:64px">${esc(labelOf(p))}</span>`; }
+function spriteThumb(n) { const s = spriteByName(n); return s ? `<img src="${PG.art(s.props[s.costume || 0])}" alt="" onerror="this.outerHTML=phc('${s.props[s.costume || 0]}')">` : ''; }
+function bdThumb(b) { const c = document.createElement('canvas'); c.width = 192; c.height = 144; drawBackdrop(c.getContext('2d'), b, 192, 144); return `<img class="bdp" src="${c.toDataURL()}" alt="">`; }
+function pickNum(owner, key, type, sp, set, col, opName) {
+  const v0 = owner[key]; let s = (typeof v0 === 'number') ? fmt(v0) : '0'; let fresh = true;
+  const card = sheet(type === 'dir' ? 'Pick a direction' : 'Pick a number', col);
+  if (type === 'dir') { const row = el('div', 'rowc'); DIRS.forEach(([d, l]) => { const b = el('button', 'opt', `${ICON.arrow(d)}<span>${l}</span>`); b.style.minWidth = '96px'; b.querySelector('svg').style.cssText = `width:40px;height:40px;transform:rotate(${d}deg)`; b.onclick = () => { closePk(); set(d); }; row.appendChild(b); }); card.appendChild(row); }
+  const row = el('div', 'numrow'); const val = el('div', 'val', s);
+  const bump = d => { s = fmt((Number(s) || 0) + d); fresh = false; val.textContent = s; };
+  const mk = (t, f) => { const b = el('button', 'nb', t); b.onclick = f; return b; };
+  row.append(mk('−10', () => bump(-10)), mk('−1', () => bump(-1)), val, mk('+1', () => bump(1)), mk('+10', () => bump(10)));
+  card.appendChild(row);
+  const pre = (D[opName] && D[opName].p && D[opName].p[key]) || [];
+  if (pre.length) { const pr = el('div', 'rowc'); pre.forEach(p => pr.appendChild(mk(fmt(p), () => { closePk(); set(p); }))); card.appendChild(pr); }
+  const pad = el('div', 'pad3');
+  ['7', '8', '9', '⌫', '4', '5', '6', '−', '1', '2', '3', '.', '0'].forEach(k => pad.appendChild(mk(k, () => {
+    if (k === '⌫') s = s.length > 1 ? s.slice(0, -1) : '0';
+    else if (k === '−') s = s.startsWith('-') ? s.slice(1) : '-' + s;
+    else if (k === '.') { if (fresh) s = '0'; if (!s.includes('.')) s += '.'; }
+    else s = (fresh || s === '0') ? k : (s === '-0' ? '-' + k : s + k);
+    if (s.replace('-', '').replace('.', '').length > 6) s = s.slice(0, -1);
+    fresh = false; val.textContent = s;
+  })));
+  const ok = el('button', 'okb', 'OK'); ok.style.gridColumn = 'span 3'; ok.onclick = () => { closePk(); const n = Number(s); set(isFinite(n) ? n : 0); }; pad.appendChild(ok);
+  card.appendChild(pad);
+  repChips(card, 'num', sp, set);
+}
+function pickText(owner, key, sp, set, col) {
+  const card = sheet('What should it say?', col); const v = owner[key];
+  const list = [...new Set([...(CFG.phrases || []), ...PHRASES])];
+  const g = el('div', 'grid sm'); list.forEach(t => { const b = el('button', 'opt' + (t === v ? ' on' : ''), esc(t)); b.onclick = () => { closePk(); set(t); }; g.appendChild(b); }); card.appendChild(g);
+  const row = el('div', 'rowc'); const own = el('button', 'pg-ghost', '✏ Type my own'); row.appendChild(own); card.appendChild(row);
+  own.onclick = () => { row.innerHTML = ''; const inp = el('input', 'txtin'); inp.maxLength = 40; inp.value = typeof v === 'string' ? v : ''; inp.setAttribute('enterkeyhint', 'done'); const ok = el('button', 'okb', 'OK');
+    const go = () => { const t = inp.value.replace(/[<>]/g, '').trim(); closePk(); if (t) set(t); }; ok.onclick = go; inp.onkeydown = e => { if (e.key === 'Enter') go(); }; row.append(inp, ok); inp.focus(); };
+  repChips(card, 'text', sp, set);
+}
+function pickBool(v, sp, set, col) {
+  const card = sheet('Pick a check', col);
+  let ops = ['touching', 'keyp', 'gt', 'lt', 'eq', 'and', 'or', 'not'].filter(allowedOp);
+  if (!ops.length) ops = ['touching', 'keyp'];
+  const row = el('div', 'rowc');
+  ops.forEach(op => { const node = newRep(op, sp); const e = el('span', 'rp b'); e.style.background = CATS[D[op].c].c; e.style.fontSize = '18px'; e.style.padding = '8px 22px'; e.style.cursor = 'pointer';
+    renderTemplate(e, op, node, sp, false); e.onclick = () => { closePk(); set(node); }; row.appendChild(e); });
+  card.appendChild(row); card.appendChild(el('div', 'lbl', 'Then tap the white parts to change them.'));
+}
+
+/* ============================== sprites panel ============================== */
+function thumbHTML(sp) { const p = sp.props[sp.costume || 0]; return `<img src="${PG.art(p)}" alt="" style="width:100%;height:100%;object-fit:contain" onerror="this.outerHTML=thumbPh('${p}')">`; }
+function thumbPh(p) { const c = document.createElement('canvas'); c.width = c.height = 104; const x = c.getContext('2d'); x.translate(52, 52); drawProp(x, p, 104); return `<img src="${c.toDataURL()}" style="width:100%;height:100%" alt="">`; }
+function renderSprites() {
+  const box = $('#sprites'); box.innerHTML = '';
+  const bt = el('div', 'tile bdt', `<div class="tp">${bdThumb(P.backdrop)}</div><span>Backdrop</span>`); bt.onclick = backdropSheet; box.appendChild(bt);
+  P.sprites.forEach((sp, i) => {
+    const t = el('div', 'tile' + (i === cur ? ' on' : '') + (sp.shown === false ? ' hid' : ''), `<div class="tp">${thumbHTML(sp)}</div><span>${esc(sp.name)}</span><span class="gear">${ICON.gear}</span>`);
+    t.onclick = () => { if (i === cur) spriteSheet(); else selectSprite(i); }; box.appendChild(t);
+  });
+  const add = el('div', 'tile add', '<b>+</b><span>Sprite</span>'); add.onclick = addSpriteSheet; box.appendChild(add);
+}
+let thumbT = 0; function refreshThumbs() { clearTimeout(thumbT); thumbT = setTimeout(() => { if (P) { renderSprites(); } }, 150); }
+function selectSprite(i) { cur = i; selB = null; cursor = null; PG.sfx.step(); renderSprites(); renderCode(); renderPalette(); }
+function spriteSheet() {
+  const sp = curSprite(); const card = sheet(`${sp.name}`, CATS.looks.c); const R = rtOf(sp);
+  const apply = (fn) => edit(() => { fn(sp); if (R) { R.size = sp.size; R.shown = sp.shown !== false; R.costume = sp.costume || 0; R.rot = sp.rotate || 'all'; } }, { sprites: true });
+  card.appendChild(el('div', 'lbl', 'Costumes (tap to wear, + to add)'));
+  const g = el('div', 'grid sm');
+  sp.props.forEach((p, i) => { const b = el('button', 'opt' + (i === (sp.costume || 0) ? ' on' : ''), `<img src="${PG.art(p)}" alt="" onerror="this.outerHTML=phc('${p}')"><span>${esc(labelOf(p))}</span>`); b.onclick = () => { apply(s => s.costume = i); spriteSheet(); }; g.appendChild(b); });
+  card.appendChild(g);
+  const lib = libProps().filter(p => !sp.props.includes(p));
+  if (lib.length) { const g2 = el('div', 'grid sm'); lib.forEach(p => { const b = el('button', 'opt', `<img src="${PG.art(p)}" alt="" style="width:44px;height:44px" onerror="this.outerHTML=phc('${p}')"><span>+ ${esc(labelOf(p))}</span>`); b.style.opacity = .8; b.onclick = () => { apply(s => s.props.push(p)); spriteSheet(); }; g2.appendChild(b); }); card.appendChild(g2); }
+  const row = el('div', 'rowc'); const mk = (t, f) => { const b = el('button', 'nb', t); b.onclick = f; return b; };
+  const sz = el('div', 'val', `${sp.size || 100}%`); sz.style.cssText = 'font-size:24px;min-width:80px;text-align:center';
+  row.append(el('span', 'lbl', 'Size'), mk('−', () => { apply(s => s.size = clamp((s.size || 100) - 10, 20, 300)); sz.textContent = sp.size + '%'; }), sz, mk('+', () => { apply(s => s.size = clamp((s.size || 100) + 10, 20, 300)); sz.textContent = sp.size + '%'; }));
+  card.appendChild(row);
+  const row2 = el('div', 'rowc');
+  const vis = el('button', 'pg-ghost', sp.shown === false ? 'Show' : 'Hide'); vis.onclick = () => { apply(s => s.shown = s.shown === false); vis.textContent = sp.shown === false ? 'Show' : 'Hide'; };
+  ROTS.forEach(([k, l]) => { const b = el('button', 'pg-ghost', l); if ((sp.rotate || 'all') === k) b.style.borderColor = 'var(--purple)'; b.onclick = () => { apply(s => s.rotate = k); spriteSheet(); }; row2.appendChild(b); });
+  row2.prepend(vis); card.appendChild(row2);
+  const row3 = el('div', 'rowc');
+  const dup = el('button', 'pg-ghost', 'Copy sprite'); dup.onclick = () => { closePk(); edit(() => { const c = clone(sp); c.name = uniqueName(sp.name); c.x = clamp(sp.x + 40, -200, 200); P.sprites.push(c); cur = P.sprites.length - 1; }, { sprites: true }); renderPalette(); };
+  const del = el('button', 'pg-ghost', 'Delete sprite'); del.style.color = 'var(--coral)'; del.onclick = () => { if (P.sprites.length < 2) { PG.toast('Keep at least one sprite'); return; } closePk(); edit(() => { P.sprites.splice(cur, 1); cur = Math.max(0, cur - 1); selB = null; cursor = null; }, { sprites: true }); renderPalette(); PG.sfx.oops(); };
+  row3.append(dup, del); card.appendChild(row3);
+}
+function libProps() { const s = new Set(); ((CFG.library || {}).props || []).forEach(p => s.add(p)); P.sprites.forEach(sp => sp.props.forEach(p => s.add(p))); STARTER.sprites.forEach(sp => sp.props.forEach(p => s.add(p))); return [...s]; }
+function addSpriteSheet() {
+  const card = pickChoice('Add a sprite', CATS.looks.c, libProps().map(p => ({ v: p, label: titleOf(p), html: `<img src="${PG.art(p)}" alt="" onerror="this.outerHTML=phc('${p}')">` })), null, p => {
+    edit(() => { P.sprites.push({ name: uniqueName(titleOf(p)), props: (PAIRS[p] || [p]).slice(), costume: 0, x: Math.round(Math.random() * 300 - 150), y: Math.round(Math.random() * 160 - 80), size: 100, dir: 90, shown: true, rotate: 'all', scripts: [] }); cur = P.sprites.length - 1; selB = null; cursor = null; }, { sprites: true });
+    renderPalette(); PG.sfx.pop();
+  });
+}
+function backdropSheet() {
+  const lib = [...new Set([...P.backdrops, ...((CFG.library || {}).backdrops || []), ...STARTER.backdrops])];
+  pickChoice('Pick the backdrop', CATS.looks.c, lib.map(b => ({ v: b, label: labelOf(b), html: bdThumb(b) })), P.backdrop, b => {
+    edit(() => { if (!P.backdrops.includes(b)) P.backdrops.push(b); P.backdrop = b; RT.bd = b; }, { sprites: true }); PG.sfx.pop();
+  });
+}
+
+/* ============================== runtime ============================== */
+function rtOf(sp) { return RT.sprites.find(r => r.src === sp); }
+function homeState(r) { const s = r.src; Object.assign(r, { name: s.name, x: s.x || 0, y: s.y || 0, size: s.size || 100, dir: s.dir ?? 90, costume: s.costume || 0, shown: s.shown !== false, rot: s.rotate || 'all', eff: { color: 0, ghost: 0 }, bubble: null, pen: false, pc: 'blue', pw: 4 }); r.px = r.x; r.py = r.y; }
+function syncRT(reset) {
+  const old = RT.sprites; RT.sprites = P.sprites.map((s, i) => { let r = old.find(o => o.src === s); if (!r || reset) { r = { src: s, layer: i, touchPrev: {} }; homeState(r); } r.name = s.name; return r; });
+  RT.threads = RT.threads.filter(T => RT.sprites.includes(T.s));
+  if (reset || !RT.bd) { RT.bd = P.backdrop; RT.vars = clone(P.vars || {}); RT.mons = new Set(P.monitors || []); }
+  for (const v in P.vars) if (!(v in RT.vars)) RT.vars[v] = P.vars[v];
+  renderMonitors(); dirty = true;
+}
+const STOP = Symbol('stop');
+function running() { return RT.threads.some(T => !T.dead); }
+function startThread(r, script, hat) {
+  const old = RT.threads.find(T => T.script === script && T.s === r && !T.dead);
+  if (old) { if (hat === 'key' || hat === 'touch') return; old.dead = true; }
+  const T = { s: r, script, hat, dead: false, cur: null, ctx: [] }; T.gen = runList(T, script.slice ? script : [], 1);
+  if (script.length > 1) ST.events[hat] = (ST.events[hat] || 0) + 1;
+  RT.threads.push(T); return T;
+}
+function startHats(op, test, only) {
+  for (const r of RT.sprites) { if (only && r !== only) continue; for (const s of r.src.scripts || []) if (s[0] && s[0].op === op && (!test || test(s[0], r))) startThread(r, s, op); }
+}
+function greenFlag() {
+  audio(); stopAll(true); ST.flags++; RT.run++; clearPen(); RT.sprites.forEach(homeState); RT.sprites.forEach((r, i) => r.layer = i);
+  RT.bd = P.backdrop; RT.vars = clone(P.vars || {}); RT.mons = new Set(P.monitors || []); RT.t0 = now(); renderMonitors();
+  startHats('flag'); $('#go').classList.remove('pulse'); checkAll(); dirty = true;
+}
+function stopAll(quiet) { if (!quiet && RT.threads.length) ST.stops++; RT.threads.forEach(T => T.dead = true); RT.threads = []; stopSounds(); RT.sprites.forEach(r => endBubble(r)); dirty = true; if (!quiet) { PG.sfx.step(); checkAll(); } }
+function endBubble(S) { if (S.bubble && S.bubble.rec && S.bubble.rec.end == null) S.bubble.rec.end = now(); S.bubble = null; }
+function* runList(T, list, from = 0) {
+  for (let i = from; i < list.length; i++) { const b = list[i]; if (T.dead) return; T.cur = b; count(T, b); yield* exec(T, b); if (T.dead) return; }
+}
+function count(T, b) {
+  const k = b.op, n = T.s.name; (ST.ran[k] = ST.ran[k] || {})[n] = (ST.ran[k][n] || 0) + 1;
+  for (const o of new Set(T.ctx)) { const kk = k + '<' + o; (ST.inside[kk] = ST.inside[kk] || {})[n] = (ST.inside[kk][n] || 0) + 1; }
+}
+function val(T, v) { return (v && typeof v === 'object') ? rep(T, v) : v; }
+function num(T, v) { const x = Number(val(T, v)); return isFinite(x) ? x : 0; }
+function truth(T, v) { if (!v) return false; const x = val(T, v); return x === true || (x !== false && x !== 0 && x !== '' && x !== '0' && x !== 'false'); }
+function rep(T, n) {
+  const S = T.s;
+  switch (n.r) {
+    case 'var': return RT.vars[n.v] ?? 0;
+    case 'rand': { let a = num(T, n.a), b = num(T, n.b); if (a > b) [a, b] = [b, a]; return Number.isInteger(a) && Number.isInteger(b) ? a + Math.floor(Math.random() * (b - a + 1)) : Math.round((a + Math.random() * (b - a)) * 100) / 100; }
+    case 'add': return num(T, n.a) + num(T, n.b);
+    case 'sub': return num(T, n.a) - num(T, n.b);
+    case 'xpos': return Math.round(S.x); case 'ypos': return Math.round(S.y);
+    case 'timer': return Math.floor((now() - RT.t0) / 100) / 10;
+    case 'touching': return n.who === 'edge' ? touchEdge(S) : touchSprite(S, RT.sprites.find(r => r.name === n.who));
+    case 'keyp': return n.k === 'any' ? RT.keys.size > 0 : RT.keys.has(n.k);
+    case 'gt': return num(T, n.a) > num(T, n.b);
+    case 'lt': return num(T, n.a) < num(T, n.b);
+    case 'eq': { const a = val(T, n.a), b = val(T, n.b); const na = Number(a), nb = Number(b); if (a !== '' && b !== '' && isFinite(na) && isFinite(nb)) return na === nb; return String(a).toLowerCase() === String(b).toLowerCase(); }
+    case 'and': return truth(T, n.a) && truth(T, n.b);
+    case 'or': return truth(T, n.a) || truth(T, n.b);
+    case 'not': return !truth(T, n.a);
+  }
+  return 0;
+}
+function* waitSecs(T, s) { const end = now() + Math.max(0, s) * 1000; do { yield; } while (now() < end && !T.dead); }
+function targetXY(S, to) {
+  switch (to) {
+    case 'random': return [Math.round(Math.random() * 400 - 200), Math.round(Math.random() * 280 - 140)];
+    case 'center': return [0, 0]; case 'top': return [S.x, 130]; case 'bottom': return [S.x, -130];
+    case 'left': return [-190, S.y]; case 'right': return [190, S.y];
+    case 'start': return [S.src.x || 0, S.src.y || 0];
+  }
+  const o = RT.sprites.find(r => r.name === to); return o ? [o.x, o.y] : [S.x, S.y];
+}
+function normDir(d) { d = ((d + 180) % 360 + 360) % 360 - 180; return d === -180 ? 180 : d; }
+function say(T, t, think, secs) { const S = T.s; const text = fmt(val(T, t));
+  if (secs == null && S.bubble && S.bubble.t === text && !!S.bubble.think === !!think && S.bubble.rec.end == null) return S.bubble.id;
+  const id = ++RT.bid; endBubble(S);
+  const rec = { who: S.name, t: text, at: now(), end: secs == null ? null : now() + secs * 1000, run: RT.run }; S.bubble = { t: text, think, id, rec };
+  ST.speech.push(rec); if (ST.speech.length > 300) ST.speech.shift(); dirty = true; return id; }
+function* exec(T, b) {
+  const S = T.s, a = b.args || {};
+  switch (b.op) {
+    case 'flag': case 'tap': case 'key': case 'touch': case 'receive': return;
+    case 'move': { const n = num(T, a.n), r = (90 - S.dir) * Math.PI / 180; S.x += n * Math.cos(r); S.y += n * Math.sin(r); fence(S); break; }
+    case 'turnr': S.dir = normDir(S.dir + num(T, a.n)); break;
+    case 'turnl': S.dir = normDir(S.dir - num(T, a.n)); break;
+    case 'goto': [S.x, S.y] = targetXY(S, a.to); fence(S); break;
+    case 'gotoxy': S.x = num(T, a.x); S.y = num(T, a.y); fence(S); break;
+    case 'glide': case 'glidexy': {
+      const [tx, ty] = b.op === 'glide' ? targetXY(S, a.to) : [num(T, a.x), num(T, a.y)]; const x0 = S.x, y0 = S.y, d = Math.max(0, num(T, a.s)) * 1000, t0 = now();
+      for (;;) { const k = d ? Math.min(1, (now() - t0) / d) : 1; S.x = x0 + (tx - x0) * k; S.y = y0 + (ty - y0) * k; penTo(S); dirty = true; if (k >= 1 || T.dead) break; yield; }
+      fence(S); break; }
+    case 'point': S.dir = normDir(num(T, a.d)); break;
+    case 'pointto': { const [tx, ty] = targetXY(S, a.to); if (tx !== S.x || ty !== S.y) S.dir = normDir(Math.round(Math.atan2(tx - S.x, ty - S.y) * 180 / Math.PI)); break; }
+    case 'changex': S.x += num(T, a.n); fence(S); break;
+    case 'changey': S.y += num(T, a.n); fence(S); break;
+    case 'setx': S.x = num(T, a.n); fence(S); break;
+    case 'sety': S.y = num(T, a.n); fence(S); break;
+    case 'bounce': bounce(S); break;
+    case 'rotstyle': S.rot = a.r; break;
+    case 'say': case 'think': say(T, a.t, b.op === 'think'); break;
+    case 'sayfor': case 'thinkfor': { const secs = Math.max(0, num(T, a.s)); const id = say(T, a.t, b.op === 'thinkfor', secs); yield* waitSecs(T, secs); if (S.bubble && S.bubble.id === id) endBubble(S); break; }
+    case 'costume': { const i = S.src.props.indexOf(a.prop); if (i >= 0) { S.costume = i; ST.cos++; } break; }
+    case 'nextcos': S.costume = (S.costume + 1) % S.src.props.length; ST.cos++; break;
+    case 'bd': if (P.backdrops.includes(a.backdrop) || a.backdrop) { RT.bd = a.backdrop; ST.bds.add(a.backdrop); } break;
+    case 'nextbd': { const i = P.backdrops.indexOf(RT.bd); RT.bd = P.backdrops[(i + 1) % P.backdrops.length]; ST.bds.add(RT.bd); break; }
+    case 'sizeby': S.size = clamp(S.size + num(T, a.n), 5, 400); break;
+    case 'size': S.size = clamp(num(T, a.n), 5, 400); break;
+    case 'effect': { const n = num(T, a.n); if (a.e === 'ghost') S.eff.ghost = clamp(S.eff.ghost + n, 0, 100); else S.eff.color = (S.eff.color + n) % 200; break; }
+    case 'cleareff': S.eff = { color: 0, ghost: 0 }; break;
+    case 'show': S.shown = true; break;
+    case 'hide': S.shown = false; break;
+    case 'front': S.layer = Math.max(...RT.sprites.map(r => r.layer)) + 1; break;
+    case 'play': { const d = sfx(a.snd); yield* waitSecs(T, d); break; }
+    case 'start': sfx(a.snd); break;
+    case 'note': { const d = num(T, a.s); playNote(a.nt, d); yield* waitSecs(T, d); break; }
+    case 'stopsnd': stopSounds(); break;
+    case 'wait': yield* waitSecs(T, num(T, a.s)); break;
+    case 'repeat': { const n = Math.round(num(T, a.n)); T.ctx.push('repeat'); for (let i = 0; i < n && !T.dead; i++) { yield* runList(T, b.body || []); yield; } T.ctx.pop(); break; }
+    case 'forever': T.ctx.push('forever'); for (;;) { if (T.dead) return; yield* runList(T, b.body || []); yield; }
+    case 'if': if (truth(T, a.c)) { T.ctx.push('if'); yield* runList(T, b.body || []); T.ctx.pop(); } break;
+    case 'ifelse': T.ctx.push('ifelse'); if (truth(T, a.c)) yield* runList(T, b.body || []); else yield* runList(T, b.else || []); T.ctx.pop(); break;
+    case 'waituntil': while (!truth(T, a.c) && !T.dead) yield; break;
+    case 'until': T.ctx.push('until'); while (!truth(T, a.c) && !T.dead) { yield* runList(T, b.body || []); yield; } T.ctx.pop(); break;
+    case 'stop': if (a.w === 'this') { T.dead = true; return; } stopAll(true); T.dead = true; return;
+    case 'broadcast': startHats('receive', h => (h.args || {}).m === a.m); break;
+    case 'setvar': setVar(a.v, val(T, a.n)); break;
+    case 'changevar': setVar(a.v, Math.round((Number(RT.vars[a.v]) || 0) * 1000 + num(T, a.n) * 1000) / 1000); break;
+    case 'showvar': RT.mons.add(a.v); renderMonitors(); break;
+    case 'hidevar': RT.mons.delete(a.v); renderMonitors(); break;
+    case 'resettimer': RT.t0 = now(); break;
+    case 'pendown': S.pen = true; S.px = S.x; S.py = S.y; penDot(S); break;
+    case 'penup': S.pen = false; break;
+    case 'pencolor': S.pc = a.col; break;
+    case 'pensize': S.pw = clamp(num(T, a.n), 1, 60); break;
+    case 'clear': clearPen(); break;
+  }
+  dirty = true;
+}
+function setVar(v, x) { if (!v) return; const n = Number(x); RT.vars[v] = (x !== '' && isFinite(n)) ? n : x; const s = ST.varSeen[v] = ST.varSeen[v] || { min: Infinity, max: -Infinity, vals: new Set() };
+  if (typeof RT.vars[v] === 'number') { s.min = Math.min(s.min, RT.vars[v]); s.max = Math.max(s.max, RT.vars[v]); } if (s.vals.size < 500) s.vals.add(String(RT.vars[v])); updateMonitors(); }
+
+/* ---- geometry: sprite boxes, touching, edges ---- */
+function geo(S) {   // canvas-space transform info
+  const o = getImg(S.src.props[S.costume] || S.src.props[0]); const s = S.size / 100, box = 100 * s;
+  const th = S.rot === 'all' ? (S.dir - 90) * Math.PI / 180 : 0, flip = S.rot === 'lr' && S.dir < 0;
+  const bb = o.bb; let x0 = (bb.x0 - .5) * box, x1 = (bb.x1 - .5) * box; const y0 = (bb.y0 - .5) * box, y1 = (bb.y1 - .5) * box;
+  if (flip) [x0, x1] = [-x1, -x0];
+  const cx = 240 + S.x, cy = 180 - S.y, c = Math.cos(th), sn = Math.sin(th);
+  const pts = [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].map(([u, v]) => [cx + u * c - v * sn, cy + u * sn + v * c]);
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  return { o, box, th, flip, cx, cy, minx: Math.min(...xs), maxx: Math.max(...xs), miny: Math.min(...ys), maxy: Math.max(...ys) };
+}
+function hitLocal(G, px, py) {   // is canvas point inside the sprite's opaque pixels
+  let u = px - G.cx, v = py - G.cy; const c = Math.cos(-G.th), s = Math.sin(-G.th); [u, v] = [u * c - v * s, u * s + v * c]; if (G.flip) u = -u;
+  const mx = Math.floor((u / G.box + .5) * MW), my = Math.floor((v / G.box + .5) * MW);
+  if (mx < 0 || my < 0 || mx >= MW || my >= MW) return false;
+  if (!G.o.mask) { const b = G.o.bb; return mx >= b.x0 * MW && mx < b.x1 * MW && my >= b.y0 * MW && my < b.y1 * MW; }
+  return G.o.mask[my * MW + mx] === 1;
+}
+function touchSprite(A, B) {
+  if (!A || !B || A === B || !A.shown || !B.shown) return false;
+  const ga = geo(A), gb = geo(B); const x0 = Math.max(ga.minx, gb.minx), x1 = Math.min(ga.maxx, gb.maxx), y0 = Math.max(ga.miny, gb.miny), y1 = Math.min(ga.maxy, gb.maxy);
+  if (x0 >= x1 || y0 >= y1) return false;
+  const step = Math.max(1.5, Math.sqrt((x1 - x0) * (y1 - y0) / 500));
+  for (let y = y0 + step / 2; y < y1; y += step) for (let x = x0 + step / 2; x < x1; x += step) if (hitLocal(ga, x, y) && hitLocal(gb, x, y)) return true;
+  return false;
+}
+function touchEdge(S) { if (!S.shown) return false; const g = geo(S); return g.minx <= 0 || g.maxx >= 480 || g.miny <= 0 || g.maxy >= 360; }
+function fence(S) { const g = geo(S); const hw = (g.maxx - g.minx) / 2, hh = (g.maxy - g.miny) / 2, ox = (g.minx + g.maxx) / 2 - g.cx, oy = (g.miny + g.maxy) / 2 - g.cy;
+  const inset = 18; S.x = clamp(S.x, -240 - hw + inset - ox, 240 + hw - inset - ox); S.y = clamp(S.y, -180 - hh + inset + oy, 180 + hh - inset + oy); penTo(S); dirty = true; }
+function bounce(S) {
+  const g = geo(S); const dl = g.minx, dr = 480 - g.maxx, dt = g.miny, db = 360 - g.maxy; const m = Math.min(dl, dr, dt, db); if (m > 0) return;
+  const r = (90 - S.dir) * Math.PI / 180; let dx = Math.cos(r), dy = Math.sin(r);
+  if (m === dl) dx = Math.max(.2, Math.abs(dx)); else if (m === dr) dx = -Math.max(.2, Math.abs(dx)); else if (m === dt) dy = -Math.max(.2, Math.abs(dy)); else dy = Math.max(.2, Math.abs(dy));
+  const nd = normDir(90 - Math.atan2(dy, dx) * 180 / Math.PI); if (Math.abs(nd - S.dir) > .5) ST.bounces++; S.dir = nd;
+  const g2 = geo(S); if (g2.minx < 0) S.x -= g2.minx; if (g2.maxx > 480) S.x -= g2.maxx - 480; if (g2.miny < 0) S.y += g2.miny; if (g2.maxy > 360) S.y += g2.maxy - 360;
+}
+
+/* ---- pen trails ---- */
+const trail = document.createElement('canvas'); trail.width = 960; trail.height = 720; const tctx = trail.getContext('2d'); let trailUsed = false;
+function clearPen() { tctx.clearRect(0, 0, 960, 720); trailUsed = false; dirty = true; }
+function penStyle(S) { tctx.strokeStyle = tctx.fillStyle = PENCOL[S.pc] || '#2E8FF5'; tctx.lineWidth = S.pw * 2; tctx.lineCap = 'round'; tctx.lineJoin = 'round'; }
+function penDot(S) { penStyle(S); tctx.beginPath(); tctx.arc((240 + S.x) * 2, (180 - S.y) * 2, S.pw, 0, 7); tctx.fill(); trailUsed = true; }
+function penTo(S) { if (S.pen && (S.px !== S.x || S.py !== S.y)) { penStyle(S); tctx.beginPath(); tctx.moveTo((240 + S.px) * 2, (180 - S.py) * 2); tctx.lineTo((240 + S.x) * 2, (180 - S.y) * 2); tctx.stroke(); trailUsed = true; } S.px = S.x; S.py = S.y; }
+
+/* ---- the frame loop (30 fps cooperative threads) ---- */
+let dirty = true, lastTick = 0;
+function tick() {
+  // touching: record pairs + edge-triggered "when I touch" hats
+  const rs = RT.sprites;
+  for (let i = 0; i < rs.length; i++) for (let j = i + 1; j < rs.length; j++) {
+    const A = rs[i], B = rs[j]; const t = touchSprite(A, B);
+    if (t) { const k = [A.name, B.name].sort().join('|'); ST.touches[k] = 1; }
+    for (const [X, Y] of [[A, B], [B, A]]) { if (t && !X.touchPrev[Y.name]) startHats('touch', h => (h.args || {}).who === Y.name, X); X.touchPrev[Y.name] = t; }
+  }
+  for (const r of rs) { const e = touchEdge(r); if (e && !r.touchPrev.edge) startHats('touch', h => (h.args || {}).who === 'edge', r); r.touchPrev.edge = e; }
+  for (const T of RT.threads.slice()) {
+    if (T.dead) continue;
+    try { const r = T.gen.next(); if (r.done) T.dead = true; } catch (e) { T.dead = true; if (e !== STOP) console.warn(e); }
+  }
+  RT.threads = RT.threads.filter(T => !T.dead);
+  $('#go').classList.toggle('on', RT.threads.length > 0);
+  updateGlow();
+}
+let lastGlow = new Set(), lastNow = new Set();
+function updateGlow() {
+  const sp = curSprite(); const g = new Set(), n = new Set();
+  for (const T of RT.threads) if (T.s.src === sp) { const e = stackEls.get(T.script); if (e) g.add(e); const b = T.cur && blockEls.get(T.cur); if (b && !isHat(T.cur)) n.add(b.classList.contains('cb') ? b.firstChild : b); }
+  lastGlow.forEach(e => { if (!g.has(e)) e.classList.remove('run'); }); g.forEach(e => e.classList.add('run')); lastGlow = g;
+  lastNow.forEach(e => { if (!n.has(e)) e.classList.remove('now'); }); n.forEach(e => e.classList.add('now')); lastNow = n;
+}
+function loop(t) {
+  if (t - lastTick >= 1000 / 30 - 2) { lastTick = t; tick(); if (t - lastCheck > 250) { lastCheck = t; checkAll(); } }
+  if (dirty) { draw(); dirty = RT.threads.length > 0; }
+  requestAnimationFrame(loop);
+}
+let lastCheck = 0;
+
+/* ---- drawing ---- */
+let cv, ctx, DPR = 1;
+function sizeCanvas() { const r = cv.getBoundingClientRect(); DPR = Math.min(2.5, window.devicePixelRatio || 1); cv.width = Math.max(1, Math.round(r.width * DPR)); cv.height = Math.max(1, Math.round(r.height * DPR)); dirty = true; }
+function draw() {
+  if (!cv.width) return; const k = cv.width / 480; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(k, 0, 0, k, 0, 0); drawBackdrop(ctx, RT.bd, 480, 360); if (trailUsed) ctx.drawImage(trail, 0, 0, 480, 360);
+  const order = RT.sprites.slice().sort((a, b) => a.layer - b.layer);
+  for (const S of order) {
+    if (!S.shown) continue; const g = geo(S);
+    ctx.save(); ctx.translate(g.cx, g.cy); if (g.th) ctx.rotate(g.th); if (g.flip && g.o.ok) ctx.scale(-1, 1);
+    ctx.globalAlpha = 1 - S.eff.ghost / 100; if (S.eff.color && 'filter' in ctx) ctx.filter = `hue-rotate(${S.eff.color * 1.8}deg)`;
+    drawProp(ctx, S.src.props[S.costume] || S.src.props[0], g.box); ctx.restore();
+  }
+  for (const S of order) if (S.shown && S.bubble) drawBubble(S);
+}
+function drawBubble(S) {
+  const g = geo(S), b = S.bubble; ctx.save(); ctx.font = `800 16px 'Baloo 2', sans-serif`;
+  const maxW = 170, words = b.t.split(/\s+/), lines = []; let ln = '';
+  for (const w of words) { const t = ln ? ln + ' ' + w : w; if (ctx.measureText(t).width > maxW && ln) { lines.push(ln); ln = w; } else ln = t; } lines.push(ln);
+  const w = Math.max(44, Math.min(maxW, Math.max(...lines.map(l => ctx.measureText(l).width)))) + 22, h = lines.length * 19 + 14;
+  let right = true, bx = g.maxx - 12, by = g.miny - h - 14;
+  if (bx + w > 474) { right = false; bx = g.minx + 12 - w; }
+  bx = clamp(bx, 4, 476 - w); by = clamp(by, 4, 356 - h);
+  ctx.fillStyle = '#fff'; ctx.strokeStyle = b.think ? '#B9A8FF' : '#9AA7C0'; ctx.lineWidth = 2.5;
+  rrect(ctx, bx, by, w, h, 14); ctx.fill(); ctx.stroke();
+  const tx = right ? bx + 18 : bx + w - 18, ty = by + h;
+  if (b.think) { [[0, 8, 5], [right ? -8 : 8, 18, 3.5]].forEach(([dx, dy, r]) => { ctx.beginPath(); ctx.arc(tx + dx, ty + dy, r, 0, 7); ctx.fill(); ctx.stroke(); }); }
+  else { ctx.beginPath(); ctx.moveTo(tx - 7, ty - 2); ctx.lineTo(tx + (right ? -10 : 10), ty + 14); ctx.lineTo(tx + 7, ty - 2); ctx.fill(); ctx.stroke(); ctx.fillRect(tx - 6, ty - 4, 12, 4); }
+  ctx.fillStyle = '#1F2A44'; ctx.textBaseline = 'top'; ctx.textAlign = 'left'; lines.forEach((l, i) => ctx.fillText(l, bx + 11, by + 8 + i * 19)); ctx.restore();
+}
+function renderMonitors() { const m = $('#mons'); if (!m) return; m.innerHTML = ''; for (const v of RT.mons) { if (!(v in RT.vars)) continue; const e = el('div', 'mon', `<span>${esc(v)}</span><b data-v="${esc(v)}">${esc(fmt(RT.vars[v]))}</b>`); m.appendChild(e); } }
+function updateMonitors() { document.querySelectorAll('#mons b').forEach(b => { const v = RT.vars[b.dataset.v]; if (b.textContent !== fmt(v)) b.textContent = fmt(v ?? 0); }); }
+
+/* ---- stage pointer: drag sprites, tap sprites ---- */
+function stagePt(e) { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 480, (e.clientY - r.top) / r.height * 360]; }
+function pickSprite(px, py) { const order = RT.sprites.filter(s => s.shown).sort((a, b) => b.layer - a.layer); for (const S of order) { const g = geo(S); if (px >= g.minx - 4 && px <= g.maxx + 4 && py >= g.miny - 4 && py <= g.maxy + 4 && (hitLocal(g, px, py) || !g.o.mask)) return S; } return null; }
+let drag = null;
+function onDown(e) {
+  audio(); const [px, py] = stagePt(e); const S = pickSprite(px, py); if (!S) return;
+  drag = { S, px, py, sx: S.x, sy: S.y, moved: false, id: e.pointerId }; try { cv.setPointerCapture(e.pointerId); } catch (_) {} e.preventDefault();
+}
+function onMove(e) {
+  if (!drag || e.pointerId !== drag.id) return; const [px, py] = stagePt(e); const dx = px - drag.px, dy = py - drag.py;
+  if (!drag.moved && Math.hypot(dx, dy) < 6) return; drag.moved = true; const S = drag.S;
+  S.x = clamp(drag.sx + dx, -240, 240); S.y = clamp(drag.sy - dy, -180, 180); penTo(S); dirty = true;
+}
+function onUp(e) {
+  if (!drag || e.pointerId !== drag.id) return; const d = drag; drag = null;
+  if (!d.moved) { startHats('tap', null, d.S); return; }
+  ST.drags++; const S = d.S; S.layer = Math.max(...RT.sprites.map(r => r.layer)) + 1;
+  if (!running()) { edit(() => { S.src.x = Math.round(S.x); S.src.y = Math.round(S.y); }, { noRender: true }); }
+  const i = P.sprites.indexOf(S.src); if (i >= 0 && i !== cur) selectSprite(i); checkAll();
+}
+
+/* ---- keys (keyboard + on-screen pad) ---- */
+const KEYMAP = { ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', ' ': 'space' };
+function keyDown(k) { const first = !RT.keys.has(k); RT.keys.add(k); fireKey(k); return first; }
+function fireKey(k) { audio(); startHats('key', h => { const kk = (h.args || {}).k; return kk === k || kk === 'any'; }); }
+function keyUp(k) { RT.keys.delete(k); }
+document.addEventListener('keydown', e => { if (e.target && e.target.tagName === 'INPUT') return; const k = KEYMAP[e.key]; if (!k) return; e.preventDefault(); RT.keys.add(k); fireKey(k); });
+document.addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keyUp(k); });
+function usesKeys() { let u = false; P.sprites.forEach(sp => sp.scripts.forEach(s => walk(s, b => { if (b.op === 'key') u = true; const scan = o => { if (o && typeof o === 'object') { if (o.r === 'keyp') u = true; Object.values(o).forEach(scan); } }; scan(b.args); }))); return u; }
+function updatePad() { const show = !!(CFG.keys || usesKeys()); const pad = $('#pad'); if (pad.classList.contains('show') !== show) { pad.classList.toggle('show', show); layout(); } }
+function buildPad() {
+  const pad = $('#pad'); pad.innerHTML = '';
+  [['left', ICON.arrow(-90)], ['up', ICON.arrow(0)], ['down', ICON.arrow(180)], ['right', ICON.arrow(90)], ['space', 'space']].forEach(([k, h]) => {
+    const b = el('button', k === 'space' ? 'space' : '', h); b.setAttribute('aria-label', k); let rpt = 0;
+    const up = () => { clearInterval(rpt); b.classList.remove('on'); keyUp(k); };
+    b.onpointerdown = e => { e.preventDefault(); try { b.setPointerCapture(e.pointerId); } catch (_) {} b.classList.add('on'); RT.keys.add(k); fireKey(k); clearInterval(rpt); rpt = setInterval(() => fireKey(k), 120); };
+    b.onpointerup = up; b.onpointercancel = up; b.onlostpointercapture = up; pad.appendChild(b);
+  });
+}
+
+/* ============================== badge checks ============================== */
+function opsList(c) { return Array.isArray(c.op) ? c.op : [c.op]; }
+function sumRan(map, by) { if (!map) return 0; return by ? (map[by] || 0) : Object.values(map).reduce((a, b) => a + b, 0); }
+function staticOps(spName) { const out = {}; let total = 0; const hats = new Set();
+  P.sprites.forEach(sp => { if (spName && sp.name !== spName) return; hatScripts(sp).forEach(s => { hats.add(s[0].op); walk(s, b => { out[b.op] = (out[b.op] || 0) + 1; total++; const scan = o => { if (o && typeof o === 'object') { if (o.r) out[o.r] = (out[o.r] || 0) + 1; Object.values(o).forEach(scan); } }; scan(b.args); }); }); });
+  return { out, total, hats }; }
+const norm = s => String(s).toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+const CHECK = {
+  run: c => { const min = c.min || 1; let n = 0; const who = new Set();
+    for (const op of opsList(c)) for (const m of (c.inside ? [].concat(c.inside).map(o => ST.inside[op + '<' + o]) : [ST.ran[op]])) { if (!m) continue; n += sumRan(m, c.by); Object.keys(m).forEach(k => (!c.by || k === c.by) && who.add(k)); }
+    return n >= min && who.size >= ((c.sprites ?? c.bys) || 1); },
+  has: c => { const { out } = staticOps(c.by); return opsList(c).reduce((a, op) => a + (out[op] || 0), 0) >= (c.min || 1); },
+  blocks: c => staticOps().total >= (c.min || 1),
+  hats: c => staticOps().hats.size >= (c.min || 1),
+  event: c => (ST.events[c.hat] || 0) >= (c.min || 1),
+  said: c => { const set = new Set(ST.speech.filter(s => (!c.by || s.who === c.by) && (!c.says || norm(s.t).includes(norm(c.says)))).map(s => s.t)); return set.size >= (c.min || 1); },
+  talk: c => { const gap = (c.gap ?? 1) * 1000 - 50, min = c.min || 2, turns = c.turns || min; const runs = {};
+    ST.speech.forEach(s => (runs[s.run] = runs[s.run] || []).push(s));
+    return Object.values(runs).some(sp => { sp = sp.slice().sort((a, b) => a.at - b.at); let t = 0, cur = null, overlap = false; const who = new Set();
+      sp.forEach((s, i) => { for (let j = 0; j < i; j++) if (sp[j].who !== s.who && s.at < (sp[j].end ?? Infinity) - 250 && s.at - sp[j].at > 100) overlap = true;
+        if (cur === null) { cur = s.who; t = 1; who.add(s.who); return; }
+        if (s.who === cur) return;   /* a reply counts when it starts after one of the current speaker's lines has ended */
+        if (sp.some(L => L.who === cur && L.at <= s.at - gap && s.at >= (L.end ?? Infinity) - 250)) { t++; cur = s.who; who.add(s.who); } });
+      return who.size >= min && t >= turns && !(c.clean && overlap); }); },
+  order: c => { const sp = ST.speech.filter(s => !c.by || s.who === c.by); return sp.some((a, i) => norm(a.t).includes(norm(c.first)) && sp.slice(i + 1).some(b => b.run === a.run && norm(b.t).includes(norm(c.then)))); },
+  bounced: c => ST.bounces >= (c.min || 1),
+  stopped: c => ST.stops >= (c.min || 1),
+  costumes: c => P.sprites.filter(s => s.props.length >= (c.min || 2)).length >= ((c.sprites ?? c.bys) || 1),
+  var: c => { const s = ST.varSeen[c.name]; if (!s) return false; const v = Number(c.value); if (c.op === '<=') return s.min <= v; if (c.op === '=') return s.vals.has(String(c.value)); return s.max >= v; },
+  touch: c => Object.keys(ST.touches).some(k => { const [a, b] = k.split('|'); return (!c.a || a === c.a || b === c.a) && (!c.b || a === c.b || b === c.b) && (!(c.a && c.b) || (k === [c.a, c.b].sort().join('|'))); }),
+  backdrop: c => ST.bds.size >= (c.min || 1),
+  costume: c => ST.cos >= (c.min || 1),
+  sprites: c => P.sprites.length >= (c.min || 1),
+  edit: c => ST.edits >= (c.min || 1),
+  drag: c => ST.drags >= (c.min || 1),
+  flag: c => ST.flags >= (c.min || 1),
+};
+const doneSet = new Set();
+function checkAll() { if (!CFG || !CFG.badge) return; for (const c of CFG.badge.checks || []) { if (doneSet.has(c.id)) continue; let ok = false; try { ok = CHECK[c.type] ? CHECK[c.type](c) : false; } catch (e) {} if (ok) { doneSet.add(c.id); PG.done(c.id); } } }
+
+/* ============================== layout ============================== */
+function layout() {
+  const root = PG.root; if (!root) return; const W = root.clientWidth, H = root.clientHeight; const narrow = innerWidth <= 820;
+  const padH = $('#pad').classList.contains('show') ? 56 : 0;
+  let sw;
+  if (narrow) { sw = Math.min(W - 20, (H * .44 - padH * .5) * 4 / 3); }
+  else { sw = Math.min(W * .41, (H - 60 - 100 - padH - 30) * 4 / 3); }
+  sw = Math.max(200, Math.floor(sw)); document.documentElement.style.setProperty('--sw', sw + 'px');
+  document.documentElement.style.setProperty('--bw', Math.floor(Math.min(W - 20, (H - 60 - 100 - padH - 30) * 4 / 3)) + 'px');
+  requestAnimationFrame(sizeCanvas);
+}
+
+/* ============================== boot ============================== */
+function validProject(p) { return p && Array.isArray(p.sprites) && p.sprites.length && p.sprites.every(s => Array.isArray(s.props) && s.props.length && Array.isArray(s.scripts)); }
+function fillProject(p) { p.backdrops = p.backdrops && p.backdrops.length ? p.backdrops : [p.backdrop || 'park']; p.backdrop = p.backdrop || p.backdrops[0]; p.vars = p.vars || {}; p.monitors = p.monitors || [];
+  p.sprites.forEach(s => { s.costume = s.costume || 0; s.x = s.x || 0; s.y = s.y || 0; s.size = s.size || 100; s.dir = s.dir ?? 90; if (s.shown === undefined) s.shown = true; s.rotate = s.rotate || 'all'; s.scripts = s.scripts || []; }); return p; }
+function renderAll() { renderSprites(); renderPalette(); renderCode(); renderMonitors(); updatePad(); dirty = true; }
+function buildUI() {
+  PG.root.innerHTML = `
+  <div id="stg-seg"><button class="on" data-v="code">💻 Blocks &amp; Code</button><button data-v="stage">🎮 Stage &amp; Play</button><button data-v="split">⬚ Split</button></div>
+  <div id="ed"><div id="cats"></div><div id="work"><div id="pal"></div>
+    <div id="code"><div id="codehd"><div class="who"></div>
+      <div id="tools"><button class="tb" id="bUndo" aria-label="Undo">${ICON.undo}</button><button class="tb" id="bUp" aria-label="Move up">${ICON.up}</button><button class="tb" id="bDown" aria-label="Move down">${ICON.down}</button>
+      <button class="tb" id="bCopy" aria-label="Copy">${ICON.copy}</button><button class="tb del" id="bDel" aria-label="Delete">${ICON.trash}</button></div></div>
+      <div id="scripts"></div></div></div></div>
+  <div id="side">
+    <div id="stagewrap"><canvas id="cv"></canvas><div id="mons"></div></div>
+    <div id="pad"></div>
+    <div id="row2"><div id="bar"><button class="big pulse" id="go" aria-label="Green flag">${ICON.flagw}</button><button class="big" id="stopb" aria-label="Stop">${ICON.stop}</button>
+      <button class="tb" id="resetb" aria-label="Reset to starter">${ICON.reset}</button><span class="sp"></span><button class="tb" id="bigb" aria-label="Big stage">${ICON.big}</button></div>
+    <div id="sprites"></div></div>
+  </div>`;
+  document.body.classList.add('v-code');
+  $('#stg-seg').onclick = e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    PG.sfx.pop();
+    $('#stg-seg').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    document.body.classList.remove('v-code', 'v-stage', 'v-split');
+    document.body.classList.add('v-' + b.dataset.v);
+    requestAnimationFrame(sizeCanvas);
+    layout();
+  };
+  // on wide screens the bar sits above the stage
+  if (innerWidth > 840) $('#side').prepend($('#bar'));
+  cv = $('#cv'); ctx = cv.getContext('2d');
+  cv.addEventListener('pointerdown', onDown); cv.addEventListener('pointermove', onMove); cv.addEventListener('pointerup', onUp); cv.addEventListener('pointercancel', onUp);
+  $('#go').onclick = () => { greenFlag(); };
+  $('#stopb').onclick = () => stopAll();
+  $('#resetb').onclick = resetSheet;
+  $('#bigb').onclick = () => { document.body.classList.toggle('bigstage'); layout(); };
+  $('#bUndo').onclick = undo; $('#bUp').onclick = () => moveSel(-1); $('#bDown').onclick = () => moveSel(1); $('#bCopy').onclick = dupSel; $('#bDel').onclick = delSel;
+  $('#scripts').onclick = e => { if (e.target.id === 'scripts') { selB = null; const sp = curSprite(); const last = sp && sp.scripts[sp.scripts.length - 1]; cursor = last ? { list: last, idx: last.length } : null; renderCode(); } };
+  document.body.appendChild(el('div', '', '')).id = 'pk';
+  buildPad();
+  addEventListener('resize', () => { const wide = innerWidth > 840; if (wide && $('#bar').parentElement.id !== 'side') $('#side').prepend($('#bar')); if (!wide && $('#bar').parentElement.id === 'side') $('#row2').prepend($('#bar')); layout(); });
+  new ResizeObserver(() => requestAnimationFrame(sizeCanvas)).observe($('#stagewrap'));
+}
+function resetSheet() {
+  const card = sheet('Start over?', CATS.control.c);
+  card.appendChild(el('p', '', 'This brings back the starter project. Your changes will go away.')).style.cssText = 'margin:0;font-size:19px;color:#5B6888';
+  const row = el('div', 'rowc'); const yes = el('button', 'okb', 'Yes, start over'); yes.style.background = 'var(--coral)'; const no = el('button', 'pg-ghost', 'No, keep it');
+  yes.onclick = () => { closePk(); stopAll(true); undoStack.push(JSON.stringify(P)); P = fillProject(clone(STARTER)); cur = 0; selB = null; cursor = null; RT.sprites = []; syncRT(true); renderAll(); PG.save(P, true); PG.sfx.pop(); };
+  no.onclick = closePk; row.append(yes, no); card.appendChild(row);
+}
+PG.boot(cfg => {
+  CFG = cfg || {};
+  STARTER = fillProject(clone(validProject(CFG.project) ? CFG.project : { backdrops: [CFG.bg || 'park'], sprites: [{ name: 'Cat', props: ['l1_cat', 'l1_cat_jump'], scripts: [[{ op: 'flag' }, { op: 'sayfor', args: { t: 'Kumusta!', s: 2 } }]] }] }));
+  if (CFG.blocks && CFG.blocks.length) { allowed = new Set(); for (const b of CFG.blocks) { if (CATS[b]) Object.keys(D).forEach(op => { if (D[op].c === b) allowed.add(op); }); else if (D[b]) allowed.add(b); } }
+  const saved = PG.load(); P = fillProject(clone(validProject(saved) ? saved : STARTER));
+  cur = Math.max(0, P.sprites.map(sp => hatScripts(sp).length > 0).lastIndexOf(true));
+  buildUI(); syncRT(true); renderAll(); layout();
+  document.fonts && document.fonts.load("800 16px 'Baloo 2'").then(() => { dirty = true; });
+  PG.onSave = () => PG.save(P);
+  requestAnimationFrame(loop);
+  window.STG = { get project() { return P; }, RT, ST, flag: greenFlag, stop: stopAll, add: addBlock, sel: selectSprite, selectBlock, key: k => { RT.keys.add(k); fireKey(k); }, keyUp, checkAll, edit, render: renderAll, openPicker, done: doneSet };
+});
+</script>
+</body></html>
