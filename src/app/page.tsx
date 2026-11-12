@@ -38,9 +38,9 @@ import { FAQS } from "@/lib/faqs";
  */
 
 export const metadata: Metadata = {
-  title: "SmartPath Tutor — DepEd MATATAG for Grades 1 to 3",
+  title: "SmartPath Tutor — DepEd-aligned learning for Grades 1 to 3",
   description:
-    "DepEd MATATAG Math and English for Grades 1–3, with Science in Grade 3. Reads aloud, and comes with a Parent app with homework coaching. Free for teachers.",
+    "DepEd-aligned Math and English for Grades 1–3, with Science in Grade 3. Reads aloud, and comes with a Parent app with homework coaching. Free for teachers.",
 };
 
 export default function HomePage() {

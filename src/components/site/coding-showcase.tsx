@@ -93,7 +93,7 @@ const CODING_FAQS = [
   },
   {
     q: "How does SmartPath Coding relate to SmartPath Tutor?",
-    a: "SmartPath Tutor is our core DepEd MATATAG curriculum platform for Grades 1–3 Math, English, and Science. SmartPath Coding is our specialized STEM & Computer Science sister platform for ages 5–12, providing early computational thinking, game design, and real Python coding.",
+    a: "SmartPath Tutor is our core DepEd-aligned curriculum platform for Grades 1–3 Math, English, and Science. SmartPath Coding is our specialized STEM & Computer Science sister platform for ages 5–12, providing early computational thinking, game design, and real Python coding.",
   },
 ];
 

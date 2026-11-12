@@ -9,7 +9,7 @@ const STEPS = [
     title: "Today's Trip",
     time: "10 mins/trip",
     icon: Compass,
-    description: "Learners embark on contextualized DepEd MATATAG missions in Math, English, and Science — like 'Count at the palengke!' or 'Read on a bangka!'.",
+    description: "Learners embark on contextualized DepEd-aligned missions in Math, English, and Science — like 'Count at the palengke!' or 'Read on a bangka!'.",
     tag: "DepEd Curriculum Adventures",
     accent: "text-amber-600 dark:text-amber-400",
     border: "border-amber-300",
@@ -142,7 +142,7 @@ export function HowItWorks() {
               <span>DepEd Values &amp; Character Strand</span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-              Includes weekly character education stories anchored in official DepEd MATATAG core values: Maka-Diyos, Maka-Tao, Maka-Kalikasan, and Maka-Bansa.
+              Includes weekly character education stories anchored in official DepEd core values: Maka-Diyos, Maka-Tao, Maka-Kalikasan, and Maka-Bansa.
             </p>
           </div>
 

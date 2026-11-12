@@ -3,7 +3,7 @@
 export const FAQS = [
   {
     q: "Which grades and subjects?",
-    a: "Grades 1–3, aligned to DepEd MATATAG. Math and English for every grade, plus Science in Grade 3. Lessons use Filipino and English, and reading moves from Filipino to English.",
+    a: "Grades 1–3, aligned to the DepEd curriculum. Math and English for every grade, plus Science in Grade 3. Lessons use Filipino and English, and reading moves from Filipino to English.",
   },
   {
     q: "How much does it cost?",

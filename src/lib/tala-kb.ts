@@ -38,7 +38,7 @@ export const TALA_TOPICS: TalaTopic[] = [
     chip: "Ano ang SmartPath?",
     keys: ["ano ang smartpath", "what is smartpath", "about", "ano to", "ano ito", "paano gumagana", "how does it work", "how it works", "explain", "tungkol", "smartpath tutor"],
     answer: [
-      "Ang **SmartPath Tutor** ay learning app para sa mga batang **Grade 1 hanggang Grade 3**. Naka-align siya sa **DepEd MATATAG**, kaya kung ano ang inaaral sa school, yun din ang pinapractice dito. 😊",
+      "Ang **SmartPath Tutor** ay learning app para sa mga batang **Grade 1 hanggang Grade 3**. Naka-align siya sa **curriculum ng DepEd**, kaya kung ano ang inaaral sa school, yun din ang pinapractice dito. 😊",
       "Araw-araw may maikling lesson si anak, yung tinatawag naming **Today's Trip**. May Math, English, at Science pag Grade 3. Binabasa nang malakas ang instructions kaya kahit hindi pa masyadong marunong magbasa si bunso, kaya niya.",
       "Ikaw naman sa **Parent app**, kita mo agad ang progress niya, live, hindi na kailangan mag-refresh.",
     ],
@@ -50,7 +50,7 @@ export const TALA_TOPICS: TalaTopic[] = [
     keys: ["grade", "grades", "subject", "subjects", "kinder", "kindergarten", "grade 4", "grade 5", "grade 6", "math", "english", "science", "filipino", "matatag", "deped", "curriculum", "ilang taon", "age"],
     answer: [
       "Sa ngayon, **Grade 1, 2 at 3** lang po kami. 📚",
-      "• **Math** at **English**: lahat ng grade (1–3)\n• **Science**: Grade 3 lang\n• Naka-align lahat sa **DepEd MATATAG**",
+      "• **Math** at **English**: lahat ng grade (1–3)\n• **Science**: Grade 3 lang\n• Naka-align lahat sa **curriculum ng DepEd**",
       "Sa reading, nagsisimula sa **Filipino** tapos unti-unting lumilipat sa **English**. Hindi biglaan, kaya hindi nao-overwhelm ang bata.",
       "Wala pa kaming Kinder o Grade 4 pataas. Pero kung mahilig sa computer si anak (5–12 years old), meron kaming **SmartPath Coding**. Itanong mo lang sa akin!",
     ],

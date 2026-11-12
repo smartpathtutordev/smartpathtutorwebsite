@@ -121,7 +121,7 @@ export function LessonDemo({ className = "" }: LessonDemoProps) {
           {/* Quick Lesson Info */}
           <div className="hidden lg:flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
             <span className="grid h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>Narrated by Teacher Saje • DepEd MATATAG Aligned</span>
+            <span>Narrated by Teacher Saje • Aligned to the DepEd curriculum</span>
           </div>
 
           {/* Interactive Player Controls */}
@@ -242,13 +242,13 @@ export function LessonDemo({ className = "" }: LessonDemoProps) {
               <GraduationCap className="h-5 w-5" />
             </div>
             <h3 className="mt-3.5 font-heading text-base font-extrabold text-slate-900 dark:text-white">
-              DepEd MATATAG Aligned
+              Aligned to the DepEd curriculum
             </h3>
             <p className="mt-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
               Grade 1 Math • Quarter 1
             </p>
             <p className="mt-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
-              100% matched to the Department of Education MATATAG curriculum so
+              100% matched to the Department of Education curriculum so
               lessons reinforce exactly what teachers teach in class.
             </p>
           </div>

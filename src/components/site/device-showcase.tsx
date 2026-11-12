@@ -80,7 +80,7 @@ const APP_DATA: Record<
     showcaseItems: [
       {
         title: "Daily Math Trips",
-        tag: "Grades 1–3 · MATATAG",
+        tag: "Grades 1–3 · DepEd-aligned",
         detail: "Visual counting, shapes, and Philippine real-world problems in 10-minute guided trips.",
         icon: Calculator,
         iconColor: "bg-amber-500/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300",
@@ -205,7 +205,7 @@ const APP_DATA: Record<
       },
       {
         title: "Recommend Lessons",
-        tag: "DepEd MATATAG",
+        tag: "DepEd-aligned",
         detail: "Assign specific Math, Reading, Writing, or Science topics to match your weekly lesson plan.",
         icon: BookOpen,
         iconColor: "bg-sky-500/10 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300",
@@ -220,7 +220,7 @@ const APP_DATA: Record<
       {
         title: "Section Topic Progress",
         tag: "Real-Time View",
-        detail: "See which MATATAG topics your class has finished, plus individual scores with parent consent.",
+        detail: "See which DepEd topics your class has finished, plus individual scores with parent consent.",
         icon: BarChart3,
         iconColor: "bg-amber-500/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300",
       },

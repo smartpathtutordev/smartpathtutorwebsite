@@ -172,7 +172,7 @@ const CONTENT_CREATORS = [
     tag: "English & Filipino",
     icon: BookOpen,
     iconColor: "bg-sky-500/10 text-sky-600 dark:bg-sky-400/15 dark:text-sky-300",
-    focus: "Curating bilingual phonics, decodable readers, sight words, and reading fluency aligned with DepEd MATATAG.",
+    focus: "Curating bilingual phonics, decodable readers, sight words, and reading fluency aligned with the DepEd curriculum.",
   },
   {
     role: "Primary Mathematics & Numeracy Specialist",

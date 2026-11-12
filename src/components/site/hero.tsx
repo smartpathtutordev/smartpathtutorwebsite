@@ -31,7 +31,7 @@ export function Hero() {
               <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-sunset text-white">
                 <Sparkles className="h-3.5 w-3.5" />
               </span>
-              DepEd MATATAG · Grades 1–3
+              DepEd-aligned · Grades 1–3
             </div>
 
             <h1 className="mt-6 font-heading text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.025em] text-slate-900 sm:text-6xl lg:text-[4.5rem] dark:text-white">

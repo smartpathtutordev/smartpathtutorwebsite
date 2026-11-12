@@ -30,22 +30,22 @@ const baloo = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://smartpathtutor.ph"),
   title: {
-    default: "SmartPath Tutor — DepEd MATATAG Grades 1–3 Learning Platform",
+    default: "SmartPath Tutor — DepEd-aligned Grades 1–3 Learning Platform",
     template: "%s · SmartPath Tutor",
   },
   description:
-    "DepEd MATATAG Math and English for Grades 1–3, with Science in Grade 3. Reads aloud and keeps parents in the loop. From ₱399/month per child. Free for teachers.",
+    "DepEd-aligned Math and English for Grades 1–3, with Science in Grade 3. Reads aloud and keeps parents in the loop. From ₱399/month per child. Free for teachers.",
   openGraph: {
     title: "SmartPath Tutor — DepEd Grades 1–3 Learning Platform",
     description:
-      "Short daily lessons for Filipino kids in Grades 1–3, aligned to DepEd MATATAG, with a Parent app for families.",
+      "Short daily lessons for Filipino kids in Grades 1–3, aligned to the DepEd curriculum, with a Parent app for families.",
     type: "website",
     locale: "en_PH",
     siteName: "SmartPath Tutor",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SmartPath Tutor — DepEd MATATAG Grades 1–3",
+    title: "SmartPath Tutor — DepEd-aligned Grades 1–3",
     description: "A short daily learning path for Filipino kids. Reads aloud. From ₱399/month.",
   },
   alternates: { canonical: "/" },

@@ -22,7 +22,7 @@ export default function Terms() {
           "One family account covers one household. Do not share an account between families.",
         ] },
         { h: "What SmartPath provides", p: [
-          "Lessons, assessments and practice for Grades 1 to 3 aligned with the DepEd MATATAG curriculum — currently Math and English, with Science at Grade 3 — plus progress reports and coaching help for parents, and class tools for teachers. We add and improve content over time, and subjects without lessons yet are shown as “Coming soon”.",
+          "Lessons, assessments and practice for Grades 1 to 3 aligned with the DepEd curriculum — currently Math and English, with Science at Grade 3 — plus progress reports and coaching help for parents, and class tools for teachers. We add and improve content over time, and subjects without lessons yet are shown as “Coming soon”.",
           "SmartPath supports learning at home and in class; it is not a school and does not replace one. It does not issue grades or certificates recognised by DepEd. Scores and suggestions are guides; a parent or teacher always decides.",
           "We work to keep SmartPath available, but it may sometimes be unavailable for maintenance or because of problems outside our control, such as internet or provider outages.",
         ] },

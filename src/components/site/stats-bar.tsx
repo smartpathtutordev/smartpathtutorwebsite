@@ -7,7 +7,7 @@ const STATS = [
   {
     icon: BookOpen,
     value: "Grades 1–3",
-    label: "DepEd MATATAG",
+    label: "DepEd-aligned",
     sub: "Primary Grades Aligned",
     accent: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-100 dark:bg-blue-950/40",

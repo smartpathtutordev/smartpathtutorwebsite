@@ -58,7 +58,7 @@ const PARTNER_TRACKS: PartnerTrack[] = [
       "20% discount on SmartPath Tutor and SmartPath Coding for your students' families",
       "100% Free Teacher App: assign lessons, monitor daily paths, and spot weak spots",
       "Zero school collection hassle: parents pay directly via GCash, bank transfer, or cards",
-      "DepEd MATATAG aligned Math, Reading & Science + Codi Coding curriculum",
+      "DepEd-aligned Math, Reading & Science + Codi Coding curriculum",
       "Free printable/digital parent flyers with step-by-step code instructions",
       "Coordinator access to live family enrollment count",
     ],
@@ -109,7 +109,7 @@ const FAQS = [
   },
   {
     q: "Can one school partner code be used for both SmartPath Tutor and SmartPath Coding?",
-    a: "Yes! Your dedicated partner code applies across both programs. Families can use it for foundational DepEd MATATAG learning (SmartPath Tutor) and introductory coding from visual blocks to Python (SmartPath Coding).",
+    a: "Yes! Your dedicated partner code applies across both programs. Families can use it for foundational DepEd-aligned learning (SmartPath Tutor) and introductory coding from visual blocks to Python (SmartPath Coding).",
   },
   {
     q: "Are the teacher and computer lab instructor tools free?",
@@ -233,7 +233,7 @@ export function PartnerWithUs() {
             transition={{ duration: 0.45, delay: 0.1, ease }}
             className="mt-4 mx-auto max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-300"
           >
-            Bring DepEd MATATAG Math &amp; Reading (<strong>SmartPath Tutor</strong>) and hands-on computer science (<strong>SmartPath Coding</strong>) to your learners. Get exclusive <strong>20% family discounts</strong>, 100% free teacher dashboards, and easy community onboarding.
+            Bring DepEd-aligned Math &amp; Reading (<strong>SmartPath Tutor</strong>) and hands-on computer science (<strong>SmartPath Coding</strong>) to your learners. Get exclusive <strong>20% family discounts</strong>, 100% free teacher dashboards, and easy community onboarding.
           </motion.p>
 
           <motion.div
@@ -299,7 +299,7 @@ export function PartnerWithUs() {
                   SmartPath Tutor
                 </h3>
                 <p className="mt-1 text-xs font-bold text-slate-500 dark:text-slate-400">
-                  Grades 1–3 · DepEd MATATAG Aligned
+                  Grades 1–3 · Aligned to the DepEd curriculum
                 </p>
 
                 <p className="mt-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans">

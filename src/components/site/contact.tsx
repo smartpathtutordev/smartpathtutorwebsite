@@ -12,7 +12,7 @@ const TOPICS = [
   "Payment (GCash / bank / cash)",
   "Siblings (Add a child for ₱199/mo)",
   "Teacher access (free)",
-  "DepEd MATATAG Grades 1–3",
+  "DepEd-aligned Grades 1–3",
   "Today's Path & App Support",
 ];
 

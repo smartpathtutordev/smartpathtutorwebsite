@@ -10,6 +10,7 @@ import { ExternalLink, Send, X } from "lucide-react";
 import {
   TALA_GREETING,
   TALA_START_CHIPS,
+  TALA_TOPICS,
   talaAnswer,
   topicById,
   type TalaLink,
@@ -20,6 +21,7 @@ type Msg =
   | { from: "tala"; paras: string[]; links?: TalaLink[] };
 
 const TEASER_KEY = "tala_chat_teaser_seen";
+const ALL_TOPICS = TALA_TOPICS.map((t) => t.id);
 
 // **bold** → <strong>. Everything else is plain text (no HTML from strings).
 function Rich({ text }: { text: string }) {
@@ -70,6 +72,7 @@ export function TalaChat() {
   const [input, setInput] = useState("");
   const [chips, setChips] = useState<string[]>(TALA_START_CHIPS);
   const [msgs, setMsgs] = useState<Msg[]>([{ from: "tala", paras: TALA_GREETING }]);
+  const showingAll = chips === ALL_TOPICS;
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -86,14 +89,14 @@ export function TalaChat() {
   useEffect(() => {
     const list = listRef.current;
     if (!list) return;
-    const last = list.lastElementChild as HTMLElement | null;
+    const latest = list.querySelector<HTMLElement>("[data-latest]");
     // A long answer from Tala should be read from its start, not its end.
     const top =
-      !typing && msgs[msgs.length - 1]?.from === "tala" && msgs.length > 1 && last
-        ? last.offsetTop - list.offsetTop - 8
+      !typing && msgs[msgs.length - 1]?.from === "tala" && msgs.length > 1 && latest
+        ? latest.offsetTop - list.offsetTop - 8
         : list.scrollHeight;
     list.scrollTo({ top, behavior: "smooth" });
-  }, [msgs, typing]);
+  }, [msgs, typing, chips]);
 
   useEffect(() => {
     if (!open) return;
@@ -184,7 +187,7 @@ export function TalaChat() {
                     </div>
                   </div>
                 ) : (
-                  <div key={i} className="flex items-end gap-2">
+                  <div key={i} data-latest={i === msgs.length - 1 ? "" : undefined} className="flex items-end gap-2">
                     <Image unoptimized src="/assets/tala-chat/tala_idle_192.png" alt="" width={28} height={28} className="mb-1 h-7 w-7 shrink-0 rounded-full bg-amber-100 object-contain" />
                     <div className="max-w-[86%] space-y-2 rounded-2xl rounded-bl-md bg-white px-3.5 py-2.5 text-[15px] leading-relaxed text-slate-700 shadow-sm ring-1 ring-slate-900/5 dark:bg-slate-800 dark:text-slate-200 dark:ring-white/10">
                       {m.paras.map((p, j) => <Para key={j} text={p} />)}
@@ -227,31 +230,37 @@ export function TalaChat() {
                   </div>
                 </div>
               )}
-            </div>
 
-            {/* Suggestion chips */}
-            <div className="flex gap-2 overflow-x-auto border-t border-slate-900/5 px-3.5 py-2.5 [scrollbar-width:none] dark:border-white/10">
-              {chips.map((id) => {
-                const t = topicById(id);
-                if (!t) return null;
-                return (
-                  <button
-                    key={id}
-                    onClick={() => askTopic(id)}
-                    disabled={typing}
-                    className="min-h-9 shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-3 text-[13px] font-bold text-amber-900 transition hover:bg-amber-100 disabled:opacity-50 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-200"
-                  >
-                    {t.chip}
-                  </button>
-                );
-              })}
-              {chips !== TALA_START_CHIPS && (
-                <button
-                  onClick={() => setChips(TALA_START_CHIPS)}
-                  className="min-h-9 shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-slate-300 px-3 text-[13px] font-bold text-slate-600 transition hover:bg-slate-100 dark:border-white/15 dark:text-slate-300 dark:hover:bg-white/5"
-                >
-                  Iba pang tanong…
-                </button>
+              {/* Suggestions sit in the conversation, wrapped, so they scroll like everything else. */}
+              {!typing && chips.length > 0 && (
+                <div className="pl-9">
+                  <p className="mb-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                    {msgs.length === 1 ? "Pwede mo akong tanungin tungkol sa:" : showingAll ? "Lahat ng pwede mong itanong:" : "Baka gusto mo ring itanong:"}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {chips.map((id) => {
+                      const t = topicById(id);
+                      if (!t) return null;
+                      return (
+                        <button
+                          key={id}
+                          onClick={() => askTopic(id)}
+                          className="min-h-9 cursor-pointer rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-left text-[13px] font-bold leading-tight text-amber-900 transition hover:bg-amber-100 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-200"
+                        >
+                          {t.chip}
+                        </button>
+                      );
+                    })}
+                    {!showingAll && (
+                      <button
+                        onClick={() => setChips(ALL_TOPICS)}
+                        className="min-h-9 cursor-pointer rounded-full border border-slate-300 px-3 py-1.5 text-[13px] font-bold text-slate-600 transition hover:bg-slate-100 dark:border-white/15 dark:text-slate-300 dark:hover:bg-white/5"
+                      >
+                        Iba pang tanong…
+                      </button>
+                    )}
+                  </div>
+                </div>
               )}
             </div>
 
