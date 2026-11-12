@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { MotionProvider } from "@/components/site/motion-provider";
+import { TalaChat } from "@/components/site/tala-chat";
 
 // Nunito — the primary UI and body font of SmartPath Tutor (clean, modern, highly legible).
 const nunito = localFont({
@@ -70,7 +71,10 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans selection:bg-amber-100 selection:text-amber-900">
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          {children}
+          <TalaChat />
+        </MotionProvider>
       </body>
     </html>
   );
