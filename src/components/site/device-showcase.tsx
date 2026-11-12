@@ -130,7 +130,7 @@ const APP_DATA: Record<
     ctaLabel: "See Plans",
     ctaHref: "/pricing",
     screens: {
-      mobile: "/images/parent-mobile.png?v=3",
+      mobile: "/images/parent-mobile.png?v=4",
       tablet: "/images/parent-tablet.png?v=3",
       laptop: "/images/parent-laptop.png?v=3",
     },
@@ -189,9 +189,9 @@ const APP_DATA: Record<
     ctaLabel: "Free Access",
     ctaHref: "/#contact",
     screens: {
-      mobile: "/images/teacher-mobile.png?v=2",
-      tablet: "/images/teacher-tablet.png?v=2",
-      laptop: "/images/teacher-laptop.png?v=2",
+      mobile: "/images/teacher-mobile.png?v=3",
+      tablet: "/images/teacher-tablet.png?v=3",
+      laptop: "/images/teacher-laptop.png?v=3",
     },
     showcaseTitle: "Inside",
     showcaseAccent: "SmartPath Teacher.",
