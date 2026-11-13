@@ -95,7 +95,7 @@ export function HowItWorks() {
   return (
     <section id="how-it-works" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-5xl px-5 sm:px-6">
-        <Head eyebrow="How it works" title="Start in" accent="4 steps." sub="GCash, bank or cash. No card. No auto-renewal." />
+        <Head eyebrow="How it works" title="Start in" accent="4 steps." sub="GCash, bank or cash. No card." />
         <ol className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {STEPS.map(([Icon, l], i) => (
             <li key={l} className="card-premium flex flex-col items-center gap-3 p-4 text-center sm:p-5">

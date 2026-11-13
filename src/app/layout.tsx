@@ -30,7 +30,7 @@ const baloo = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://smartpathtutor.ph"),
   title: {
-    default: "SmartPath Tutor — DepEd-aligned Grades 1–3 Learning Platform",
+    default: "SmartPath Tutor",
     template: "%s · SmartPath Tutor",
   },
   description:

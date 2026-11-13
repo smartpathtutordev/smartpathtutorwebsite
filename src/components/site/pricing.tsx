@@ -4,28 +4,19 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Wallet, ArrowRight, Sparkles, Minus, Plus } from "lucide-react";
 
-type Cycle = "monthly" | "term" | "year";
-
-const CYCLES: { id: Cycle; label: string; hint?: string }[] = [
-  { id: "monthly", label: "Monthly" },
-  { id: "term", label: "Term", hint: "~90 days" },
-  { id: "year", label: "School Year" },
-];
-
-const CADENCE: Record<Cycle, string> = {
-  monthly: "/ month",
-  term: "/ term (~90 days)",
-  year: "/ school year",
-};
-
-// Prices from docs/PRODUCT_DECISION_pricing_programs.md (smartpath_tutor),
-// matching plan_list_price_php(). Keep the two in step.
-const PRO: Record<Cycle, number> = { monthly: 399, term: 1099, year: 3990 };
-const SIBLING: Record<Cycle, number> = { monthly: 199, term: 549, year: 1990 };
+// Monthly only for now (owner 2026-11-13): Term and School Year are off sale,
+// matching ParentPlans.forSale in smartpath_tutor. Regular prices match
+// plan_list_price_php(); keep the two in step.
+const PRO_REGULAR = 399;
+const SIBLING = 199;
+// Launch promo: 50% off the first child's monthly plan.
+const LAUNCH_DISCOUNT = 0.5;
+const PRO_LAUNCH = PRO_REGULAR * (1 - LAUNCH_DISCOUNT);
 const MIN_KIDS = 1;
 const MAX_KIDS = 5;
 
-const peso = (n: number) => "\u20b1" + n.toLocaleString("en-PH");
+const peso = (n: number) =>
+  "\u20b1" + n.toLocaleString("en-PH", { minimumFractionDigits: Number.isInteger(n) ? 0 : 2, maximumFractionDigits: 2 });
 
 const PRO_FEATURES = ["Tutor app per child", "Parent app", "10 Parent AI questions/mo", "No ads"];
 const TEACHER_FEATURES = ["Set up a class", "Recommend lessons", "Write multiple-choice questions", "See topics done"];
@@ -44,10 +35,10 @@ function Feature({ text, dark }: { text: string; dark?: boolean }) {
 }
 
 export function Pricing() {
-  const [cycle, setCycle] = useState<Cycle>("monthly");
   const [kids, setKids] = useState(1);
   const extra = kids - 1;
-  const total = PRO[cycle] + extra * SIBLING[cycle];
+  const total = PRO_LAUNCH + extra * SIBLING;
+  const regularTotal = PRO_REGULAR + extra * SIBLING;
 
   return (
     <section id="pricing" className="relative scroll-mt-20 overflow-hidden border-y border-slate-900/5 bg-[#fbf8f2] py-20 sm:py-28 dark:border-white/5 dark:bg-slate-950">
@@ -61,24 +52,8 @@ export function Pricing() {
           </h2>
           <p className="mt-3 text-lg text-slate-600 dark:text-slate-400">One price for your first child. Siblings cost less.</p>
 
-          <div role="group" aria-label="Billing period" className="mt-8 inline-flex max-w-full items-center rounded-full border border-slate-900/10 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-slate-900">
-            {CYCLES.map((c) => {
-              const active = cycle === c.id;
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => setCycle(c.id)}
-                  aria-pressed={active}
-                  className={`relative flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full px-3.5 text-sm font-bold transition-colors sm:px-5 ${
-                    active ? "text-white dark:text-slate-900" : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  }`}
-                >
-                  {active && <motion.span layoutId="billing-pill" transition={{ duration: 0.35, ease }} className="absolute inset-0 rounded-full bg-slate-900 dark:bg-white" />}
-                  <span className="relative whitespace-nowrap">{c.label}</span>
-                  {c.hint && <span className={`relative hidden text-[11px] font-semibold sm:inline ${active ? "opacity-80" : "opacity-60"}`}>{c.hint}</span>}
-                </button>
-              );
-            })}
+          <div className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-sunset px-5 py-2.5 text-sm font-extrabold text-white shadow-lg shadow-orange-500/30">
+            <Sparkles className="h-4 w-4" /> Launch promo: 50% off your first child&apos;s monthly plan
           </div>
         </div>
 
@@ -97,7 +72,7 @@ export function Pricing() {
                 <h3 className="font-heading text-2xl font-extrabold">Pro</h3>
                 <p className="text-sm font-semibold text-slate-400">Per child, full Tutor app</p>
               </div>
-              <span className="rounded-full bg-gradient-sunset px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">Recommended</span>
+              <span className="rounded-full bg-gradient-sunset px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white">Launch 50% off</span>
             </div>
 
             {/* Stepper */}
@@ -129,12 +104,13 @@ export function Pricing() {
             <div className="mt-6">
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
                 <span className="font-heading text-5xl font-extrabold leading-none tracking-tight tabular-nums">{peso(total)}</span>
-                <span className="text-sm font-semibold text-slate-300">{CADENCE[cycle]}</span>
+                <span className="text-sm font-semibold text-slate-300">/ month</span>
+                <s className="ml-1 text-lg font-bold text-slate-500 tabular-nums" aria-label={`Regular price ${peso(regularTotal)}`}>{peso(regularTotal)}</s>
               </div>
               <p className="mt-2 text-sm font-semibold text-slate-400 tabular-nums">
                 {extra === 0
-                  ? `${peso(PRO[cycle])} for 1 child · each extra child ${peso(SIBLING[cycle])}`
-                  : `${peso(PRO[cycle])} + ${extra} \u00d7 ${peso(SIBLING[cycle])} for ${kids} children`}
+                  ? `${peso(PRO_LAUNCH)} for 1 child (reg. ${peso(PRO_REGULAR)}) · each extra child ${peso(SIBLING)}`
+                  : `${peso(PRO_LAUNCH)} + ${extra} \u00d7 ${peso(SIBLING)} for ${kids} children`}
               </p>
             </div>
 
@@ -178,7 +154,7 @@ export function Pricing() {
         </div>
 
         <p className="mx-auto mt-8 max-w-2xl text-center text-sm font-semibold text-slate-600 dark:text-slate-400">
-          GCash, bank or cash · No card · No auto-renewal · Up to 5 children · +40 AI questions ₱99
+          GCash, bank or cash · No card · Up to 5 children · +40 AI questions ₱99
         </p>
 
       </div>

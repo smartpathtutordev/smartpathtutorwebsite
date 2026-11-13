@@ -32,7 +32,7 @@ const PARENT_AUTH_URL = "https://smartpathtutor.ph/app/parent/#/auth";
 const TUTOR_URL = "https://smartpathtutor.ph/app/tutor/";
 const ASSISTED_SETUP_MAILTO =
   `mailto:sptutor.ph@gmail.com?subject=${encodeURIComponent("Assisted Parent Account Setup")}&body=${encodeURIComponent(
-    "Hi SmartPath team! Please help me set up my Parent account.\n\nParent Name:\nParent Email:\nChild's Name & Grade (Grade 1, 2, or 3):\nPreferred Plan (Monthly / Quarterly / Yearly):\n",
+    "Hi SmartPath team! Please help me set up my Parent account.\n\nParent Name:\nParent Email:\nChild's Name & Grade (Grade 1, 2, or 3):\nPreferred Plan: Monthly\n",
   )}`;
 
 const STEPS = [
@@ -66,7 +66,7 @@ const STEPS = [
     iconColor: "bg-amber-500/10 text-amber-600 dark:bg-amber-400/15 dark:text-amber-300",
     character: "/assets/characters/tatay_idle.png",
     bullets: [
-      "Inside the Parent app, tap Plan and select Monthly (₱399/mo), Quarterly, or Yearly.",
+      "Inside the Parent app, tap Plan and select Monthly (₱399/mo, 50% off at launch).",
       "Pay securely via PayMongo using GCash, Maya, or debit/credit card.",
       "Your plan activates automatically within seconds and unlocks Tutor access.",
     ],

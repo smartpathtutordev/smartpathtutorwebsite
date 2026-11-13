@@ -28,7 +28,7 @@ export function CtaBanner() {
             Start <span className="text-gradient-sunset">today</span>.
           </h2>
 
-          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Siblings just ₱199/mo. No auto-renewal.</p>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300 sm:text-xl">Siblings just ₱199/mo.</p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a

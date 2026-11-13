@@ -29,7 +29,7 @@ const ASSISTED_MAILTO =
   "mailto:" + EMAIL +
   "?subject=" + encodeURIComponent("Pa-setup ng Parent account") +
   "&body=" + encodeURIComponent(
-    "Hi SmartPath! Pakitulungan po akong i-set up ang Parent account ko.\n\nPangalan ko:\nMobile number:\nPangalan at Grade ni anak (1, 2 o 3):\nPlan (Monthly / Term / School Year):\n",
+    "Hi SmartPath! Pakitulungan po akong i-set up ang Parent account ko.\n\nPangalan ko:\nMobile number:\nPangalan at Grade ni anak (1, 2 o 3):\nPlan: Monthly\n",
   );
 
 export const TALA_TOPICS: TalaTopic[] = [
@@ -62,8 +62,8 @@ export const TALA_TOPICS: TalaTopic[] = [
     keys: ["magkano", "hm", "hmm", "how much po", "presyo", "price", "pricing", "how much", "cost", "bayad", "rate", "rates", "fee", "pro plan", "plan", "plans", "subscription", "subscribe", "mahal", "monthly", "kada buwan", "isang buwan", "per month"],
     answer: [
       "Isang plan lang kami, ang **Pro**, para sa isang anak: 💛",
-      "• **₱399** kada buwan\n• **₱1,099** kada term (mga 90 days)\n• **₱3,990** buong school year",
-      "Kung buong school year ang kunin mo, parang **₱332 lang kada buwan**. Tipid!",
+      "• **₱399** kada buwan (Monthly lang muna)",
+      "🎉 **Launch promo: 50% off!** Ang unang anak ay **₱199.50** lang kada buwan.",
       "Kasama na: Tutor app ni anak, Parent app mo, walang ads, at **10 tanong kay Teacher Saje** (ang AI helper ng parents) kada buwan.",
       "May kapatid? Mas mura ang dagdag na anak. Tanungin mo lang ako ng \"kapatid\". 😉",
     ],
@@ -77,8 +77,8 @@ export const TALA_TOPICS: TalaTopic[] = [
     answer: [
       "Pwede hanggang **5 anak** sa iisang family account, at bawat isa may sariling profile. 👧👦",
       "Ang unang anak ay presyo ng Pro. Bawat **dagdag na anak** ay:",
-      "• **₱199** kada buwan\n• **₱549** kada term\n• **₱1,990** kada school year",
-      "Halimbawa, **2 anak, monthly**: ₱399 + ₱199 = **₱598** kada buwan.",
+      "• **₱199** kada buwan",
+      "Halimbawa, **2 anak, monthly**: ₱399 + ₱199 = **₱598** kada buwan (₱398.50 sa launch promo).",
       "Kung magdagdag ka ng anak sa gitna ng plan mo, babayaran mo lang ang **natitirang araw**, kasi iisa lang ang end date ng buong household.",
     ],
     links: [{ label: "I-compute sa pricing", href: "/pricing" }],
@@ -101,10 +101,10 @@ export const TALA_TOPICS: TalaTopic[] = [
     chip: "Auto-renew ba?",
     keys: ["auto renew", "autorenew", "auto-renew", "renew", "renewal", "automatic", "awtomatik", "kusang", "kakaltasan", "charge", "charged", "recurring", "mag expire", "expire", "expired", "matapos", "end date", "remind", "reminder"],
     answer: [
-      "**Hindi kami nagcha-charge nang automatic.** Walang biglang kaltas. 🙅‍♀️",
-      "Kung naka-ON ang auto-renew, **paaalalahanan ka namin 7, 3 at 1 araw** bago matapos ang plan, tapos ikaw ang magbabayad kung gusto mong ituloy.",
+      "**Monthly** ang plan natin, kaya tuloy-tuloy kada buwan. 📅",
+      "**Paaalalahanan ka namin 7, 3 at 1 araw** bago ang due date, para makapagbayad ka sa Parent app at tuloy-tuloy ang lessons ni anak.",
       "Kung magbayad ka nang maaga, **madadagdag lang ang days** sa dulo ng plan mo. Walang masasayang.",
-      "Kung OFF naman, kusa lang matatapos ang plan sa end date. Buo mo pa ring magagamit lahat ng araw na binayaran mo.",
+      "Gusto mong itigil? Pwede anytime sa Parent app. Magagamit mo pa rin lahat ng araw na nabayaran mo.",
     ],
     next: ["cancel", "payment", "refund"],
   },
@@ -114,7 +114,7 @@ export const TALA_TOPICS: TalaTopic[] = [
     keys: ["cancel", "i-cancel", "icancel", "stop", "itigil", "ihinto", "unsubscribe", "ayoko na", "tigil", "quit", "pause", "i-pause"],
     answer: [
       "Oo naman, **anytime** pwede, sa Parent app mismo. 😊",
-      "At dahil hindi kami nagcha-charge nang automatic, **hindi ka na sisingilin ulit** hangga't hindi ka mismo nagbabayad. Tuloy pa rin ang access ni anak hanggang matapos ang mga araw na nabayaran mo.",
+      "Tuloy pa rin ang access ni anak hanggang matapos ang buwan na nabayaran mo.",
     ],
     next: ["refund", "renew"],
   },
@@ -137,7 +137,7 @@ export const TALA_TOPICS: TalaTopic[] = [
     keys: ["libre", "free", "trial", "free trial", "try", "subukan", "demo", "sample", "pa-try", "patry", "walang bayad"],
     answer: [
       "**Libre** ang paggawa ng Parent account. Pwede mo nang silipin ang Parent app nang walang binabayaran. 😊",
-      "Para mabuksan ang **lessons ni anak** sa Tutor app, kailangan ng **Pro plan** (₱399 kada buwan). Walang auto-charge, kaya pwede mong subukan muna nang **isang buwan** tapos tingnan kung bagay kay anak.",
+      "Para mabuksan ang **lessons ni anak** sa Tutor app, kailangan ng **Pro plan** (₱399 kada buwan, pero **50% off sa launch promo: ₱199.50 lang**). Subukan mo muna nang **isang buwan** at tingnan kung bagay kay anak.",
       "Para sa **teachers**, libre talaga, walang bibilhin.",
     ],
     links: [{ label: "Gumawa ng libreng Parent account", href: PARENT_APP }],
@@ -149,7 +149,7 @@ export const TALA_TOPICS: TalaTopic[] = [
     keys: ["paano magsimula", "how to start", "get started", "sign up", "signup", "register", "mag register", "magregister", "create account", "gumawa ng account", "account", "paano gamitin", "how to use", "setup", "set up", "simula", "magsimula", "umpisa", "mag umpisa", "mag start", "mag-start", "paano mag start", "enroll", "mag enroll", "start"],
     answer: [
       "Mga **3 minutes** lang 'to! ⏱️",
-      "• **Step 1:** Buksan ang **Parent app** → *Create account*. Gamitin ang email at password, o **Continue with Google**. I-click ang link sa confirmation email.\n• **Step 2:** Sa Parent app, tap **Plan** → piliin ang Monthly, Term o School Year → magbayad.\n• **Step 3:** Tap **Add child**: nickname, avatar, at grade (1, 2 o 3).\n• **Step 4:** Buksan ang **Tutor app** sa device ni anak, mag-sign in **isang beses** gamit ang Parent email mo. Tapos tap na lang ni anak ang picture niya. Tapos na!",
+      "• **Step 1:** Buksan ang **Parent app** → *Create account*. Gamitin ang email at password, o **Continue with Google**. I-click ang link sa confirmation email.\n• **Step 2:** Sa Parent app, tap **Plan** → piliin ang **Monthly** → magbayad.\n• **Step 3:** Tap **Add child**: nickname, avatar, at grade (1, 2 o 3).\n• **Step 4:** Buksan ang **Tutor app** sa device ni anak, mag-sign in **isang beses** gamit ang Parent email mo. Tapos tap na lang ni anak ang picture niya. Tapos na!",
       "Medyo hirap sa tech? Okay lang, **kami na ang mag-se-set up** para sa'yo. Itanong mo lang ang \"pa-setup\". 😊",
     ],
     links: [
