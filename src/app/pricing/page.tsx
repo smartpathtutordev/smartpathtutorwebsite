@@ -7,7 +7,7 @@ import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
 
 export const metadata: Metadata = {
-  title: "Pricing — SmartPath Tutor",
+  title: "Pricing",
   description:
     "Simple plans per child starting at ₱399/month, with sibling discounts and free classroom tools for teachers.",
 };

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Volume2, Users, GraduationCap, Compass, Sparkles } from "lucide-react";
+import { ArrowRight, Volume2, Users, GraduationCap, Sparkles } from "lucide-react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -96,41 +96,6 @@ export function Hero() {
                 </div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.45, duration: 0.5, ease }}
-                className="absolute top-[46%] -left-8 z-20 hidden items-center sm:flex gap-3 rounded-2xl border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur sm:-left-24 dark:border-white/10 dark:bg-slate-900/95"
-              >
-                <span className="relative grid h-9 w-9 overflow-hidden place-items-center rounded-xl bg-amber-100 dark:bg-amber-500/15">
-                  <Image
-                    src="/assets/characters/tala_wave.png"
-                    alt="Tala"
-                    width={36}
-                    height={36}
-                    className="h-8 w-8 object-contain"
-                  />
-                </span>
-                <div>
-                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">From ₱399/mo</p>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">+₱199 per sibling</p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 12 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6, duration: 0.5, ease }}
-                className="absolute inset-x-0 -bottom-5 z-20 mx-auto flex w-max items-center gap-3 whitespace-nowrap rounded-2xl sm:inset-x-auto sm:bottom-14 sm:-right-16 sm:mx-0 border border-slate-900/5 bg-white/95 px-4 py-3 shadow-xl shadow-slate-900/10 backdrop-blur dark:border-white/10 dark:bg-slate-900/95"
-              >
-                <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-sunset text-white">
-                  <Compass className="h-4.5 w-4.5" />
-                </span>
-                <div>
-                  <p className="text-sm font-extrabold leading-tight text-slate-900 dark:text-white">Today&apos;s Trip</p>
-                  <p className="text-xs font-semibold text-orange-600 dark:text-orange-400">Math · English · Science</p>
-                </div>
-              </motion.div>
             </div>
           </motion.div>
         </div>

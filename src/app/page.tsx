@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { SiteNav } from "@/components/site/nav";
 import { Hero } from "@/components/site/hero";
 import { AppShowcase } from "@/components/site/app-showcase";
-import { Pricing } from "@/components/site/pricing";
 import { Faq } from "@/components/site/faq";
 import { Contact } from "@/components/site/contact";
 import { SiteFooter } from "@/components/site/footer";
@@ -33,8 +32,9 @@ import { FAQS } from "@/lib/faqs";
  *
  * WHAT IS LEFT OWNS THE ANCHORS. Removing a section also removes its id, and
  * a nav link to a missing id scrolls nowhere and reports no error. The nav
- * below is kept to the ids this page still renders — #pricing and #faq — and
- * must be cut back again if another section goes.
+ * below is kept to the ids this page still renders — #faq — and must be cut
+ * back again if another section goes. Pricing lives on /pricing (owner
+ * 2026-11-13: not on the main page).
  */
 
 export const metadata: Metadata = {
@@ -51,7 +51,6 @@ export default function HomePage() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQS.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) }) }} />
         <Hero />
         <AppShowcase />
-        <Pricing />
         <Faq />
         <Contact />
       </main>
