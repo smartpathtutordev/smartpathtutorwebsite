@@ -13,7 +13,6 @@ const links = [
   { href: "/parent-app", label: "Parent" },
   { href: "/teacher-app", label: "Teacher" },
   { href: "/coding", label: "Coding" },
-  { href: "/pricing", label: "Pricing" },
   { href: "/partner-with-us", label: "Partners" },
   { href: "/about", label: "About Us" },
 ];

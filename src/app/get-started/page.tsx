@@ -20,6 +20,7 @@ import {
 import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { Contact } from "@/components/site/contact";
+import { Pricing } from "@/components/site/pricing";
 
 export const metadata: Metadata = {
   title: "Get Started · Parent Step-by-Step Guide",
@@ -297,6 +298,11 @@ export default function GetStartedPage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Pricing lives here, not in the nav (owner 2026-11-13). */}
+        <div className="mt-14">
+          <Pricing />
         </div>
 
         {/* Embedded Contact / Chat Form */}
